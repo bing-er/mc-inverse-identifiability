@@ -96,8 +96,9 @@ manifest itself. Run `./reproduce.sh manifest` to verify it.
 
 ## Citation
 
-Citation metadata are provided in `CITATION.cff`. A version-specific Zenodo DOI
-will be added before journal submission.
+Version 1.0.0 is archived on Zenodo at
+[https://doi.org/10.5281/zenodo.23274281](https://doi.org/10.5281/zenodo.23274281).
+Citation metadata are provided in `CITATION.cff`.
 
 ## Licenses
 

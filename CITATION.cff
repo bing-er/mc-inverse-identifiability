@@ -7,11 +7,14 @@ title: >-
   differentiable Monte Carlo: code and frozen artifacts
 type: software
 version: 1.0.0
+date-released: 2026-10-10
+doi: 10.5281/zenodo.23274281
 authors:
   - family-names: Yu
     given-names: Binger
     affiliation: British Columbia Institute of Technology
 repository-code: "https://github.com/bing-er/mc-inverse-identifiability"
+url: "https://doi.org/10.5281/zenodo.23274281"
 license: MIT
 keywords:
   - differentiable Monte Carlo
