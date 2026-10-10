@@ -1,0 +1,178 @@
+{
+  "analysis": "MERGE_CHECKS item 2: nuisance design, version 2 with marginalization",
+  "date": "2026-10-03",
+  "spec_version": "2.1.0",
+  "transport_run": false,
+  "feasibility_gate_run": false,
+  "status": "DESIGN FROZEN AND NOT RELEASED; blocked on the citation gate and the phantom scattering decision",
+  "what_version_1_got_wrong": "it swept nuisance values and recomputed the six-parameter bound at each one, which treats the nuisance as KNOWN inside every draw. That answers conditional sensitivity, how the conclusion moves across plausible operating points, and not the reviewer's question, which is what the method is worth when thickness and scattering are unknown. The corrected design answers it with the nuisance-marginalized effective information.",
+  "inputs": {
+    "nuisance_spec": "spec/nuisance_spec.json",
+    "nuisance_spec_sha256": "26f08df296d033ec6d484a1e24d31b92c31a7f84d43b5a20b51b468559e4688d",
+    "baseline_spec_sha256": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5"
+  },
+  "outputs": {
+    "results/nuisance_design.json": "4dd8e8ca667b51d76a9613947182a432c427b0ab6e856b74c8e554cb42c9b468"
+  },
+  "code": {
+    "src/augmented.py": "54b8a8ad92db44f65a7167ec2f6a6357cc84a80f5857d43acb612e8213f0658b",
+    "scripts/nuisance_sensitivity.py": "f29101e5556b2d210c25908c39e1d74b1bc122932a25c7243f91078be01965c6"
+  },
+  "production_parameterization_untouched": {
+    "psi": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "artifacts_verified_unchanged_since_commit_bcd4496": {
+      "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+      "results/production_crb.json": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+      "results/production_crb_table.tsv": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4",
+      "results/unify_spectrum.json": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1"
+    },
+    "augmented_vector_scope": "MERGE_CHECKS item 2 only"
+  },
+  "augmented_parameterization": {
+    "theta": "[psi(6), eta(6)]",
+    "eta": [
+      "log_d_epidermis",
+      "log_d_papillary",
+      "log_d_reticular",
+      "log_mus_scale",
+      "mus_slope",
+      "log_f_melanin"
+    ],
+    "coordinates": "log for every strictly positive quantity, additive for the scattering exponent shift. Positivity is then automatic for any finite eta, so no draw is ever rejected, and eta is dimensionless so its column scale is unity by construction.",
+    "feasible_by_construction": "boundaries strictly increasing and scattering strictly positive for every draw, verified over the whole set and at an absurd eta of plus and minus 6"
+  },
+  "marginalization": {
+    "F_eff": "F_pp - F_pe pinv(F_ee) F_ep, the Schur complement of the block Fisher matrix",
+    "two_routes": "Schur and projection; the projection route J_perp = (I - P_eta) J_w_psi is reported because it avoids a pseudo-inverse of a near-singular F_ee, and the Schur route is kept as evidence",
+    "verified_analytically": [
+      "nuisance columns spanning one psi direction collapse to rank 1 and marginalization removes exactly that direction, |cos| 1.000000000000",
+      "nuisance orthogonal to psi costs no information, below 1e-12",
+      "F_eff is never larger than F_pp in the positive-semidefinite order, so marginalized bounds are never tighter than conditional ones",
+      "a rank-deficient F_ee is reported and still leaves psi identifiable, because marginalization removes only the identifiable part of the nuisance span",
+      "a psi direction lying inside the nuisance span makes F_eff rank deficient, no finite bound is reported, and the lost direction is identified as the one the nuisance swallowed",
+      "the two routes agree to 7e-16"
+    ],
+    "reports": [
+      "conditional from F_pp, labelled supplementary",
+      "marginalized from F_eff, labelled primary",
+      "rank, condition number and singularity of F_ee",
+      "rank of the nuisance column space",
+      "the change marginalization makes to StO2_U, StO2_D and the near-null direction"
+    ]
+  },
+  "estimator_column_support": {
+    "pmc_supports": "the seven absorption columns, because the replay kernel accumulates pathlength and the escaping weight is w0 exp(-sum_j mua_j L_j), so pathlength moments give absorption derivatives and nothing else",
+    "pmc_does_not_support": [
+      "log_d_epidermis",
+      "log_d_papillary",
+      "log_d_reticular",
+      "log_mus_scale",
+      "mus_slope"
+    ],
+    "consequence": "the replay kernel must not be assumed to support geometry derivatives. For those five columns AD is compared against the ensemble central difference, the only estimator-independent reference available for them."
+  },
+  "feasibility_gate": {
+    "runs_zero_draws": true,
+    "why_geometry_columns_are_suspect": "a boundary position enters through a searchsorted layer index and through the distance-to-interface comparison, discrete branches that MOVE with the parameter. The pathwise derivative drops the boundary term they generate, which is the same mechanism that makes common-random-number finite differences unable to validate pathwise AD. A thickness derivative taken by AD is suspect by construction and must be demonstrated.",
+    "cost_consequence": "a column that fails must be built by the ensemble central difference, which costs far more per draw, so the 48-draw cost cannot be fixed before the gate"
+  },
+  "cost": {
+    "status": "deferred until the gate reports per-column cost and noise",
+    "lower_bound_hours_if_AD_holds_on_every_column": 7.15,
+    "lower_bound_basis": "48 draws at 372 s for forward plus the twelve-column jacfwd scaled from the six-column measurement, plus 164 s for the pMC replay. The jacfwd cost will rise with twelve columns rather than six and the gate measures that too.",
+    "upper_bound": "set by how many of the five pMC-unsupported columns need an ensemble central difference"
+  },
+  "citation_gate": {
+    "released": false,
+    "unverified": [
+      "log_d_epidermis",
+      "log_d_papillary",
+      "log_d_reticular",
+      "log_mus_scale",
+      "mus_slope",
+      "log_f_melanin"
+    ],
+    "insufficient": [
+      "log_d_papillary",
+      "log_d_reticular"
+    ],
+    "log_d_papillary_problem": "the cited source supplies the nominal layer thickness, not a measured spread. The 0.25 is currently carried over from the epidermal dimension by analogy, which is not an argument. A histological or imaging source for between-subject variation is required.",
+    "log_d_reticular_problem": "the citation is an optical properties review, which is the wrong kind of source for a thickness width. A dedicated morphometric source is required, and it must support a width wider than the superficial dimensions rather than merely be consistent with it.",
+    "rule": "no transport may be submitted while this gate is closed"
+  },
+  "phantom_scattering": {
+    "p1_p2_result_stays_in_section_3_4": true,
+    "mandatory_label": "not re-evaluated under the nuisance prior",
+    "this_round_may_claim": "scattering_nuisance_remains_weakly_constrained",
+    "forbidden": "phantom scattering recovery still fails",
+    "why": "a Fisher statement about a nuisance column and an empirical recovery failure on measured phantom data are different claims on different data"
+  },
+  "classification_groups": {
+    "conditional": "supplementary; from F_pp with eta held at the drawn value",
+    "marginalized": "primary; from F_eff. This group answers the reviewer.",
+    "new_marginalized_classification": "marginalized_upper_StO2_well_conditioned is flagged in the spec as the one most likely to fail, because the upper plexus conclusion is the one the manuscript relies on and the nuisance lies on the path to it"
+  },
+  "melanin_decision": {
+    "choice": "included in eta as a jointly unknown nuisance",
+    "not_an_equity_claim": "marginalizing over an unknown nuisance is a statement about surviving information, not about differences between people. No stratification, no ratio, no tone statement.",
+    "override": "demote to a conditional sensitivity dimension if the user prefers"
+  },
+  "selftests": "55 of 55",
+  "not_started": [
+    "any transport",
+    "the citation review",
+    "the feasibility gate",
+    "any draw evaluation",
+    "any manuscript text"
+  ],
+  "scope_decisions_confirmed": {
+    "melanin": "log_f_melanin stays in eta as a jointly unknown nuisance absorber; tone stratification, population ratios and equity claims remain forbidden",
+    "phantom_scattering": "separated from this round; the P1 and P2 measured-phantom recovery result stays in section 3.4 labelled 'not re-evaluated under the nuisance prior'; this round may report only 'scattering nuisance remains weakly constrained'; no new phantom recovery is run"
+  },
+  "two_mathematical_corrections": {
+    "A_nuisance_side_marginalization": {
+      "what_was_missing": "only F_psi_eff was computed, so a claim about the scattering nuisance would have been read from bare F_ee, which assumes psi is KNOWN. That is the assumption this check exists to remove.",
+      "added": "F_eta_eff = F_ee - F_ep pinv(F_pp) F_pe, by the projection route J_eta_perp = (I - P_psi) J_eta with the Schur form as cross-check only",
+      "routes_agree": "psi 8.1e-16, eta 6.2e-16",
+      "scattering_classification_now_uses": "the data-only estimable bound on log_mus_scale from F_eta_eff, never bare F_ee",
+      "demonstration": "in a constructed case where the log_mus_scale column lies inside the psi column span, bare F_ee gives it a sqrt-CRLB of 0.0248, well inside its 0.20 prior so it would read as measured, while F_eta_eff shows it not individually estimable at all with a null-space leakage of 1.000000",
+      "prior_informed_posterior": {
+        "definition": "Cov = inverse(F_eta_eff + diag(1 / prior_sd^2))",
+        "named_separately_from": "data_only_crlb",
+        "why": "the prior precision is positive definite, so the posterior is finite even where the data alone identify nothing. In the same constructed case log_mus_scale has no data-only bound yet a posterior/prior SD ratio of exactly 1.000000, which says the data narrowed nothing. Reporting the two under one name would let a prior masquerade as a measurement.",
+        "invariants_verified": [
+          "never wider than the prior",
+          "with zero information the posterior equals the prior exactly"
+        ]
+      }
+    },
+    "B_per_parameter_estimability": {
+      "what_was_wrong": "every bound was set to None whenever an information matrix lost rank, which erases the bound of a parameter that is still identifiable because some other direction is not",
+      "rule": "from the SVD take a null-space basis N; parameter j is individually estimable when ||N^T e_j|| is below the recorded leakage tolerance of 1e-08, and then a finite e_j^T F^+ e_j is reported; otherwise the bound is 'infinite', the value is null, and the leakage is recorded",
+      "nullity_above_one": "no single near-null vector and no dominant component are reported, because any one eigenvector the solver returns is a basis artifact. The null space is reported as a dimension and a basis, and estimator comparisons use principal angles and the projector distance.",
+      "single_direction_only_when": "full rank AND the smallest eigenvalue separated from the next by the declared ratio of 10",
+      "analytic_cases_verified": [
+        "F = diag(1, 0): the first parameter finite at 1.0, the second infinite with leakage 1.0",
+        "a 30 degree rotated single null direction: both parameters inestimable with leakages 0.5 and 0.8660, decided by their own projections",
+        "diag(2, 0, 3): the two identifiable parameters keep finite bounds while the third is infinite",
+        "a two-dimensional null space: a single direction is refused, the subspace is reported, and dominant_component is absent",
+        "full rank with eigenvalue separation 1.010 is refused and 100 is accepted",
+        "principal angles and projector distance: 0 for identical subspaces, 1.000 for orthogonal ones"
+      ]
+    }
+  },
+  "next_steps_in_order": [
+    "complete and review the six specific citations, and supply proper sources for log_d_papillary and log_d_reticular, which are currently flagged insufficient on their merits",
+    "open the citation gate only once every dimension is verified",
+    "run the nominal feasibility gate, which evaluates zero draws",
+    "produce the cost estimate from the gate's per-column measurements",
+    "only then consider the 48 draws"
+  ]
+}

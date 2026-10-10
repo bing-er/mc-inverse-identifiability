@@ -1,0 +1,141 @@
+{
+  "analysis_only": true,
+  "analytic_result": {
+    "all_zero_upper_formula": "1 - alpha**(1/n)",
+    "necessary_replicate_formula": "ceil(log(alpha)/log(1-margin))",
+    "scenarios": [
+      {
+        "all_zero_upper_at_six_replicates": 0.39303776899708276,
+        "alpha": 0.05,
+        "name": "single_one_sided_statement",
+        "registration_status": "illustrative_not_frozen",
+        "rows": [
+          {
+            "all_zero_upper_at_minimum": 0.0981446276772957,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 43.50845833333333,
+            "margin": 0.1,
+            "minimum_replicates_necessary": 29
+          },
+          {
+            "all_zero_upper_at_minimum": 0.049507609888227,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 88.51720833333333,
+            "margin": 0.05,
+            "minimum_replicates_necessary": 59
+          },
+          {
+            "all_zero_upper_at_minimum": 0.019904816220685073,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 223.54345833333332,
+            "margin": 0.02,
+            "minimum_replicates_necessary": 149
+          },
+          {
+            "all_zero_upper_at_minimum": 0.009969146792899286,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 448.5872083333333,
+            "margin": 0.01,
+            "minimum_replicates_necessary": 299
+          }
+        ]
+      },
+      {
+        "all_zero_upper_at_six_replicates": 0.4592581264399005,
+        "alpha": 0.025,
+        "name": "equal_split_one_of_two_legs",
+        "registration_status": "illustrative_not_frozen",
+        "rows": [
+          {
+            "all_zero_upper_at_minimum": 0.09739375591449195,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 54.01049999999999,
+            "margin": 0.1,
+            "minimum_replicates_necessary": 36
+          },
+          {
+            "all_zero_upper_at_minimum": 0.04994408370585468,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 108.02099999999999,
+            "margin": 0.05,
+            "minimum_replicates_necessary": 72
+          },
+          {
+            "all_zero_upper_at_minimum": 0.019956000841316213,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 274.55337499999996,
+            "margin": 0.02,
+            "minimum_replicates_necessary": 183
+          },
+          {
+            "all_zero_upper_at_minimum": 0.009974054826946355,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 552.1073333333333,
+            "margin": 0.01,
+            "minimum_replicates_necessary": 368
+          }
+        ]
+      },
+      {
+        "all_zero_upper_at_six_replicates": 0.8290024053323303,
+        "alpha": 2.5e-05,
+        "name": "candidate3_component_reference_only",
+        "registration_status": "reference_only_not_a_candidate2_allocation",
+        "rows": [
+          {
+            "all_zero_upper_at_minimum": 0.09960090546487887,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 151.52945833333334,
+            "margin": 0.1,
+            "minimum_replicates_necessary": 101
+          },
+          {
+            "all_zero_upper_at_minimum": 0.04990326394050182,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 310.56037499999996,
+            "margin": 0.05,
+            "minimum_replicates_necessary": 207
+          },
+          {
+            "all_zero_upper_at_minimum": 0.019981731493671107,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 787.6531249999999,
+            "margin": 0.02,
+            "minimum_replicates_necessary": 525
+          },
+          {
+            "all_zero_upper_at_minimum": 0.00999392898951379,
+            "descriptive_gpu_hours_at_measured_pilot_rate": 1582.8077083333333,
+            "margin": 0.01,
+            "minimum_replicates_necessary": 1055
+          }
+        ]
+      }
+    ],
+    "scope": "necessary for a non-randomized one-sided bound uniformly valid over the Bernoulli rare-event class; not sufficient for Candidate 2 and not a bound under a stronger separately registered model"
+  },
+  "candidate2_verdict": null,
+  "coverage_claimed": false,
+  "coverage_simulation_run": false,
+  "criterion_registered": false,
+  "decision": {
+    "authorizes_48_draw_study": false,
+    "authorizes_transport": false,
+    "automatic_replacement_selected": false,
+    "current_six_replicate_candidate2_registerable": false,
+    "do_not_interpret_as": [
+      "a Candidate 2 verdict",
+      "a sufficient sample-size calculation",
+      "a registered alpha split",
+      "permission to reuse pilot trials"
+    ],
+    "required_next_action": "choose and justify Candidate 2 margins and a stochastic assumption or increase the frozen replicate design, then implement and independently validate a bound before registration"
+  },
+  "inputs": {
+    "counterexample_measured_false_equivalence_rate": 0.739,
+    "counterexample_replicates": 6,
+    "counterexample_theoretical_all_zero_probability": 0.7350918906249998,
+    "counterexample_truth_and_illustrative_margin": 0.05,
+    "measured_pilot_gpu_hours_for_six_replicates": 9.00175,
+    "source_artifact_digest": "78bf19e403b97d00fb71786c6a8f54665d50bd7a89b0068d85e3aca0b56d86e9"
+  },
+  "schema_version": "candidate2-coverage-feasibility-v1",
+  "six_replicate_finding": {
+    "current_design_can_certify_below_margin_after_all_zero": false,
+    "equal_split_alpha_0p025_all_zero_upper": 0.4592581264399005,
+    "illustrative_margin": 0.05,
+    "single_statement_alpha_0p05_all_zero_upper": 0.39303776899708276,
+    "why": "a valid upper endpoint must be far above 0.05 after six all-zero observations; the rejected heuristic's endpoint of zero is the source of its measured undercoverage"
+  },
+  "status": "CANDIDATE 2 COVERAGE FEASIBILITY AUDIT; NOT A VERDICT",
+  "transport_run": false
+}

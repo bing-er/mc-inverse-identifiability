@@ -1,0 +1,115 @@
+{
+  "profile": "p2_legacy",
+  "transport_run": false,
+  "pool": "../jax-pad-fisher/outputs/fim_crb/raw_ms2000",
+  "n_seeds": 32,
+  "n_observables": 120,
+  "n_radial_bins": 30,
+  "r_max_cm": 1.5,
+  "N_tot": 400000.0,
+  "N_per_wavelength": 100000.0,
+  "parameter_order_production": [
+    "StO2_U",
+    "B_U",
+    "StO2_D",
+    "B_D",
+    "DermR",
+    "SubQ"
+  ],
+  "parameter_order_fim_stack": [
+    "StO2_U",
+    "StO2_D",
+    "B_U",
+    "B_D",
+    "DermR",
+    "SubQ"
+  ],
+  "checks": {
+    "fim_stack_bitwise_identical": true,
+    "stack_theta_order_matches": true,
+    "n_seeds_matches": true
+  },
+  "relative_residuals": {
+    "fim_stack_Fk": 0.0,
+    "sdU_min_count_vs_frozen": 0.03559987884326836,
+    "sdD_min_count_vs_frozen": 0.2664279142970402,
+    "sdU_no_min_count_vs_frozen": 8.379525667479057e-13,
+    "sdD_no_min_count_vs_frozen": 9.983353550682863e-12
+  },
+  "empty_bins": {
+    "n_R_le_zero": 0,
+    "n_obs": 120
+  },
+  "min_count_filter": {
+    "threshold": 5.0,
+    "bins_used_with_filter": 66,
+    "bins_used_without_filter": 120,
+    "bins_dropped_by_filter": 54
+  },
+  "crb": {
+    "with_min_count": {
+      "sd": [
+        0.08702484552615633,
+        0.007241090192475044,
+        2.4224668869780333,
+        0.11384974843780729,
+        0.023685712890712713,
+        0.08294962683078883
+      ],
+      "numerical_rank": 6,
+      "eigenvalues": [
+        0.17025281899129208,
+        65.68396348993934,
+        155.07537780862765,
+        1065.3303885182156,
+        7360.912169044661,
+        103062.50153888858
+      ]
+    },
+    "without_min_count": {
+      "sd": [
+        0.08403327125075309,
+        0.007082545336871798,
+        1.912834405816532,
+        0.08202340051627277,
+        0.02225409239085384,
+        0.06512052152560512
+      ],
+      "numerical_rank": 6,
+      "eigenvalues": [
+        0.2730228141864649,
+        124.10979522778811,
+        171.66671946773246,
+        1263.8214615498532,
+        7700.38539275809,
+        103433.82043969445
+      ]
+    }
+  },
+  "frozen_reference_x1": {
+    "x": 1.0,
+    "sdU": 0.08403327125082351,
+    "ciU": [
+      0.0839077607609071,
+      0.0841497663475841
+    ],
+    "sdD": 1.9128344058356286,
+    "ciD": [
+      1.9023691424245261,
+      1.9220984396908296
+    ]
+  },
+  "least_informed_direction_normalized": {
+    "eigenvalue": 0.26699524572271044,
+    "components": {
+      "StO2_U": -0.012872457559474623,
+      "B_U": 0.0014966327067892325,
+      "StO2_D": 0.9863800942961872,
+      "B_D": -0.15284983340219796,
+      "DermR": -0.0010472376904932016,
+      "SubQ": 0.05934813581996633
+    }
+  },
+  "worst_relative_residual": 0.2664279142970402,
+  "pass": true
+}

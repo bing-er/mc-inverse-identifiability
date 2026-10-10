@@ -1,0 +1,189 @@
+{
+  "analysis": "MERGE_CHECKS item 2: five review blockers",
+  "date": "2026-10-04",
+  "the_gate_has_not_run": true,
+  "1_stress_search_is_not_a_certification": {
+    "problem": "a routine named as a certification claimed invariance over every admissible Jacobian while searching the leading psi singular directions, each applied identically to all eta columns, plus 48 random directions. The admissible set is a product of per-column balls, so that search is not the set.",
+    "also": "it had no caller outside its own definition, so it was not in any reporting path",
+    "resolution": "renamed to stress_search_classifications; it never returns a certification. A flip found is conclusive; no flip found is weak evidence and every classification downstream of it is reported as unresolved.",
+    "counterexample": {
+      "baseline": 0.07949880115600956,
+      "searched_max": 0.08043994268880739,
+      "threshold": 0.08074839325759885,
+      "admissible_untested": 0.0810568438263903,
+      "untested_direction": {
+        "column_direction_indices": [
+          3,
+          4,
+          5,
+          0,
+          1
+        ],
+        "sign": -1.0
+      },
+      "search_any_flip_found": false,
+      "search_status": "unresolved",
+      "is_a_certification": false
+    },
+    "counterexample_construction": "the search applies one direction to all eta columns; this assigns a DIFFERENT psi left-singular direction to each column, which is admissible and is not in the search set",
+    "reproducible_by": "scripts/stress_search_counterexample.py",
+    "user_reported_numbers": {
+      "baseline": 0.3393281036,
+      "searched_max": 0.3772730688,
+      "admissible_untested": 0.397995551,
+      "threshold": 0.3876343099,
+      "note": "independently constructed during review; reproduced here in structure on the frozen production psi block"
+    }
+  },
+  "2_mask_contract_fails_closed": {
+    "problem": "require_mask defaulted to False, and margin_safety_analysis.py and nuisance_sensitivity.py passed no mask, contradicting the spec",
+    "resolution": "require_mask defaults to True; every production Fisher call passes an explicit mask; a synthetic analysis that wants all rows passes an explicit all-true mask with a recorded rationale",
+    "tests": [
+      "block_information requires a mask by default",
+      "a mask of the wrong length is rejected",
+      "excluded components cannot contribute: setting them to 1e6 leaves both blocks bitwise unchanged",
+      "margin_safety_analysis.py: 2 production calls, all masked",
+      "nuisance_sensitivity.py: 3 production calls all masked, 1 deliberate refusal probe"
+    ]
+  },
+  "3_no_assumption_free_guarantee": {
+    "problem": "sign-flipping X - X.mean(axis=0) is not an exact randomization distribution, since centering makes the residuals dependent. Gaussian simulations cannot support a independent of the error law claim.",
+    "measured_by_the_reviewer": "0.9264 +- 0.0037 under Rademacher plus small normal",
+    "measured_here": {
+      "max_of_both": {
+        "gaussian": 0.9737,
+        "rademacher": 0.9283,
+        "laplace": 0.986,
+        "t3": 0.9733
+      },
+      "bonferroni_t_alone": {
+        "gaussian": 0.9603,
+        "rademacher": 0.0283
+      },
+      "centered_sign_flip_alone": {
+        "gaussian": 0.9597,
+        "rademacher": 0.9283
+      }
+    },
+    "finding": "the Bonferroni component is the one that collapses under the near-discrete law, to 0.0283, because six replicates landing on the same value collapse the sample standard deviation while the mean stays far from zero. At 120 components the chance of at least one such component is 97.7 percent, which matches the measurement.",
+    "resolution": "per-component approximate normality is now the REGISTERED coverage assumption and every independent of the error law claim is removed. The assumption is justified by each replicate being an average over 200000 photons, and its failure mode is handled rather than assumed away.",
+    "degenerate_spread_guard": "a supported component whose replicate standard deviation falls below 0.05 of the column median blocks the comparison. Measured, 98.8 percent of near-discrete trials are now blocked rather than given an uncovered verdict.",
+    "non_gaussian_regression_test": "non_gaussian_coverage_simulation records Gaussian, Laplace, t(3) and the Rademacher blocked fraction"
+  },
+  "4_rank_aware_principal_angles": {
+    "problem": "full QR bases include arbitrary completion vectors for a rank-deficient block, so the angles measured against them are an artifact of the factorization",
+    "resolution": "each basis comes from singular vectors retained at the same declared rank tolerance used elsewhere, max(m, n) * eps * s_max",
+    "tests": [
+      "a rank-3 block in 5 columns reports eta rank 3 and 3 angles rather than 5",
+      "an eta block inside the psi span reports a smallest angle below 1e-6 while an orthogonal one reports above 1 degree"
+    ]
+  },
+  "5_spec_reconciled": {
+    "margin_basis": "the headroom justification is WITHDRAWN and the phrase is not restated, so a search for it finds nothing. The margin is recorded as a NECESSARY column-level criterion carrying no claim about any classification.",
+    "bound_description": "the larger of a Bonferroni-corrected t and a centered sign-flip quantile, with per-component approximate normality as the registered assumption and an explicit statement that nothing here is independent of the error law",
+    "no_certification_claimed": "the spec says the stress search can only find a flip and that every classification downstream is unresolved until an exhaustive invariance argument exists"
+  },
+  "selftests": {
+    "total": 118,
+    "passed": 118,
+    "skipped": 0,
+    "failed": 0,
+    "core": 82,
+    "gate_policy": 27,
+    "end_to_end_mocked": 9,
+    "other_suites": {
+      "scripts/nuisance_sensitivity.py": "55 of 55"
+    }
+  },
+  "outputs": {
+    "results/stress_search_counterexample.json": "6e366ee477bacefb7d74c8be17bc93696ea3f9a84ca0168a80a6129a46395845",
+    "results/margin_safety_analysis.json": "9ef91f3e4920c971f5ad36c2c8e2cbbdaaa041f5886bc557e49b9a92f1ddd4b7",
+    "results/nuisance_feasibility_gate_design.json": "a2cfc264857a5711e3bea54deb2ab295a2f6d3af67a1c395e4c275e565c21c6c"
+  },
+  "code": {
+    "scripts/nuisance_feasibility_gate.py": "f293a233649947da216faa68231da7b22e2d8bdd32b434d429ed985c99d5047a",
+    "src/augmented.py": "d22cb2300e6452aaf54bb7a92b8bce6132ff3e8c17fac0f17e2f7a7112b3340e",
+    "scripts/stress_search_counterexample.py": "b8d7f1f435fdca23bf263215304b7f20780e0bd92a063098b8c10fb8eab5f9d1",
+    "scripts/margin_safety_analysis.py": "6e53b21eaf0a281b1985e221c094598e700277f428f983d4a7449b4d89b7c3fc",
+    "scripts/nuisance_sensitivity.py": "ee5566b0e93e245da1891372027c26b1bf27ef6525b9c1e210df19d5ae023326"
+  },
+  "nuisance_spec_sha256": "e3970e0a2387b51b7ae851e1589e0eec7354c30f2b00de8a161b680fd6cedcb0",
+  "gate_remains_closed": {
+    "explicit_release_decision": null,
+    "preflight_passed": true,
+    "manifest_files_bound": 9,
+    "blocking": "citation_gate.explicit_release_decision is null"
+  },
+  "preflight_after_the_fixes": {
+    "job": "62952749",
+    "passes": true,
+    "selftests_on_the_cluster": "116 passed, 2 skipped, 0 failed; the two skips are the design artifact checks, since the preflight job does not run --dry-run",
+    "eta0_vs_production_max_rel_diff": 1.4635023881012331e-16,
+    "repeat_bitwise_identical": true,
+    "repeat_spread": 0.0,
+    "deterministic_flag_set": true,
+    "ad_column_norms": [
+      2.636406161637684,
+      1.2966413849000025,
+      0.3641227807845396,
+      7.1609542079891595,
+      1.0462721776139772
+    ],
+    "ad_all_finite": true,
+    "input_hashes": {
+      "spec/nuisance_spec.json": "e3970e0a2387b51b7ae851e1589e0eec7354c30f2b00de8a161b680fd6cedcb0",
+      "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+      "src/augmented.py": "d22cb2300e6452aaf54bb7a92b8bce6132ff3e8c17fac0f17e2f7a7112b3340e",
+      "scripts/nuisance_feasibility_gate.py": "f293a233649947da216faa68231da7b22e2d8bdd32b434d429ed985c99d5047a"
+    },
+    "jaxpad_bound_hashes": {
+      "jaxpad:scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+      "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+      "jaxpad:src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+      "jaxpad:src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+      "jaxpad:src/pad/config_v4_633nm.py": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3"
+    },
+    "environment": {
+      "ptxas_version": "12.9.86",
+      "cuda_module": "cuda/12.9",
+      "backend": "gpu",
+      "jax_version": "0.9.1",
+      "device_kind": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+      "n_devices": 1
+    },
+    "timings_s": {
+      "first_call_including_compile": 8.81,
+      "cached_call": 8.11,
+      "production_forward_direct": 8.18,
+      "ad_jacobian": 9.48
+    }
+  },
+  "production_artifacts_byte_for_byte_unchanged": {
+    "spec/baseline_spec.json": {
+      "sha256": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+      "against_commit": "bcd4496",
+      "identical": true
+    },
+    "results/production_crb.json": {
+      "sha256": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+      "against_commit": "bcd4496",
+      "identical": true
+    },
+    "results/production_crb_table.tsv": {
+      "sha256": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4",
+      "against_commit": "bcd4496",
+      "identical": true
+    },
+    "results/unify_spectrum.json": {
+      "sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1",
+      "against_commit": "bcd4496",
+      "identical": true
+    },
+    "data/derived/production_pooled.npz": {
+      "sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+      "gitignored": true,
+      "matches_the_pool_provenance_record": true
+    }
+  },
+  "all_production_artifacts_identical": true
+}

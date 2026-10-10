@@ -1,0 +1,494 @@
+{
+  "stage": 1,
+  "mode": "selftest",
+  "spec_version": "1.0.0",
+  "results": [
+    {
+      "profile": "p1_legacy:diagonal_poisson",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 1.397780113876479e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          648.1352326307785,
+          107.72602020626846,
+          37.33986759320578,
+          33.165276510408894,
+          27.541475469867365,
+          6.993182615061545e-15
+        ],
+        "eigenvalues": [
+          420079.27977735375,
+          11604.895429481363,
+          1394.2657118781399,
+          1099.93556601188,
+          758.5328710573059,
+          -7.438718050087362e-12
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 8.313810804139366e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 1.5210670530876128e+17,
+        "eigenvector_vs_right_singular_abs_residual": 1.3322676295501878e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.6375798723879577e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 9.268101067958091e+16,
+        "condition_number_I": 8.589769740588591e+33,
+        "eigh_resolvable_floor": 9.327633771535413e-11,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9941205002787354,
+          0.02664487884996726,
+          0.001942453751684306,
+          4.467768111041217e-06,
+          0.0018976871522254682,
+          0.10491476060860715
+        ],
+        "StO2_deep": [
+          0.026567026508278697,
+          0.9915481066578652,
+          0.07839438873418388,
+          0.06515806317454528,
+          0.0757317100298604,
+          1.9878480089217437e-16
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.3,
+          0.65,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.3,
+          1.0,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "n_observables": 152,
+        "likelihood": "diagonal_poisson",
+        "n_measurement_photons": 1.0,
+        "max_steps": 2000,
+        "parameter_coordinates": "phi",
+        "blood_coordinate": "legacy"
+      },
+      "selftest_pass": true
+    },
+    {
+      "profile": "p1_legacy:multinomial_fixed_launch",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 1.397780113876479e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          2862.5227333908665,
+          478.9456373905784,
+          195.7495218890854,
+          137.65103413002825,
+          132.66264087377192,
+          8.658830534041382e-14
+        ],
+        "eigenvalues": [
+          8194036.399179519,
+          229388.92357546755,
+          38317.875319805506,
+          18947.807197066188,
+          17599.376283603393,
+          4.279405584601012e-11
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 1.1365858402932324e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 5707750347962482.0,
+        "eigenvector_vs_right_singular_abs_residual": 4.3298697960381105e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.191468312850173e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 3.3058999389549504e+16,
+        "condition_number_I": 1.0928974406382344e+33,
+        "eigh_resolvable_floor": 1.8194415749971423e-09,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9941453711367443,
+          0.025333582951465976,
+          0.0008155884040993809,
+          0.0016445846012037902,
+          0.004765898205940285,
+          0.10491476060860706
+        ],
+        "StO2_deep": [
+          0.02556575452501294,
+          0.9953995721592508,
+          0.08667851105506665,
+          0.009752769150305521,
+          0.03029526622964381,
+          2.0570662912976784e-17
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.3,
+          0.65,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.3,
+          1.0,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "n_observables": 152,
+        "likelihood": "multinomial_fixed_launch",
+        "n_measurement_photons": 1.0,
+        "max_steps": 2000,
+        "parameter_coordinates": "phi",
+        "blood_coordinate": "legacy"
+      },
+      "selftest_pass": true
+    },
+    {
+      "profile": "p2_legacy:diagonal_poisson",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 1.397780113876479e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          211302.2031817344,
+          34118.989137020166,
+          13851.180543268052,
+          11089.696025335546,
+          8502.700192569295,
+          1.2127935896228452e-11
+        ],
+        "eigenvalues": [
+          44648621069.454956,
+          1164105419.7320993,
+          191855202.4422078,
+          122981357.93434314,
+          72295910.56471789,
+          4.546234770861409e-07
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 1.7087637531698432e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 3090851029004784.5,
+        "eigenvector_vs_right_singular_abs_residual": 1.6653345369377348e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.3773557501292315e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 1.7422767154256248e+16,
+        "condition_number_I": 3.0355281531143037e+32,
+        "eigh_resolvable_floor": 9.913985425814556e-06,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9943219328916246,
+          0.01627263470615674,
+          0.005204117630066623,
+          0.004409648043659055,
+          0.0023367286204707114,
+          0.10491476060860698
+        ],
+        "StO2_deep": [
+          0.01582586656032535,
+          0.9971459038880424,
+          0.06623916187421656,
+          0.03257856348827092,
+          0.0007739135325285811,
+          2.917663219400094e-16
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.3,
+          0.65,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.3,
+          1.0,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "n_observables": 120,
+        "likelihood": "diagonal_poisson",
+        "n_measurement_photons": 100000,
+        "max_steps": 2000,
+        "parameter_coordinates": "psi",
+        "blood_coordinate": "legacy"
+      },
+      "selftest_pass": true
+    },
+    {
+      "profile": "p2_legacy:multinomial_fixed_launch",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 1.397780113876479e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          7.614234922729085,
+          1.3426527639549264,
+          0.5684796018412016,
+          0.38306401086243974,
+          0.3370365432828264,
+          1.625582993405e-16
+        ],
+        "eigenvalues": [
+          57.97657345850721,
+          1.8027164445558024,
+          0.32316905770953164,
+          0.14673803641801952,
+          0.11359363150803671,
+          -6.770074683389374e-16
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 3.676706090272598e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 2.5619766389765544e+16,
+        "eigenvector_vs_right_singular_abs_residual": 3.885780586188048e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.7497064945727708e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 4.684002572381774e+16,
+        "condition_number_I": 2.193988009807908e+33,
+        "eigh_resolvable_floor": 1.2873385348501285e-14,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9944404321900278,
+          0.003296876864373727,
+          0.00785008539586337,
+          0.0013029838155515765,
+          0.002632266617336192,
+          0.10491476060860708
+        ],
+        "StO2_deep": [
+          0.0031135482343323854,
+          0.9981119487730509,
+          0.016675575628447393,
+          0.039635494612860804,
+          0.04374695735830222,
+          1.8881341555940837e-16
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.3,
+          0.65,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.3,
+          1.0,
+          0.1,
+          0.49,
+          0.45
+        ],
+        "n_observables": 120,
+        "likelihood": "multinomial_fixed_launch",
+        "n_measurement_photons": 100000,
+        "max_steps": 2000,
+        "parameter_coordinates": "psi",
+        "blood_coordinate": "legacy"
+      },
+      "selftest_pass": true
+    },
+    {
+      "profile": "production:diagonal_poisson",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 3.043112704716577e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          171718.2597356406,
+          29828.612820013892,
+          13130.238457524249,
+          9174.573177116079,
+          8190.282772960297,
+          3.5086940794093004e-12
+        ],
+        "eigenvalues": [
+          29487160726.636944,
+          889746142.7662967,
+          172403161.95144874,
+          84172792.98225772,
+          67080731.90105024,
+          -1.203104511328379e-07
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 5.174723061320762e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 9772650047226578.0,
+        "eigenvector_vs_right_singular_abs_residual": 1.304512053934559e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.1519747401362397e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 4.8940789891990216e+16,
+        "condition_number_I": 2.3952009152519316e+33,
+        "eigh_resolvable_floor": 6.547464953906996e-06,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9943022853701943,
+          0.006804333122597685,
+          0.012548032630554666,
+          0.009505105311041895,
+          0.007858703133006567,
+          0.10491476060860705
+        ],
+        "StO2_deep": [
+          0.008603551817951525,
+          0.9908517185254793,
+          0.12928275326551023,
+          0.010067582034100717,
+          0.036379448749210175,
+          2.0492287752415611e-16
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.0560139,
+          1.0,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "n_observables": 120,
+        "likelihood": "diagonal_poisson",
+        "n_measurement_photons": 100000,
+        "max_steps": 4000,
+        "parameter_coordinates": "psi",
+        "blood_coordinate": "physical_bvf"
+      },
+      "selftest_pass": true
+    },
+    {
+      "profile": "production:multinomial_fixed_launch",
+      "reparameterization": {
+        "T_analytic_vs_central_difference_max_rel_err": 3.043112704716577e-10,
+        "T_is_diagonal": false,
+        "phi_StO2_direction_pushed_through_T_vs_psi_basis_cosine": 1.0
+      },
+      "spectral_identities": {
+        "singular_values": [
+          6.510170467748644,
+          1.1442141446985856,
+          0.48170341392762417,
+          0.32373567075597565,
+          0.31852760910883127,
+          3.1016905670408307e-16
+        ],
+        "eigenvalues": [
+          42.38231951914661,
+          1.3092260089283134,
+          0.23203817898952825,
+          0.1048047845198214,
+          0.10145983776458843,
+          -2.678441018640989e-16
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 3.353014860072045e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 2784102041651365.5,
+        "eigenvector_vs_right_singular_abs_residual": 1.6375789613221059e-15,
+        "Jw_v_minus_s_u_rel_residual": 1.3642936449977112e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 2.0989103609905468e+16,
+        "condition_number_I": 4.405424703473468e+32,
+        "eigh_resolvable_floor": 9.41076539343535e-15,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvector_alignment_with_named_directions": {
+        "StO2_upper": [
+          0.9942459260054974,
+          0.0115770511467107,
+          0.01176756223701342,
+          0.013334745368653539,
+          0.004196732015192595,
+          0.10491476060860706
+        ],
+        "StO2_deep": [
+          0.014125650524253098,
+          0.9848671631340561,
+          0.16135455933144385,
+          0.060105291207709625,
+          0.013754894740971482,
+          3.405013539178958e-16
+        ]
+      },
+      "config_echo": {
+        "psi": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "scale": [
+          1.0,
+          0.0560139,
+          1.0,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "n_observables": 120,
+        "likelihood": "multinomial_fixed_launch",
+        "n_measurement_photons": 100000,
+        "max_steps": 4000,
+        "parameter_coordinates": "psi",
+        "blood_coordinate": "physical_bvf"
+      },
+      "selftest_pass": true
+    }
+  ],
+  "failures": []
+}

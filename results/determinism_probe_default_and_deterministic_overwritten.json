@@ -1,0 +1,29 @@
+{
+  "backend": "gpu",
+  "jax_version": "0.9.1",
+  "n_photons_per_wavelength": 2000,
+  "repeats": 5,
+  "xla_flags": "--xla_gpu_cuda_data_dir=/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/cudacore/12.9.1 --xla_gpu_deterministic_ops=true",
+  "ptxas_version": "12.9.86",
+  "deterministic_env": {
+    "XLA_FLAGS": "--xla_gpu_cuda_data_dir=/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/cudacore/12.9.1 --xla_gpu_deterministic_ops=true",
+    "TF_DETERMINISTIC_OPS": "1",
+    "JAX_DETERMINISTIC_OPS": null
+  },
+  "binned_reflectance_repeat": {
+    "max_relative_spread": 0.0,
+    "bitwise_identical": true
+  },
+  "per_photon_repeat": {
+    "detector_id_bitwise_identical": true,
+    "weight_bitwise_identical": true,
+    "weight_max_relative_spread": 0.0
+  },
+  "difference_quotient_repeat": {
+    "h": 0.04000000000000001,
+    "max_abs_signal": 80.55083689396189,
+    "max_abs_repeat_jitter": 4.440892098500626e-16,
+    "jitter_over_signal": 5.513154511785733e-18,
+    "note": "the method relies on common random numbers cancelling between plus h and minus h, so this ratio is what decides whether repeat non-determinism matters"
+  }
+}

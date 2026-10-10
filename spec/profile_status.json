@@ -1,0 +1,190 @@
+{
+  "note": "Curated, committed record of what each profile has actually achieved. Generated reports live in results/; this file is the durable statement and is edited deliberately, not by a script.",
+  "updated": "2026-10-08",
+  "p1_legacy": {
+    "raw_svd_reproduced": true,
+    "whitening_eligible": false,
+    "reason": "non-positive reflectance estimates in 10/152 bins at the frozen transport budget",
+    "evidence": {
+      "step_A": {
+        "description": "recompute P1's published scale=1.0 quantities from its frozen Jacobian cache, no transport",
+        "script": "scripts/p1_legacy_reproduce.py",
+        "report": "results/p1_legacy_stepA.json",
+        "worst_relative_residual_vs_frozen_json": 0.0,
+        "quantities_checked": [
+          "singular_values",
+          "smallest_over_largest",
+          "align_sto2U_vmin",
+          "align_sto2D_vmin",
+          "sto2U_in_weakest1",
+          "sto2U_in_weakest2",
+          "sto2D_in_weakest1",
+          "sto2D_in_weakest2",
+          "response",
+          "resp_ratio_U",
+          "resp_ratio_D",
+          "phi-space StO2 direction construction vs P1's stored e_sto2U/e_sto2D"
+        ]
+      },
+      "step_B": {
+        "description": "rerun the nominal scale=1.0 point only and emit standardized J_phi and R",
+        "script": "scripts/p1_legacy_adapter.py",
+        "artifact": "data/derived/p1_legacy_nominal.npz",
+        "report": "results/p1_legacy_stepB.json",
+        "jacobian_vs_frozen_max_abs_diff_over_max_abs_J": 2.886e-16,
+        "six_point_scan_rerun": false
+      }
+    },
+    "empty_bins": {
+      "n_zero_R_bins": 10,
+      "n_bins_total": 152,
+      "per_wavelength_zero_counts": {
+        "540nm": 8,
+        "580nm": 2,
+        "633nm": 0,
+        "800nm": 0
+      },
+      "n_bins_per_wavelength": 38,
+      "zero_bin_radii_cm_540nm": [
+        1.1,
+        1.22,
+        1.3,
+        1.34,
+        1.38,
+        1.42,
+        1.46,
+        1.5
+      ],
+      "expected_counts_below_5_at_Nmeas_1e5": 74,
+      "interpretation": "These are Monte Carlo sampling shortfalls, not physically zero reflectance. P1's 30000 transport photons suffice to estimate the Jacobian but not to stabilize R across all 152 retained bins. P1's raw unweighted SVD never exposed this because it never needed R."
+    },
+    "explicitly_rejected_remedies": [
+      {
+        "remedy": "raise n_transport_photons",
+        "why_rejected": "the result would no longer be the frozen p1_legacy baseline"
+      },
+      {
+        "remedy": "drop the empty bins",
+        "why_rejected": "changes the observation space, so the spectrum is no longer comparable to the frozen one"
+      },
+      {
+        "remedy": "add an epsilon floor to R",
+        "why_rejected": "manufactures Fisher information that the simulation did not produce"
+      }
+    ],
+    "scope": "p1_legacy is complete. Its only task was to reproduce the raw-J SVD, and that is done. It is not a whitening input."
+  },
+  "p2_legacy": {
+    "fim_reproduced": true,
+    "legacy_published_bounds_reproduced": true,
+    "whitening_eligible": true,
+    "reason": "all 120 bins have strictly positive pooled reflectance at 32 streams x 200000 photons",
+    "evidence": {
+      "script": "scripts/p2_legacy_reproduce.py",
+      "report": "results/p2_legacy_reproduce.json",
+      "transport_run": false,
+      "fim_stack_Fk_bitwise_identical": true,
+      "legacy_published_bounds_relative_residual": 9.983e-12,
+      "frozen_sdU": 0.08403327125082351,
+      "frozen_sdD": 1.9128344058356286,
+      "n_R_le_zero": 0,
+      "n_observables": 120
+    },
+    "findings": [
+      "P2 ships two pipelines over the same pool that disagree on three points: the photon budget (N_TOT=4e5 total in build_fim_stack.py vs PROD_N=1e5 per wavelength in fim_analyze.py), the min-count filter, and the parameter order.",
+      "The published bounds come from fim_boundary_poisson_pooled.py, which applies NO min-count filter. Enabling MIN_COUNT=5 drops 54 of 120 bins and moves the deep bound from 1.9128 to 2.4225, a 26.6% change. The spec's p2_legacy profile was corrected accordingly.",
+      "Gcw is stored in production order [StO2_U, B_U, StO2_D, B_D, DermR, SubQ]; fim_stack.npz applies PERM=[0,2,1,3,4,5] to a different order. Any consumer must declare which it uses.",
+      "The least-informed normalized eigenvector is the deep StO2 direction (StO2_D = +0.99), confirming P2's central identifiability claim.",
+      "In contrast with p1_legacy, zero of 120 bins are empty, so p2_legacy is whitening eligible."
+    ]
+  },
+  "production": {
+    "status": "formal 32-seed pool complete; production spectrum and CRLB frozen",
+    "pilot": {
+      "purpose": "validate runtime, memory, 4000-step convergence and output format before committing a full pool",
+      "seed": 43000,
+      "run_locally": true,
+      "artifact": "data/pilot/seed_43000_pilot.npz",
+      "report": "results/pilot/seed_43000_pilot.json",
+      "excluded_from_formal_pool": true,
+      "why_excluded": "the formal pool must use one hardware, one JAX backend and one environment; mixing one local CPU seed with 31 cluster seeds would confound the pool",
+      "measured": {
+        "jax_compile_s": 1.3,
+        "execution_s": 3559.0,
+        "energy_diagnostic_s": 189.5,
+        "total_s": 3751,
+        "peak_rss_mb": 874
+      },
+      "findings": [
+        "max_steps=4000 is fully converged: in-flight weight at termination is 0.0000 at all four wavelengths, so no photon is truncated by the step cap.",
+        "J_psi and R are finite throughout; cond(J_psi) = 1.14e5.",
+        "One non-positive bin remains at 540 nm, r = 1.475 cm, in a SINGLE seed. Pooling 32 seeds is expected to clear it, since P2's 32 x 200000 pool had zero empty bins on the same grid, but that must be confirmed on the actual pooled R, not assumed.",
+        "Compile is 1.3 s, not a meaningful share of the 59 min execution. The compile-once worker is still the right architecture, but it does not change the time budget."
+      ]
+    },
+    "formal_pool": {
+      "status": "complete",
+      "artifact": "data/derived/production_pooled.npz",
+      "artifact_sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+      "provenance": "results/production_pooled_provenance.json",
+      "pool_check": "results/pool_check.json",
+      "all_11_pool_gates_passed": true,
+      "n_seeds": 32,
+      "seed_range": [43000, 74000],
+      "seed_stride": 1000,
+      "n_transport_photons_per_wavelength_per_seed": 200000,
+      "pooled_transport_photons_per_wavelength": 6400000,
+      "max_steps": 4000,
+      "slurm_array_job": 62317711,
+      "cuda_module": "cuda/12.9",
+      "ptxas_version": "12.9.86",
+      "jax_version": "0.9.1",
+      "jax_backend": "gpu",
+      "n_observables": 120,
+      "all_bins_retained": true,
+      "pooled_R_strictly_positive_all_bins": true,
+      "min_count_filter": false,
+      "epsilon_floor": false,
+      "bins_dropped": 0
+    },
+    "diagnostic_policy": "The energy-accounting termination diagnostic costs ~190 s per seed and is evidence about the step cap, not about the seed. It is opt-in (--diagnostic): run it on the verification seed and a spot check, not all 32 times.",
+    "note": "The formal raw-vs-whitened comparison uses one J, one observation grid and one parameter coordinate system, switching only the likelihood.",
+    "completed_comparison": [
+      "raw J SVD",
+      "diagonal-Poisson whitening",
+      "fixed-launch multinomial whitening"
+    ],
+    "spectrum": {
+      "artifact": "results/unify_spectrum.json",
+      "artifact_sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1",
+      "provenance": "results/unify_spectrum_provenance.json",
+      "transport_rerun": false,
+      "all_checks_passed": true
+    },
+    "crlb": {
+      "artifact": "results/production_crb.json",
+      "artifact_sha256": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+      "provenance": "results/production_crb_provenance.json",
+      "transport_rerun": false,
+      "headline_likelihood": "multinomial_fixed_launch",
+      "headline_deep_StO2_sqrt_crlb": 1.8492941303743464,
+      "sensitivity_likelihood": "diagonal_poisson",
+      "sensitivity_deep_StO2_sqrt_crlb": 1.873168894940181,
+      "quantity": "lower bound on the standard deviation of a locally unbiased estimator at the nominal point",
+      "not_a_confidence_interval": true,
+      "not_an_achieved_estimator_error": true
+    },
+    "manuscript_contract": {
+      "single_configuration": "spec/baseline_spec.json profiles.production",
+      "single_headline_deep_StO2_sqrt_crlb": 1.8492941303743464,
+      "headline_branch": "multinomial_fixed_launch",
+      "supplementary_only": {
+        "production_diagonal_poisson_sensitivity": 1.873168894940181,
+        "p2_legacy_published_diagonal_poisson": 1.9128344058356286,
+        "p2_legacy_min_count_5_sensitivity": 2.4224668869780333
+      },
+      "p1_legacy_crlb": null,
+      "p1_legacy_crlb_reason": "p1_legacy has no likelihood model and is retained only for raw-J SVD reproduction"
+    }
+  }
+}

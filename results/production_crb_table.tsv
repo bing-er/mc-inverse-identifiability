@@ -1,0 +1,19 @@
+likelihood	role	target	kind	value	sqrt_crlb	gauss_equiv_1p96_span_lo	gauss_equiv_1p96_span_hi	relative_sqrt_crlb
+multinomial_fixed_launch	headline	StO2_U	parameter	0.95	0.066724885	0.81922163	1.0807784	0.0702367
+multinomial_fixed_launch	headline	f_U	parameter	0.0560139	0.0010889491	0.053879599	0.058148201	0.0194407
+multinomial_fixed_launch	headline	StO2_D	parameter	0.65	1.8492941	-2.9745499	4.2745499	2.84507
+multinomial_fixed_launch	headline	f_D	parameter	0.0186713	0.014854885	-0.01044374	0.04778634	0.7956
+multinomial_fixed_launch	headline	mua_DermR	parameter	0.49	0.019661898	0.45146339	0.52853661	0.0401263
+multinomial_fixed_launch	headline	mua_SubQ	parameter	0.45	0.063839535	0.32487681	0.57512319	0.141866
+multinomial_fixed_launch	headline	StO2_D_minus_StO2_U	linear contrast	-0.3	1.8742869	-3.9735349	3.3735349	6.24762
+multinomial_fixed_launch	headline	f_D_minus_f_U	linear contrast	-0.0373426	0.014835605	-0.066419852	-0.0082653477	0.397284
+multinomial_fixed_launch	headline	S_combined	nonlinear contrast, analytic gradient propagated	0.875	0.46209313	-0.030685886	1.7806859	0.528106
+diagonal_poisson	sensitivity	StO2_U	parameter	0.95	0.082713743	0.78788404	1.112116	0.0870671
+diagonal_poisson	sensitivity	f_U	parameter	0.0560139	0.0012658949	0.053532792	0.058495008	0.0225997
+diagonal_poisson	sensitivity	StO2_D	parameter	0.65	1.8731689	-3.0213436	4.3213436	2.8818
+diagonal_poisson	sensitivity	f_D	parameter	0.0186713	0.015142719	-0.011007885	0.048350485	0.811016
+diagonal_poisson	sensitivity	mua_DermR	parameter	0.49	0.021875931	0.44712396	0.53287604	0.0446448
+diagonal_poisson	sensitivity	mua_SubQ	parameter	0.45	0.064199914	0.32417048	0.57582952	0.142666
+diagonal_poisson	sensitivity	StO2_D_minus_StO2_U	linear contrast	-0.3	1.8999142	-4.0237634	3.4237634	6.33305
+diagonal_poisson	sensitivity	f_D_minus_f_U	linear contrast	-0.0373426	0.015080854	-0.066900531	-0.0077846692	0.403851
+diagonal_poisson	sensitivity	S_combined	nonlinear contrast, analytic gradient propagated	0.875	0.46962037	-0.045439019	1.795439	0.536709

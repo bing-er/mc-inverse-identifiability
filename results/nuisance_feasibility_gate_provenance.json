@@ -1,0 +1,410 @@
+{
+  "analysis": "MERGE_CHECKS item 2: nominal-point derivative feasibility gate, implementation only",
+  "date": "2026-10-04",
+  "transport_run": false,
+  "draws_evaluated": 0,
+  "is_the_nuisance_study": false,
+  "status": "statistics and control flow corrected; real-executor preflight submitted; the gate itself has NOT run",
+  "what_it_decides": "whether the eta derivatives are computable at all, and what the nuisance study would cost. It is evaluated at the nominal point and runs zero draws.",
+  "inputs": {
+    "spec/nuisance_spec.json": "26f08df296d033ec6d484a1e24d31b92c31a7f84d43b5a20b51b468559e4688d",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "src/augmented.py": "54b8a8ad92db44f65a7167ec2f6a6357cc84a80f5857d43acb612e8213f0658b"
+  },
+  "outputs": {
+    "results/nuisance_feasibility_gate_design.json": "ff2c25a916722ac8ee0cf06eea6fff14e18950e2516540dfb56208b7d5736e8e"
+  },
+  "code": {
+    "scripts/nuisance_feasibility_gate.py": "46b8c3443979c9a6cdb7b0d4ba3dccd6721ac7db0a406614b7b7c6ed4daee712",
+    "scripts/preflight_fir.sbatch": "910f98fdec5bbd1fc00153abeab17f07f7961bfcfcffe48baeab6457b8f8ba43"
+  },
+  "entry_points": {
+    "reachable_without_the_citation_gate": [
+      "--selftest",
+      "--dry-run"
+    ],
+    "transport": "--run only, and it calls require_citation_gate_open first",
+    "no_bypass": "a self-test inspects the argument parser rather than the source text and asserts the exposed options are exactly --selftest, --dry-run, --run, --replicates and --photons, with no force, skip, ignore or allow flag",
+    "verified_hard_fail": "--run exits 1 with REFUSING to run transport while the gate is closed"
+  },
+  "per_column_declarations": {
+    "units_and_coordinates": "every eta parameter declares units and a coordinate; all six are dimensionless because the positive quantities are carried in log",
+    "bounds": {
+      "log_d_epidermis": [
+        -2.0,
+        2.0
+      ],
+      "log_d_papillary": [
+        -2.0,
+        2.0
+      ],
+      "log_d_reticular": [
+        -2.0,
+        2.0
+      ],
+      "log_mus_scale": [
+        -2.0,
+        2.0
+      ],
+      "mus_slope": [
+        -3.0,
+        3.0
+      ],
+      "log_f_melanin": [
+        -3.0,
+        2.9957322725539908
+      ]
+    },
+    "bounds_are_feasibility_limits_not_priors": "beyond them the layer stack or the scattering would stop being physical, so the gate refuses rather than evaluates",
+    "step_grid": [
+      0.4,
+      0.3,
+      0.2,
+      0.1
+    ],
+    "step_grid_is_shared": "eta is dimensionless, so a step is a fractional change in the underlying quantity and one grid serves every column",
+    "moderate_steps_only": "the h to zero limit degenerates to the pathwise derivative under common random numbers, which is the thing being tested"
+  },
+  "refusal_not_clamping": "an infeasible point is refused with a stated reason. Clamping would quietly change the step size and corrupt the extrapolation.",
+  "estimator_support": {
+    "pmc_supported_eta": [
+      "log_f_melanin"
+    ],
+    "pmc_unsupported_eta": [
+      "log_d_epidermis",
+      "log_d_papillary",
+      "log_d_reticular",
+      "log_mus_scale",
+      "mus_slope"
+    ],
+    "why": "the replay kernel accumulates per-layer pathlength and the escaping weight is w0 exp(-sum_j mua_j L_j), so its moments give absorption derivatives and nothing else. Only the melanin column is an absorber; the three thickness and two scattering columns are not differentiable this way.",
+    "route_for_unsupported": "AD against an ensemble central difference with independent replicate streams and an h^2 extrapolation, the estimator-independent reference item 1 used"
+  },
+  "why_the_thickness_columns_are_suspect": "a layer boundary position enters the kernel through a searchsorted layer index and through the distance-to-interface comparison, both discrete branches that MOVE with the parameter. The pathwise derivative drops the boundary term those branches generate, which is the same mechanism that makes common-random-number finite differences unable to validate pathwise AD. A thickness derivative taken by AD is therefore suspect by construction and must be demonstrated, not assumed.",
+  "convergence_rule": "converged when the three-term minus two-term difference stays below three replicate standard errors, so the h^2 fit is limited by noise and not by truncation",
+  "agreement_rule": "AD is accepted for a column when it sits within three standard errors of the ensemble reference. A column that fails is routed to the ensemble difference, which is the expected outcome for a pathwise derivative that drops a moving-boundary term.",
+  "cost_projection": {
+    "gate_itself": {
+      "finite_difference_evaluations": 40,
+      "replicates": 6,
+      "forward_seconds_each": 126.6,
+      "finite_difference_seconds": 30384.0,
+      "ad_eta_jacobian_seconds_each": 640.0,
+      "ad_jacobian_seconds_total": 3840.0,
+      "pmc_seconds": 0.0,
+      "total_hours": 9.51
+    },
+    "study_cost_by_number_of_ensemble_columns": {
+      "0": {
+        "columns_needing_ensemble_difference": 0,
+        "seconds_per_draw": 744.0,
+        "hours_for_48_draws": 9.92
+      },
+      "1": {
+        "columns_needing_ensemble_difference": 1,
+        "seconds_per_draw": 6820.8,
+        "hours_for_48_draws": 90.94
+      },
+      "2": {
+        "columns_needing_ensemble_difference": 2,
+        "seconds_per_draw": 12897.6,
+        "hours_for_48_draws": 171.97
+      },
+      "3": {
+        "columns_needing_ensemble_difference": 3,
+        "seconds_per_draw": 18974.4,
+        "hours_for_48_draws": 252.99
+      },
+      "4": {
+        "columns_needing_ensemble_difference": 4,
+        "seconds_per_draw": 25051.2,
+        "hours_for_48_draws": 334.02
+      },
+      "5": {
+        "columns_needing_ensemble_difference": 5,
+        "seconds_per_draw": 31128.0,
+        "hours_for_48_draws": 415.04
+      }
+    },
+    "no_pmc_term": "no eta column is a pMC-supported absorption column this round",
+    "basis": "forward at 126.6 s measured in the item 1 pilot at 200000 photons per wavelength over four wavelengths. A five-column eta jacfwd is taken as about five forward evaluations, 640 s, and the eleven-column theta jacobian as 744 s scaled from the six-column 372 s measurement. Both are projections and the gate measures them.",
+    "status": "projection; the gate replaces every term with a measurement"
+  },
+  "cost_finding": "the gate itself is 9.51 hours. The 48-draw study is 9.92 hours if AD holds on every column, 90.94 with one ensemble column, 252.99 with the three thickness columns, which are the suspect ones, and 415.04 if all five fail. The gate replaces every term with a measurement.",
+  "selftests": {
+    "total": 60,
+    "passed": 60,
+    "groups": {
+      "core": "44, gate-state independent, including the simultaneous test, the paired convergence denominator, the hard gate and the runner through a mocked executor",
+      "gate policy": "9",
+      "end to end, mocked": "7, including the unconverged case that must refuse"
+    }
+  },
+  "two_selftest_errors_found_and_fixed": {
+    "melanosome_bound": "the first version asserted that an in-bounds point could trigger the fraction guard. It cannot: the bound already makes the guard unreachable. The test now asserts the edge is feasible, beyond it is refused, and the guard is redundant by construction, which is what is actually true.",
+    "bypass_search": "the first version searched its own source for override flag names, which contains those names as literals in the test, so it reported a bypass that does not exist. It now inspects the argument parser instead."
+  },
+  "production_artifacts_unchanged": {
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "results/production_crb.json": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+    "results/production_crb_table.tsv": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4",
+    "results/unify_spectrum.json": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1"
+  },
+  "not_started": [
+    "any transport",
+    "the citation review completion",
+    "any draw evaluation",
+    "any manuscript text"
+  ],
+  "no_longer_a_placeholder": "--run previously raised SystemExit immediately after the gate check, so the transport path was a stub. build_executor now constructs the production forward model under an eta perturbation and run_gate performs the column-by-column measurement. The gate is still checked BEFORE the executor is constructed, so a closed gate never imports the transport stack.",
+  "executor": {
+    "built_from": "the production forward solver forward_y_multi_layer, with the layer stack from boundaries_from_eta, the reduced scattering scaled per wavelength by mus_factor_from_eta, and the production psi held at nominal",
+    "pmc_route": "src/replay_kernel.replay_moments, used only for the one absorber column",
+    "refuses_infeasible_eta": "the executor itself re-checks the point and raises before any transport, so a planner oversight cannot slip a bad point through",
+    "production_psi_unchanged": true
+  },
+  "runner_records_per_column_per_h_per_replicate": [
+    "R_plus and R_minus full observable vectors at every step size",
+    "the difference quotients, which a self-test confirms follow exactly from the stored arrays",
+    "the seed, drawn as seed_base + 7919 r",
+    "forward_pairs_total, forward_per_evaluation and pmc_replay timings",
+    "an array_sha256 digest over the stored arrays, which a self-test recomputes",
+    "the pMC moment shape and digest where pMC applies"
+  ],
+  "failure_semantics": "the result artifact is written only after every column returns. A transport failure propagates and leaves no artifact, which a self-test verifies by injecting a failure on the fifth reflectance call and confirming the output path is untouched.",
+  "mocked_executor_selftests": {
+    "gate_closed_zero_calls": "invoking main() with --run while the gate is closed constructs no executor and makes zero reflectance calls",
+    "released_test_spec_enters_executor": "with a test copy of the spec whose citations are marked verified, the runner makes 6 x 3 x 2 x 4 = 144 reflectance calls across six columns and 3 pMC calls, one per replicate on the single supported column",
+    "pmc_restricted": "pmc_used is true exactly for log_f_melanin",
+    "raw_arrays_kept": "R_plus has shape (4, 120) per replicate and the digest recomputes",
+    "quotients_derivable": "the stored quotients equal (R_plus - R_minus) / 2h at zero tolerance",
+    "failure_writes_nothing": "a simulated transport failure propagates and the artifact is unchanged",
+    "executor_refuses_infeasible": "an out-of-bounds eta is refused by the executor before transport"
+  },
+  "nan_warning_fixed": "the dry run previously called column_convergence on an all-zero array purely to obtain the rule string, which produced an All-NaN RuntimeWarning. The rule is now a module constant, CONVERGENCE_RULE, and the dry run no longer invokes the convergence routine at all. Verified with RuntimeWarning promoted to an error.",
+  "result_artifact_not_produced": "results/nuisance_feasibility_gate.json does not exist",
+  "remaining_citation_block": {
+    "gate": "CLOSED",
+    "all_dimensions_pass_policy": true,
+    "blocking": "citation_gate.explicit_release_decision is null",
+    "also_required_before_the_gate_runs": "the real-executor preflight must pass"
+  },
+  "n_eta": 5,
+  "control_flow_fix": {
+    "problem": "selftest hard-asserted that the citation gate must be closed, so once the spec was released main --run would have called selftest and failed on its own success condition",
+    "fix": "self-tests are split into selftest_core, which is gate-state independent and is the only group --run calls, selftest_gate_policy, which tests the closed and released states separately, and selftest_end_to_end, which drives main --run itself",
+    "end_to_end_goes_through_main": "the previous mocked test called run_gate directly, which would not have caught this. The new one injects a released spec through a module hook, invokes main(), and asserts it passes through the factory and the runner and writes the artifact"
+  },
+  "spec_override_is_not_a_cli_flag": "the end-to-end test needs main() to see a released spec, but a --spec flag would have been a bypass: anyone could hand-write a released spec and point production at it. The override is a module-level hook with no command-line surface, and a self-test asserts --spec does not exist",
+  "real_ad_comparison": {
+    "traced_path_is_jnp_only": true,
+    "how": "refl_eta takes eta as a jnp array and builds the layer stack with jnp.diff, jnp.exp, at[].multiply and jnp.cumsum, and the scattering factor with jnp.exp and a jnp power. No np.asarray, no float() and no Python list conversion appears inside it",
+    "why_it_matters": "any of those would freeze eta into a constant and make jacfwd silently return zeros for the geometry columns, which is exactly the failure this gate exists to detect",
+    "jacobian": "jax.jacfwd over the five eta columns, one Jacobian per replicate serving every column",
+    "comparison": "paired against the h^2-extrapolated ensemble reference replicate by replicate, since they share photon keys inside a replicate",
+    "route_decision": "each column's verdict sets estimator_route_for_the_study, so the gate output really decides the study's estimator per column. ad_compared is true and the artifact carries estimator_routes_for_the_study"
+  },
+  "rounding_floor_bug_found_by_the_mocked_runner": {
+    "symptom": "the mocked AD is the exact derivative of the mock response, so the paired difference against the reference was pure rounding, yet the comparison returned a confident z of 39.8 and routed every column to the ensemble method",
+    "cause": "the paired mean and its standard error were both at the 1e-16 level and their ratio is arbitrary. Dividing one rounding number by another produced a verdict out of noise.",
+    "fix": "ROUNDING_RELATIVE_FLOOR of 1e-12 relative to the quantity's own magnitude. A component whose paired standard error does not clear that floor is decided on its mean instead of a ratio: negligible means exact agreement, anything larger means a genuine constant offset and an infinite z.",
+    "same_guard_as_item_1": "the radial pilot needed the same kind of floor for the same reason, and it would have mattered on real data too, where a column whose AD happens to be right would have been rejected",
+    "selftests_added": [
+      "a paired scatter at rounding level is not turned into a confident disagreement",
+      "a constant offset above the floor is still caught despite zero scatter"
+    ]
+  },
+  "pmc_removed_this_round": {
+    "pmc_used_anywhere": false,
+    "why": "with melanin gone, three eta columns move layer boundaries and two move scattering. The replay kernel accumulates per-layer pathlength and the escaping weight is w0 exp(-sum_j mua_j L_j), so its moments give absorption derivatives and nothing else: it supports neither geometry nor scattering derivatives.",
+    "no_success_phrasing": "no output says pMC was used; every column records pmc_used false with the reason",
+    "cost_has_no_pmc_term": true,
+    "still_right_for_psi": "the six psi columns are absorption columns and pMC does support them; that is item 1 and is unaffected"
+  },
+  "no_unimplemented_branches": "grep over the script finds no TODO, FIXME, NotImplemented, placeholder or unreachable marker. The only path that does not execute is the real transport inside build_executor, which is blocked by the gate rather than unwritten, and the mocked end-to-end test exercises the control flow around it.",
+  "nuisance_spec_unchanged_since": "82c792e",
+  "five_corrections": {
+    "1_convergence_is_a_hard_gate": {
+      "before": "a column could be reported as not converged and still receive an AD comparison, an estimator route and a place in a success artifact",
+      "after": "an unconverged column gets ad_comparison null, ad_compared false, estimator_route_for_the_study null and status unresolved, and main --run raises REFUSING to write a feasibility result with a nonzero exit and writes nothing",
+      "end_to_end_test": "a mock with a strong quartic term makes all five columns fail convergence, and the test asserts main --run refuses and leaves no artifact"
+    },
+    "2_paired_convergence_denominator": {
+      "before": "the truncation diagnostic divided by SE(e2)",
+      "after": "it divides by the paired standard error of e3 - e2",
+      "why": "the two fits share the same difference quotients, so their difference is far less noisy than either one and SE(e2) understates the truncation. This is the same mistake item 1 made with an unpaired denominator.",
+      "non_finite_and_unsupported": "a non-finite paired difference BLOCKS the comparison rather than being dropped, and a component whose reference magnitude is at or below 1e-12 of the column's largest is excluded by a pre-registered rule and counted. Neither is silently ignored."
+    },
+    "3_simultaneous_comparison": {
+      "before": "mean over standard error compared to a fixed threshold of 3, per component",
+      "after": "max-T over the column's components, calibrated by EXACT sign-flip randomization over all 2^n replicate sign patterns, at a pre-registered alpha of 0.05",
+      "why": "120 components on 6 replicates means 120 t statistics on 5 degrees of freedom, which exceed 3 somewhere with probability near one. A self-test shows pure noise putting 3 of 120 components past t = 3 while max-T returns p = 0.59 and does not reject.",
+      "resolution_floor": "with 6 replicates the null has 64 points, so no p below 1/64 = 0.0156 is attainable, and that floor is recorded with every verdict",
+      "two_cases_the_randomization_test_cannot_handle": {
+        "rounding_level": "a component whose paired standard error is at rounding level cannot enter the test, because sign-flipping a zero-variance difference leaves it unchanged. It is decided on its mean: negligible is exact agreement.",
+        "deterministic_offset": "zero scatter with a mean above the rounding floor is a disagreement no randomization null can explain, so it is reported directly rather than laundered through a p value. Sign-flipping alone would have returned p = 1 for it."
+      },
+      "symmetry_assumption": "sign-flip calibration assumes the paired differences are symmetric about zero under the null, which holds for a difference of two estimators sharing exchangeable replicate noise"
+    },
+    "4_spec_cleanup": {
+      "removed": "the field saying log_f_melanin stays in eta, which contradicted its removal",
+      "status_updated": "the top-level status now says the only thing holding the gate is the explicit release decision",
+      "not_started_updated": "the citation review, the phantom scattering decision, the melanin decision and the gate implementation moved to a completed block; not_started now lists only the 48-draw study, manuscript text and the gate transport",
+      "selftest": "six stale-claim patterns are searched for and rejected, including the melanin sentence, a theta of 6 + 6 = 12, a melanin entry in parameterization.eta, pMC claiming psi columns, the citation review listed as not started, and any dimension left unresolved"
+    },
+    "5_real_executor_preflight": {
+      "why": "the mocked self-tests exercise control flow and statistics against an analytic response and establish nothing about transport. Describing 44 of 44 mocked checks as verifying the real executor would have been wrong.",
+      "what_it_does": "compiles the traced eta path on the target hardware and checks that at eta = 0 the reflectance reproduces the production forward solver called DIRECTLY with the same keys, with nothing from this module in the path, so a reordered layer or a misapplied scale shows up. It also checks that the AD column norms are nonzero for the three geometry and two scattering columns, since a frozen eta would make jacfwd return exactly zero there.",
+      "cost": "2000 photons per wavelength, minutes rather than hours",
+      "gate_relationship": "it validates code rather than priors, so it does not require the citation gate, and it cannot write the gate artifact: --out is rejected for it",
+      "spec_records": "executor_verification_status says the mocked self-tests do NOT verify the real executor and that the preflight is required before the gate runs"
+    }
+  },
+  "mocked_selftests_do_not_verify_the_real_executor": "60 of 60 mocked checks verify control flow, statistics and artifact handling against an analytic response. They are not evidence about transport. That is what the preflight is for.",
+  "nuisance_spec_sha256": "ef7dd7a8efd4b77a390a0240472d8d4c91e3686a5f6289ea76f2208aed775e55",
+  "formal_run_62960056": {
+    "job": "62960056, FAILED exit 1:0, elapsed 09:00:50",
+    "preflight_dependency": "62960055, COMPLETED, afterok satisfied",
+    "outcome": "the gate refused to write a success artifact. No downstream study was launched.",
+    "selftests": "130/134 passed, 4 skipped, 0 failed",
+    "why_the_four_skips_recurred": "the job script runs --selftest BEFORE --dry-run, so the generated design artifacts do not exist yet when the design-content and whole-file withdrawn-claim checks run. An earlier note in this conversation said the dry run would come first and those checks would execute on the cluster; that was wrong. They run locally and the skips are counted and printed.",
+    "all_five_columns_blocked": {
+      "statement": "every column reported outcome 'blocked', which is NOT a measurement that the h^2 extrapolation truncates too much. 'blocked' means the degenerate-spread guard declined to issue a verdict. The gate measured nothing about convergence for these columns.",
+      "degenerate_spread_components_per_column": {
+        "log_d_epidermis": 26,
+        "log_d_papillary": 28,
+        "log_d_reticular": 28,
+        "log_mus_scale": 29,
+        "mus_slope": 58
+      }
+    },
+    "root_cause_is_mine": {
+      "defect": "two thresholds that are each defensible in isolation interact badly on a radially binned observable. DEGENERATE_SPREAD_FRACTION compares a component's absolute replicate standard deviation against 0.05 of the COLUMN MEDIAN standard deviation, which assumes the components share a scale. These columns span 7.5 to 10.0 decades of dynamic range, so the outermost radial bins have a genuinely tiny absolute spread because their signal is tiny, and the guard reads that as a collapsed sample. SUPPORT_RELATIVE_FLOOR of 1e-12 times the largest magnitude is far too permissive to remove them: it excluded 0 of 120 components for four of the five columns.",
+      "evidence": "every degenerate-spread component in all five columns sits below 1e-4 of the column maximum, and not one sits above 1e-2. The guard fires exclusively in the noise floor and never on a signal-carrying component.",
+      "introduced_in": "the fix for the Bonferroni collapse under a near-discrete law, which was calibrated on a homogeneous-scale simulation"
+    },
+    "a_second_and_independent_problem": {
+      "statement": "fixing the thresholds alone would not produce a pass. Restricted to the components carrying more than 1e-3 of the column maximum, the POINT ESTIMATE of the relative truncation |e3 - e2| / |reference| already exceeds the 5 percent margin for four of the five columns, and the simultaneous upper confidence bound is wider than the point estimate.",
+      "median_and_max_relative_truncation_on_that_stratum": {
+        "log_d_epidermis": {
+          "n": 18,
+          "median": 0.0266,
+          "max": 0.362
+        },
+        "log_d_papillary": {
+          "n": 25,
+          "median": 0.0653,
+          "max": 0.425
+        },
+        "log_d_reticular": {
+          "n": 57,
+          "median": 0.0241,
+          "max": 0.252
+        },
+        "log_mus_scale": {
+          "n": 25,
+          "median": 0.0115,
+          "max": 0.0321
+        },
+        "mus_slope": {
+          "n": 15,
+          "median": 0.0432,
+          "max": 0.292
+        }
+      },
+      "reading": "the step grid (0.4, 0.3, 0.2, 0.1) is in the wrong regime for the h^2 extrapolation. The three thickness columns are the worst, which is what the design predicted from the moving-boundary term the pathwise derivative drops. log_mus_scale is the only column whose top-stratum point estimate stays under the margin.",
+      "status": "POST HOC and DESCRIPTIVE. Computed from the stored data after seeing the gate fail. It is not a verdict, no threshold was tuned to produce it, and it must not be reported as a convergence result."
+    },
+    "the_transport_is_not_lost": "results/nuisance_feasibility_gate_BLOCKED.json preserves every per-replicate difference quotient, every R_plus and R_minus, and every AD Jacobian. The convergence and equivalence analysis can be redone entirely offline with no new transport. Re-analysing this same data under changed thresholds is a post-hoc adjustment and must be pre-registered as such before it is applied, not decided after seeing which choice passes.",
+    "measured_costs": {
+      "forward_per_evaluation_s": 128.9,
+      "design_estimate_s": 126.6,
+      "ad_five_column_jacfwd_per_replicate_s": 244.5,
+      "design_estimate_ad_s": 640.0,
+      "note": "the AD jacobian is 2.6 times cheaper than the design assumed; the forward cost matched within 2 percent"
+    },
+    "estimator_routes_selected": "none. Every column is None, because no column was adjudicated.",
+    "support_mask_counts": {
+      "log_d_epidermis": "120/120 supported",
+      "log_d_papillary": "120/120",
+      "log_d_reticular": "120/120",
+      "log_mus_scale": "120/120",
+      "mus_slope": "90/120 supported, 30 excluded"
+    },
+    "no_downstream_classification_was_claimed": true,
+    "production_artifacts_unchanged": true,
+    "downstream_study_not_launched": true
+  },
+  "correction_to_ee6cf5d": {
+    "1_the_withdrawn_rule_still_controlled_the_outcome": {
+      "defect": "simultaneous_equivalence_test still returned early on degenerate.any() with outcome 'unresolved'. Setting blocked to False and calling the count a diagnostic did not withdraw the rule's behavioural effect: it still prevented equivalence.",
+      "fix": "the conditional return is removed. The count is computed for reporting and no branch reads it: it does not affect support, the critical value, the bounds or the outcome.",
+      "test_replaced": "the old test asserted DEGENERATE_SPREAD_IS_A_BLOCKING_CRITERION is False, which a rule still in control would satisfy. It is replaced by a BEHAVIOURAL scale-invariance test: 90 single-component rescalings by 1e-9, 1e-6 and 1e3 over 30 datasets must leave the outcome and both bounds unchanged. The implementation passes it only after the conditional return was removed.",
+      "suspension_now_data_independent": "require_registered_interval_criterion reads nominal_derivative_feasibility_gate.interval_criterion_registration and refuses BEFORE any data is read or any executor is built. A data-triggered suspension is indistinguishable from a verdict, which is the thing being withdrawn.",
+      "documentation": "every remaining claim that the guard blocks the near-discrete mechanism is corrected. The 0.0283 coverage shortfall is now stated as UNGUARDED."
+    },
+    "2_the_diagnostic_now_reproduces_the_gate_exactly": {
+      "denominator": "was |mean(e2)|; is now max(|mean(e2)|, |mean(e3)|), the gate's own mag",
+      "multiplicity": "was one critical value over all 120 reused after each floor; is now recomputed over the k components each floor retains",
+      "lower_bound": "added, and the three-way outcome now uses the gate's rule",
+      "verification": "a regression runs the gate's simultaneous_equivalence_test on the same stored arrays and requires the bounds, the critical value and the outcome to match. Maximum bound difference 0.00e+00 over five columns.",
+      "corrected_numbers_at_the_10_percent_floor": {
+        "log_d_epidermis": {
+          "upper": 0.1363,
+          "outcome": "unresolved"
+        },
+        "log_d_papillary": {
+          "upper": 0.2004,
+          "outcome": "unresolved"
+        },
+        "log_d_reticular": {
+          "upper": 0.2469,
+          "outcome": "unresolved"
+        },
+        "log_mus_scale": {
+          "upper": 0.0256,
+          "outcome": "equivalent under this post-hoc floor"
+        },
+        "mus_slope": {
+          "upper": 0.1544,
+          "outcome": "unresolved"
+        }
+      },
+      "what_i_had_reported": "five of five unresolved at the 10 percent floor. That was wrong, and both errors above caused it.",
+      "this_does_not_authorize_the_floor": "the 10 percent floor retains 4 to 13 of 120 components and is about twice as aggressive as MIN_COUNT=5, which already moves the deep bound 26.6 percent."
+    },
+    "3_replicates_cannot_fix_a_bias": {
+      "statement": "at the 1 percent diagnostic floor four of five columns have NO solvable replicate count: the point discrepancy already reaches 33.94, 25.00, 20.11 and 13.05 percent against a 5 percent margin. Replicates shrink s/sqrt(n) and cannot shrink |mean|, which is finite-difference truncation bias. More replicates would establish INEQUIVALENCE for those columns.",
+      "only_solvable_column_at_that_floor": {
+        "log_mus_scale": {
+          "point": 0.0311,
+          "n_lower_bound": 153
+        }
+      },
+      "every_number_states": [
+        "the formula",
+        "the retained component set",
+        "the step grid assumed",
+        "that no power is claimed",
+        "the multiplicity rule",
+        "that the projected point discrepancy must already be inside the margin",
+        "that it is a LOWER bound, since the sign-flip component cannot be projected without the future data"
+      ],
+      "confirmatory_runs_need_independent_transport_replicates": true
+    },
+    "4_a_defect_in_my_own_tests": {
+      "what_happened": "the end-to-end refusal test wrote to the real BLOCKED_ARTIFACT path and deleted nine hours of transport. chmod 444 does not prevent removal, which depends on directory permissions.",
+      "fix": "the refusal path is redirected to a temporary directory before any test runs, and two checks assert the temporary path differs from the real one and that the real evidence still exists afterwards. Restored from git and the cluster copy; sha256 unchanged."
+    },
+    "preserved": [
+      "the immutable raw artifact and its sha256",
+      "the corrected mus_slope count of 28",
+      "the corrected release-status text and the unchanged release scope",
+      "no estimator route and no downstream classification",
+      "the production-mask conflict analysis",
+      "no GPU submission"
+    ],
+    "selftests": "141/141, 57/57 and 26/26, all clean under -W error",
+    "nothing_frozen": "no replacement criterion is registered and no run is proposed for submission"
+  }
+}

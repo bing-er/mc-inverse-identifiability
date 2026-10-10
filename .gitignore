@@ -1,0 +1,26 @@
+.DS_Store
+.idea/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+docs/
+reproduced/
+tmp/
+logs/
+_to_delete/
+
+# LaTeX build products not intentionally included in the release.
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.blg
+*.out
+*.xdv
+*.synctex.gz
+
+# Local diagnostics are not evidence.
+data/derived/**/_smoke/
+results/*_smoke.json
+results/*preview*.json

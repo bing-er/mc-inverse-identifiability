@@ -1,0 +1,120 @@
+{
+  "schema_version": "candidate3-grid-pilot-v1",
+  "status": "FROZEN NON-CONFIRMATORY GRID-IDENTIFICATION PILOT",
+  "purpose": "identify a four-step finite-difference grid without producing a Candidate 3 verdict",
+  "frozen": true,
+  "freeze_hash": "7f1407bbfcf92e1a375dcb69ced276a3d53b6990984214f5dc559eb02ad5827a",
+  "run_design": {
+    "n_photons_per_wavelength": 200000,
+    "n_replicates": 6,
+    "wavelengths_nm": [540.0, 580.0, 633.0, 800.0],
+    "columns": [
+      "log_d_epidermis",
+      "log_d_papillary",
+      "log_d_reticular",
+      "log_mus_scale",
+      "mus_slope"
+    ],
+    "h_candidates": [0.5, 0.4, 0.3, 0.2, 0.1, 0.07],
+    "seed_namespace": "candidate3.phase3b2.grid-pilot.v1",
+    "replicate_seeds": [
+      3200000000,
+      3200104729,
+      3200209458,
+      3200314187,
+      3200418916,
+      3200523645
+    ],
+    "seed_stride": 104729,
+    "common_random_numbers": "the identical key array, in identical order, is reused across every h and both arms within one replicate",
+    "stopping_rule": "fixed design; no interim looks, no early success, no post-hoc replicate addition"
+  },
+  "execution_plan": {
+    "partition": "one frozen replicate per Slurm array task",
+    "array_indices": [0, 1, 2, 3, 4, 5],
+    "replicates_per_task": 1,
+    "assembly": "only after all six complete shards pass exact hash, seed, index and schema checks",
+    "partial_shards_are_not_analyzable": true
+  },
+  "selection_rule": {
+    "subset_size": 4,
+    "must_include_h_at_least": 0.3,
+    "must_include_h_at_most": 0.1,
+    "fit": "D(h) = d + a h^2 + b h^4",
+    "objective": "95th percentile absolute multinomial-whitened held-out prediction error across replicates, held-out h values and coordinates",
+    "common_grid_ratio_budget": 1.25,
+    "tie_absolute_tolerance": 1e-12,
+    "tie_break_order": [
+      "smaller combined range coefficient",
+      "smaller whitened intercept variance",
+      "lexicographically larger h subset"
+    ]
+  },
+  "measurement_model": {
+    "likelihood": "multinomial_fixed_launch",
+    "support": "literal_all_120",
+    "observable_order": "wavelength-major: wavelength_index * 30 + bin_index",
+    "production_reflectance": "data/derived/production_pooled.npz:R",
+    "baseline_spec": "spec/baseline_spec.json"
+  },
+  "required_outputs": [
+    "sum_plus (raw weight sum; reflectance is recovered using fixed N and annulus area)",
+    "sum_minus (raw weight sum; reflectance is recovered using fixed N and annulus area)",
+    "sum_Y",
+    "sum_Y2",
+    "max_abs_Y",
+    "key_fingerprint",
+    "parameter_digest",
+    "wall_seconds",
+    "environment",
+    "range_pairing_shape_finite_checks"
+  ],
+  "preflight": {
+    "seed": 3100000000,
+    "seed_namespace": "candidate3.phase3b2.grid-preflight.v1",
+    "probes": [
+      {"column": "log_d_papillary", "wavelength_index": 0},
+      {"column": "mus_slope", "wavelength_index": 0}
+    ],
+    "required_gpu_name_contains": "H100",
+    "required_device_kind_contains": "MIG 1g.10gb",
+    "visible_gpu_count": 1,
+    "nvidia_smi_memory_scope": "informational physical-card capacity; not the MIG allocation",
+    "projection_overhead_seconds_per_shard": 300,
+    "artifact": "results/candidate3_grid_pilot_preflight.json",
+    "trials_are_not_pilot_trials": true
+  },
+  "resource_cap": {
+    "gpu_per_task": "one 10 GB H100 MIG-equivalent slice",
+    "maximum_concurrent_tasks": 6,
+    "host_memory_gb_per_task": 24,
+    "shard_wall_hours": 4,
+    "aggregate_gpu_hours": 24
+  },
+  "forbidden": [
+    "Candidate 3 equivalent or inequivalent verdict",
+    "coverage or type-I claim",
+    "run_gate wiring",
+    "reuse of pilot trials in the frozen validation suite",
+    "changing h, photons, replicates, seeds, objective, ratio budget or stopping rule after any transport output is observed"
+  ],
+  "normative_input_hashes": {
+    "docs/planning/CANDIDATE3_GRID_PILOT_PLAN.md": "acc34eb5fa761c645180000843b0965a3a8fa56e67af0aff8c778cc24af1051d",
+    "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+    "jaxpad:scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+    "jaxpad:src/pad/config_v4_633nm.py": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3",
+    "jaxpad:src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+    "jaxpad:src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+    "scripts/candidate3_executor.py": "df3596dfef9267ec9d1e8a5dc8be2137528ec65317f417f79dd9eb32bbf8a431",
+    "scripts/candidate3_grid_analysis.py": "93f12e0913cd1782742dc3cea3217cf7d4c6ace2555b2011e9ec7af410922ba7",
+    "scripts/candidate3_grid_pilot.py": "1f8c1cabec36265f45ea5e0406ee96191e03e12eb845d0168a1fa39eee7e64b8",
+    "scripts/candidate3_grid_pilot_audit.py": "984f5a77d62d5710aa6763d3cc12b35695f013a32d825a4102b71a04c9e086a5",
+    "scripts/candidate3_grid_pilot_fir.sbatch": "490f4008ea2a3647e32b37d7f38fae7a332377e5a8f73a25406538cd7ccd62ae",
+    "scripts/candidate3_grid_preflight.py": "8df92151474b9fb11b9c976bbd9e95bd90f46098cf8c375d0cdb008b37238084",
+    "scripts/candidate3_grid_preflight_fir.sbatch": "548fb2e7ff0bebe289a2a802993a624c8c13c535684a3abd9c4315baeb0fbdf0",
+    "scripts/nuisance_feasibility_gate.py": "3501dce0744b124b4f847a4339677f7ee8bd16b3ee133d1817fac1b662c27986",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "spec/nuisance_spec.json": "75d6589066f98fbcb9822f650238df459b6832a19787bf0754e9151a9f3ec911",
+    "src/augmented.py": "f5807ccac5211dc492fbe41896ba18b3d94bacab1c157764636e0946a146b8c6"
+  }
+}

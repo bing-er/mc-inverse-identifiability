@@ -1,0 +1,103 @@
+{
+  "analysis": "MERGE_CHECKS item 1, independent Jacobian validation: design freeze and pilot sizing",
+  "date": "2026-10-01",
+  "transport_rerun": false,
+  "status": "design frozen, self-tests pass, pilot NOT started; awaiting design review",
+  "inputs": {
+    "validation_spec": "spec/validation_spec.json",
+    "validation_spec_sha256": "457798bedc078ce7527dfff4543512925a98f92d1eef5ccd6bdf101a57d51674",
+    "baseline_spec": "spec/baseline_spec.json",
+    "baseline_spec_sha256": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "near_null_direction_from": "results/production_crb.json",
+    "production_crb_sha256": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+    "spectrum_cross_reference": "results/unify_spectrum.json",
+    "unify_spectrum_sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1",
+    "replay_equivalence": "results/replay_equivalence.json",
+    "replay_equivalence_sha256": "a294e5be898cea76aac15a257016c15b0c70d8cd37e532ff31eb0ea1b692cc0d"
+  },
+  "outputs": {
+    "results/jacobian_validation_design.json": "32e12d3c9538cf1aef3ac5d714b01f8915ea2496b8a56a7c29e66779f779a7e7"
+  },
+  "code": {
+    "scripts/jacobian_validation.py": "c27a4be9ed410c1f4f41d8fd5471a801f3ab4c354faaafa8db576a76c4be3f88",
+    "src/unify.py": "d5feeb57f429bcf8486b5f7f3f2ffe9261f792c8cdb6ad223e42850537b7ffca",
+    "src/replay_kernel.py": "0860adda918c29dd33287664990091999cff654ba875cca7d86d3db31db29d07",
+    "scripts/replay_equivalence.py": "da01e89c607f3723bf99007a554203491add6bcaac793a3c30e0b1abd002a113",
+    "scripts/write_replay_provenance.py": "e4480d9028fec93ba36fcbf6ca5cc3836a9ce3469977495f70a71b3daaa1889c",
+    "scripts/replay_gate_fir.sbatch": "003aaa2c1f85070a7b017cdf13598cebdfce03c205426e54b0f52a02834d95ad",
+    "scripts/pilot_fir.sbatch": "9f4587c615aee8b3ea7a77de5bb77e3dfb49ba3dd8c976b0d29329c0fde4c318"
+  },
+  "method_provenance": {
+    "method_reused_from": "mc-oximetry-equity/scripts/p5_ensemble_derivative.py",
+    "what_is_reused": "the independent-stream ensemble central difference with h^2 extrapolation, and the rule that verdicts come from replicate standard error rather than a relative-percent cutoff",
+    "what_is_not_reused": [
+      "any numerical result, step size, photon budget, replicate count or draw from that study",
+      "its step-size selection code, which guards only the lower bound of a parameter",
+      "its conclusions, measured on a different column at a different operating point"
+    ],
+    "step_size_code_rewritten_because": "the P5 rule filters steps only on psi - h > 0. At this operating point StO2_U is 0.95 against an upper bound of 1.0, so a magnitude-only rule gives psi + h = 1.064 and evaluates a saturation above unity. The rule here applies an explicit bound for every parameter and checks both signs of every step before transport."
+  },
+  "design_decisions_recorded": {
+    "two_term_h2_extrapolation_is_primary": true,
+    "three_term_fit_is_a_truncation_diagnostic_only": true,
+    "acceptance_based_on_replicate_standard_error": true,
+    "no_relative_percent_cutoff": true,
+    "h_is_never_driven_toward_zero": "that limit degenerates to the pathwise derivative under common random numbers, which is the thing being tested",
+    "common_random_numbers_within_a_replicate": true,
+    "independent_seeds_across_replicates": true,
+    "total_escape_is_not_sufficient_on_its_own": "the final validation adds predefined radial aggregates, a covariance-aware comparison of the full 120-component radial vector, and the directional derivative along the production near-null direction",
+    "paired_replicate_inference": "each comparison uses the replicate standard error of its OWN paired difference: z_AD from AD_r - reference_r, z_pMC from pMC_r - reference_r, separation_z from AD_r - pMC_r. SE(reference) is reported as a descriptive scale only and is never a comparison denominator.",
+    "verdicts_reported_separately": "ad_vs_reference, pmc_vs_reference and ad_vs_pmc are three separate verdicts. A preference for an estimator requires ad_vs_pmc resolved AND the paired differences against the reference to support it.",
+    "no_claim_of_validation": "a comparison that detects no difference is reported as unresolved or consistent within current resolution. Failing to resolve a difference at a finite budget is not evidence that none exists.",
+    "full_vector_statistic": "PC-standardized paired-mean discrepancy on the paired difference vectors, retaining k = min(n_replicates - 2, 8) principal components of the paired scatter. Deliberately not called a chi-square and given no p-value, because the covariance comes from the same small set of replicates as the mean.",
+    "near_null_direction_coordinates": "the right singular vectors of J_w = C^{-1/2} J_psi D live in the scaled coordinate z, where psi = D z, so the psi-space direction is the pushforward D v_z. The field previously named near_null_direction_psi_from_svd held v_z and was mislabelled; it is now near_null_direction_z_from_svd, with near_null_tangent_psi_per_unit_z alongside it. The tangent is stored unnormalized so a unit step along it is a unit displacement in z; a unit-norm copy is kept for display only. Two checks are recorded per branch: J_psi @ (D v_z) equals (J_psi D) @ v_z, and the whitened response along the direction equals the smallest singular value."
+  },
+  "selftest_findings": {
+    "checks": 42,
+    "passed": 42,
+    "coordinate_error_caught_and_fixed": "the near-null direction was being read from the SVD of J_w and used directly as a psi-space direction. The right singular vectors live in z, so the correct direction is the pushforward D v_z. Using v_z reweighted the direction by D and inflated the f_D component by a factor of 53.6 relative to StO2_D, which made f_D falsely appear to cap the step. With the pushforward, StO2_D caps it and the near-null sweep moves deep StO2 by 0.078, matching the StO2_D column.",
+    "inference_error_caught_and_fixed": "all three comparisons used SE(reference) as the denominator, which discards the pairing that shared random numbers create. On synthetic data with large shared noise and a real AD-pMC offset, the reference-only denominator gives z = 1.13 and would report unresolved, while the paired denominator gives z = 309.4 and resolves it.",
+    "earlier_design_error_caught_and_fixed": "the first seed base of 71000 collided with production pool seed 43000 + 1000 * 28; the base is now 910000 with stride 10007",
+    "earlier_reporting_error_caught_and_fixed": "the dry-run margin initially minimised over all six components, so it reported the bound distance of a component the step never moves",
+    "threefry_split_prefix_finding": "the first negative control for the equivalence gate was a three-way PRNG split discarding one output. The gate reported zero mismatches, because JAX's threefry split is a prefix and split(k, 3)[:2] is bitwise equal to split(k, 2). That class of change does not perturb the stream and is not a usable control; the property is verified in the gate's own output and the rejected candidate is recorded there."
+  },
+  "open_blocking_item": {
+    "perturbation_monte_carlo": "CLEARED. The replay kernel is vendored at src/replay_kernel.py and passed photon-level equivalence against this production kernel: 20 of 20 cases over 80000 photon comparisons, 5 seeds and all four wavelengths, detector bin and escaping weight bitwise identical, zero escaped-flag mismatches, and the pathlength identity w = w0 exp(-sum_j mua_j L_j) holding to 1.35e-14.",
+    "gate_can_fail": "a negative control that swaps the two halves of the free-path key split is rejected by the same criteria, producing 296 detector-bin and 122 escaped-flag mismatches over 400 photons",
+    "availability_is_read_from_the_gate": "results/replay_equivalence.json, requiring both all_passed and negative_control_rejected; the presence of a kernel file is not sufficient",
+    "consequence": "the pilot may now run AD and pMC together against the ensemble reference on the same replicates",
+    "backend_caveat": "the CPU gate does not license a GPU pilot. Bitwise agreement under one XLA backend does not carry over to another, so the gate is re-run on the GPU and pMC availability is read from the artifact taken on the backend the process is actually using."
+  },
+  "cost_estimate": {
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s",
+    "status": "ESTIMATE; the pilot measures the per-evaluation cost directly and replaces this",
+    "replicates": 6,
+    "photons_per_wavelength": 200000,
+    "pilot_ad_only_runnable_now": {
+      "forward_equivalents": 120.0,
+      "estimated_hours": 1.77
+    },
+    "pilot_future_ad_plus_pmc": {
+      "forward_equivalents": 138.0,
+      "estimated_hours": 2.04
+    },
+    "full_seven_targets_ad_only": {
+      "forward_equivalents": 420.0,
+      "estimated_hours": 6.2
+    },
+    "full_seven_targets_future_ad_plus_pmc": {
+      "forward_equivalents": 483.0,
+      "estimated_hours": 7.13
+    },
+    "caveat": "the AD per-evaluation factor of 2.0 forward equivalents is a conservative placeholder and is among the things the pilot measures",
+    "pmc_now_available": true,
+    "which_plan_is_runnable": "AD plus pMC, 138 forward equivalents for the pilot",
+    "pmc_factor_still_unmeasured_on_gpu": "replay_moments is one additional vmapped pass over the same photons plus the pathlength accumulation, so the 1.5 forward-equivalent placeholder is structurally plausible but has not been measured on the production GPU. The pilot measures it.",
+    "gate_cost_observed": "the gate itself took 31 minutes of wall clock on CPU for 4000 photons per wavelength over 5 seeds and 4 wavelengths with four vmapped passes each; this is a CPU figure and is not a basis for the GPU pilot estimate"
+  },
+  "not_started": [
+    "the pilot transport run",
+    "the full six-column run",
+    "any manuscript text"
+  ]
+}

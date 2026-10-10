@@ -1,0 +1,76 @@
+{
+  "analysis": "three comparable spectra from one pooled Jacobian",
+  "date": "2026-09-30",
+  "transport_rerun": false,
+  "note": "no transport was run for this analysis; it consumes the frozen 32-seed pool only",
+  "input": {
+    "artifact": "data/derived/production_pooled.npz",
+    "sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+    "n_seeds": 32,
+    "pooled_transport_photons_per_wavelength": 6400000,
+    "max_steps": 4000,
+    "ptxas_version": "12.9.86",
+    "jacobian_coordinates": "psi",
+    "reparameterize_applied": false,
+    "reparameterize_rationale": "the pooled artifact already stores J in psi coordinates; pushing it through T again would apply the reparameterization twice"
+  },
+  "output": {
+    "artifact": "results/unify_spectrum.json",
+    "sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1"
+  },
+  "code": {
+    "scripts/unify_spectrum.py": "a85d7fc6b9992066547813e891f5da2465649fc85dae8c1d26a02af176fd5a6f",
+    "src/unify.py": "d5feeb57f429bcf8486b5f7f3f2ffe9261f792c8cdb6ad223e42850537b7ffca",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5"
+  },
+  "shared_across_all_three_branches": {
+    "jacobian": "one pooled J_psi, 120 x 6",
+    "grid": "30 radial bins to 1.5 cm, 4 wavelengths, 120 observables",
+    "coordinates": "psi, physical blood volume fraction",
+    "column_scale_D": [
+      1.0,
+      0.05601390243902439,
+      1.0,
+      0.018671304347826087,
+      0.49,
+      0.45
+    ],
+    "only_difference": "the likelihood, and nothing else"
+  },
+  "likelihood_budget": {
+    "n_measurement_photons_per_wavelength": 100000,
+    "source": "spec/baseline_spec.json profiles.production",
+    "note": "the measurement budget enters the likelihood; the 6.4e6 pooled transport photons set the Monte Carlo precision of R and J and never enter it"
+  },
+  "branches": {
+    "raw": {
+      "form": "J_w = J D",
+      "condition_number_Jw": 6529.6,
+      "condition_number_I": 42635000.0
+    },
+    "diagonal_poisson": {
+      "form": "J_w = diag(sqrt(N A / R)) J D",
+      "condition_number_Jw": 200.79,
+      "condition_number_I": 40318.0,
+      "direct_fisher_normalized_max_diff": 5.831e-16
+    },
+    "multinomial_fixed_launch": {
+      "form": "J_w = sqrt(N) M^{-1/2} A J D, blockwise per wavelength, M = diag(p) - outer(p, p), p = A R",
+      "condition_number_Jw": 227.97,
+      "condition_number_I": 51969.0,
+      "direct_fisher_normalized_max_diff": 8.741e-15
+    }
+  },
+  "independent_direct_fisher_forms": {
+    "poisson": "I = N D J^T diag(A / R) J D",
+    "multinomial": "I = N D J^T A pinv(M) A J D, summed over wavelength blocks",
+    "purpose": "built from the definition rather than from the same J_w, so agreement is evidence and not an algebraic tautology"
+  },
+  "checks": {
+    "spectral_identities_all_branches": "PASS",
+    "direct_fisher_both_likelihood_branches": "PASS",
+    "non_finite_values_in_output": 0,
+    "near_null_read_from": "last right singular vector of J_w, not eigh(I)"
+  },
+  "near_null_coordinates": "the right singular vectors of J_w = C^{-1/2} J_psi D live in the scaled coordinate z, where psi = D z, so the psi-space direction is the pushforward D v_z. The field previously named near_null_direction_psi_from_svd held v_z and was mislabelled; it is now near_null_direction_z_from_svd, with near_null_tangent_psi_per_unit_z alongside it. The tangent is stored unnormalized so a unit step along it is a unit displacement in z; a unit-norm copy is kept for display only. Two checks are recorded per branch: J_psi @ (D v_z) equals (J_psi D) @ v_z, and the whitened response along the direction equals the smallest singular value."
+}

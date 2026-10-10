@@ -1,0 +1,33 @@
+{
+  "claim_tested": "that the stress search establishes invariance over the admissible set",
+  "verdict": "it does not",
+  "runs_transport": false,
+  "construction": "the search applies one direction to all eta columns; this assigns a DIFFERENT psi left-singular direction to each column, which is admissible and is not in the search set",
+  "margin": 0.05,
+  "seed": 3,
+  "baseline": 0.07949880115600956,
+  "searched_max": 0.08043994268880739,
+  "admissible_untested": 0.0810568438263903,
+  "threshold": 0.08074839325759885,
+  "untested_direction": {
+    "column_direction_indices": [
+      3,
+      4,
+      5,
+      0,
+      1
+    ],
+    "sign": -1.0
+  },
+  "search_any_flip_found": false,
+  "search_status": "unresolved",
+  "is_a_certification": false,
+  "what_the_old_implementation_would_have_returned": "certified true",
+  "user_reported_counterexample": {
+    "baseline": 0.3393281036,
+    "searched_max": 0.3772730688,
+    "admissible_untested": 0.397995551,
+    "threshold": 0.3876343099,
+    "note": "independently constructed during review; reproduced here in structure on the frozen production psi block"
+  }
+}

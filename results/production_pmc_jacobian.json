@@ -1,0 +1,687 @@
+{
+ "status": "SAME-STREAM SPECTRUM ROBUSTNESS CHECK; NOT ADJUDICATION",
+ "interpretation": "Both Jacobians are plug-in estimates from the same 32 frozen production streams. Agreement of the spectrum functionals shows the production identifiability conclusion is insensitive to the choice between the pathwise-AD and replay-pMC derivative constructions; it does not establish that either construction is correct, and the unresolved independent-estimator adjudication stands.",
+ "transport_rerun": false,
+ "inputs": {
+  "pooled_artifact": "data/derived/production_pooled.npz",
+  "pooled_sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+  "production_crb": "results/production_crb.json",
+  "production_crb_sha256": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+  "baseline_spec_sha256": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+  "pmc_stream_files": [
+   {
+    "seed": 43000,
+    "sha256": "9e0fef420cb6ab872400765283bae268c723c336c7defb96f19198b45c6aa207",
+    "bytes": 11914
+   },
+   {
+    "seed": 44000,
+    "sha256": "861fc67285f998b0b3686c4bae696235edb6375763484c064d3c2809d7437baf",
+    "bytes": 11853
+   },
+   {
+    "seed": 45000,
+    "sha256": "92bcd2300b8e98fe694a25df2b6e6a8484b7af56323fbd50366db35c9aa3f957",
+    "bytes": 11903
+   },
+   {
+    "seed": 46000,
+    "sha256": "73498b95df5cefff23b744bb7b9250aa64e51d03d8adfd59d43287ea25523442",
+    "bytes": 11952
+   },
+   {
+    "seed": 47000,
+    "sha256": "af758631de2f96752d663a1415d138106a282f7ed1d06a10d50967dbb81cfb4d",
+    "bytes": 11913
+   },
+   {
+    "seed": 48000,
+    "sha256": "66c85ecdbcf858a780a14964e03a54f1bcf8484f16b802aa7ad56ca8a06ec683",
+    "bytes": 11921
+   },
+   {
+    "seed": 49000,
+    "sha256": "111312ed3bb13e1993dfd90cc01eb4cf6ee6b4076d3a96824f32854626054735",
+    "bytes": 11953
+   },
+   {
+    "seed": 50000,
+    "sha256": "ed2e4ccd1272d5694975a6776bcd8942b1a0f711b5bb94e155b9854de7239036",
+    "bytes": 11851
+   },
+   {
+    "seed": 51000,
+    "sha256": "0eb82391c375d19c3ab1f651c10e9528941733bb8d4292803bcf84e3d8d781b7",
+    "bytes": 11954
+   },
+   {
+    "seed": 52000,
+    "sha256": "cb6fd7dd1b3938518701ede5822941f1da403dcc3c45be27986ccc5c4326d72b",
+    "bytes": 11804
+   },
+   {
+    "seed": 53000,
+    "sha256": "df6e067991e3482109901f7c06d56cfc0b501798221a74131b14c76b4e65e85d",
+    "bytes": 11949
+   },
+   {
+    "seed": 54000,
+    "sha256": "394c6dd2307dfe4b8a615023519c941e4cab2073c23100a3d16b184a1d9d811d",
+    "bytes": 11917
+   },
+   {
+    "seed": 55000,
+    "sha256": "9c2d6607ff113cba2c484ce801778e7af2570dc559bd246e3ca8c5f8b57db70b",
+    "bytes": 11855
+   },
+   {
+    "seed": 56000,
+    "sha256": "4117720d750e72521850eeb18290384e18d6b788847888e364210dc8e71bc332",
+    "bytes": 11911
+   },
+   {
+    "seed": 57000,
+    "sha256": "b7ec83d0da70099d864ef5671f50280f2cd5ccfd18026f8f13fcef5bd589e8eb",
+    "bytes": 11914
+   },
+   {
+    "seed": 58000,
+    "sha256": "aeebe8b10042ad090577cefaf13c121492dd1a1452e62b4b2de9506db1741674",
+    "bytes": 11953
+   },
+   {
+    "seed": 59000,
+    "sha256": "f784a8cd67befa52d47d9ee48225ac1a05fda9aa9ed73487e1f4a58588823b3a",
+    "bytes": 11854
+   },
+   {
+    "seed": 60000,
+    "sha256": "41d4e8aea830bc3d3fe4df1dd9fdf4cc24be3f5f8b77e0979138560eb692b99e",
+    "bytes": 11858
+   },
+   {
+    "seed": 61000,
+    "sha256": "270de3e8897407d460970c35e6f6ac500cf379c32b7d4bd4261e058bb014011f",
+    "bytes": 11941
+   },
+   {
+    "seed": 62000,
+    "sha256": "2d2f58e4be5a3e7dbf70aa7192a17d925e1166da4cdf9866a4f51e49211387ce",
+    "bytes": 11918
+   },
+   {
+    "seed": 63000,
+    "sha256": "db9e711c65db9195f89902ebceacd90022cfb3bf75041e761227527ac21bd358",
+    "bytes": 11810
+   },
+   {
+    "seed": 64000,
+    "sha256": "06b39d72302927e87b7f1c2fded68c9523f3b8e0c1350058812eed63db824b9a",
+    "bytes": 11911
+   },
+   {
+    "seed": 65000,
+    "sha256": "7931b62dd9c3f0359f6c78b60d45a9ebef260c6952117d8422abc3aab5dbe8e6",
+    "bytes": 11856
+   },
+   {
+    "seed": 66000,
+    "sha256": "18197fdb484f5db30b64f6a38f896cc88a9754d7ac7f9711ba47e8dada03bea0",
+    "bytes": 11866
+   },
+   {
+    "seed": 67000,
+    "sha256": "1bf29b55b0e70955324fb253e101f0433158e7c41276ff38e05367b1f974d030",
+    "bytes": 11864
+   },
+   {
+    "seed": 68000,
+    "sha256": "e3bb7bf7e5a52b438cecc41c2d79d8ea5ad793b4d0d310328dbd54b75e149649",
+    "bytes": 11954
+   },
+   {
+    "seed": 69000,
+    "sha256": "321faa00dd89e8bc56846ad96c786fa192c21aa1fa8bd09371962a0df2cb2354",
+    "bytes": 11955
+   },
+   {
+    "seed": 70000,
+    "sha256": "fa7f99ba7366a426cc92440b44c38d8c27c249fa682db9e1e3b30bf117aafb29",
+    "bytes": 11915
+   },
+   {
+    "seed": 71000,
+    "sha256": "0690daec6bb48eecf24d4ac8b2ada59c3582033615986b497a403000d829f8ad",
+    "bytes": 11912
+   },
+   {
+    "seed": 72000,
+    "sha256": "3480a3c88048d51b8969c6c06c3d3943af2a8d4233e6da5861292152fddb775c",
+    "bytes": 11915
+   },
+   {
+    "seed": 73000,
+    "sha256": "9157abc9dd665862a616b73499f3ac01927fdd8f81c288024d5b711783244c53",
+    "bytes": 11920
+   },
+   {
+    "seed": 74000,
+    "sha256": "d0767746613a65e2baba47fdfaf9e61ff743ab42aadc219cb8c8b9322fd584d7",
+    "bytes": 11911
+   }
+  ]
+ },
+ "same_stream_evidence": {
+  "photon_level_gpu_gate": {
+   "max_rel_tolerance": 1e-12,
+   "gate_sha256": "2896966c58481561ca3c4ed04bb443910e145d6d2470399de6c03f467964e190",
+   "provenance_sha256": "6750158799888aa148d82887560660cd5d7131e9283e3a14dd0d9ef1018689f1",
+   "n_photon_comparisons": 80000,
+   "det_id_mismatches": 0,
+   "escaped_flag_mismatches": 0,
+   "weights_bitwise_identical": true
+  },
+  "stream_aggregate_consequences": [
+   {
+    "seed": 43000,
+    "passes": true,
+    "max_abs_diff": 1.6342482922482304e-13,
+    "max_rel_diff": 5.062722638823986e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 44000,
+    "passes": true,
+    "max_abs_diff": 1.4921397450962104e-13,
+    "max_rel_diff": 3.0983485082308885e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 45000,
+    "passes": true,
+    "max_abs_diff": 3.055333763768431e-13,
+    "max_rel_diff": 6.343479010874591e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 46000,
+    "passes": true,
+    "max_abs_diff": 4.192202140984591e-13,
+    "max_rel_diff": 8.690178559103403e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 47000,
+    "passes": true,
+    "max_abs_diff": 3.765876499528531e-13,
+    "max_rel_diff": 7.824968065351734e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 48000,
+    "passes": true,
+    "max_abs_diff": 1.2789769243681803e-13,
+    "max_rel_diff": 3.770910357370908e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 49000,
+    "passes": true,
+    "max_abs_diff": 3.836930773104541e-13,
+    "max_rel_diff": 7.92605565625007e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 50000,
+    "passes": true,
+    "max_abs_diff": 2.7000623958883807e-13,
+    "max_rel_diff": 6.357808445142103e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 51000,
+    "passes": true,
+    "max_abs_diff": 3.055333763768431e-13,
+    "max_rel_diff": 6.804515697433378e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 52000,
+    "passes": true,
+    "max_abs_diff": 6.394884621840902e-13,
+    "max_rel_diff": 1.3214970899915474e-14,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 53000,
+    "passes": true,
+    "max_abs_diff": 2.2737367544323206e-13,
+    "max_rel_diff": 4.808296879667369e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 54000,
+    "passes": true,
+    "max_abs_diff": 2.0605739337042905e-13,
+    "max_rel_diff": 5.092576764964548e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 55000,
+    "passes": true,
+    "max_abs_diff": 4.334310688136611e-13,
+    "max_rel_diff": 9.003623246839484e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 56000,
+    "passes": true,
+    "max_abs_diff": 1.9895196601282805e-13,
+    "max_rel_diff": 4.788429205617913e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 57000,
+    "passes": true,
+    "max_abs_diff": 2.7711166694643907e-13,
+    "max_rel_diff": 5.707758647274869e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 58000,
+    "passes": true,
+    "max_abs_diff": 4.192202140984591e-13,
+    "max_rel_diff": 9.376600852268335e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 59000,
+    "passes": true,
+    "max_abs_diff": 1.9184653865522705e-13,
+    "max_rel_diff": 4.613042884723722e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 60000,
+    "passes": true,
+    "max_abs_diff": 2.7000623958883807e-13,
+    "max_rel_diff": 6.02004303361811e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 61000,
+    "passes": true,
+    "max_abs_diff": 1.0658141036401503e-13,
+    "max_rel_diff": 5.205128657368579e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 62000,
+    "passes": true,
+    "max_abs_diff": 1.9895196601282805e-13,
+    "max_rel_diff": 4.402469246527008e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 63000,
+    "passes": true,
+    "max_abs_diff": 2.4158453015843406e-13,
+    "max_rel_diff": 5.8117104107928816e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 64000,
+    "passes": true,
+    "max_abs_diff": 2.4868995751603507e-13,
+    "max_rel_diff": 6.027626679765509e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 65000,
+    "passes": true,
+    "max_abs_diff": 7.815970093361102e-14,
+    "max_rel_diff": 4.649675554435038e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 66000,
+    "passes": true,
+    "max_abs_diff": 2.984279490192421e-13,
+    "max_rel_diff": 6.269828368802946e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 67000,
+    "passes": true,
+    "max_abs_diff": 2.4868995751603507e-13,
+    "max_rel_diff": 5.169482285030987e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 68000,
+    "passes": true,
+    "max_abs_diff": 1.4921397450962104e-13,
+    "max_rel_diff": 4.958171709950925e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 69000,
+    "passes": true,
+    "max_abs_diff": 3.623767952376511e-13,
+    "max_rel_diff": 8.041216005898154e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 70000,
+    "passes": true,
+    "max_abs_diff": 2.2026824808563106e-13,
+    "max_rel_diff": 4.899158269326859e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 71000,
+    "passes": true,
+    "max_abs_diff": 2.8421709430404007e-13,
+    "max_rel_diff": 6.293590659273156e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 72000,
+    "passes": true,
+    "max_abs_diff": 3.126388037344441e-13,
+    "max_rel_diff": 6.452049247061289e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 73000,
+    "passes": true,
+    "max_abs_diff": 1.8474111129762605e-13,
+    "max_rel_diff": 4.1934312799229225e-15,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   },
+   {
+    "seed": 74000,
+    "passes": true,
+    "max_abs_diff": 4.689582056016661e-13,
+    "max_rel_diff": 1.0454474577630547e-14,
+    "max_rel_tolerance": 1e-12,
+    "bitwise_identical": false
+   }
+  ],
+  "pooled_aggregate_consequence": {
+   "passes": true,
+   "max_abs_diff": 6.394884621840902e-14,
+   "max_rel_diff": 1.4236444337420142e-15,
+   "max_rel_tolerance": 1e-12,
+   "bitwise_identical": false
+  },
+  "note": "The frozen photon-level GPU gate establishes trajectory identity. Aggregate reflectance is a consequence and can differ at roundoff level when XLA reduces the production primal beside jacfwd rather than moments."
+ },
+ "branches": {
+  "multinomial_fixed_launch": {
+   "ad": {
+    "sqrt_crlb_psi": {
+     "StO2_U": 0.06672488477709707,
+     "f_U": 0.001088949076226428,
+     "StO2_D": 1.849294130374331,
+     "f_D": 0.014854885100113372,
+     "mua_DermR": 0.01966189761337211,
+     "mua_SubQ": 0.06383953503700525
+    },
+    "condition_number_Jw": 227.96711428251012,
+    "numerical_rank": 6,
+    "singular_values": [
+     121.9778431905003,
+     49.04420397627159,
+     18.205113890659437,
+     13.141307530339686,
+     1.3161624235331493,
+     0.5350677161239066
+    ],
+    "weakest_direction_scaled": [
+     0.012485980766073403,
+     -0.0016339418556149297,
+     -0.9876572040043712,
+     0.14396757039827385,
+     0.0018741602923105724,
+     -0.06036972828667002
+    ]
+   },
+   "pmc": {
+    "sqrt_crlb_psi": {
+     "StO2_U": 0.06654797930688892,
+     "f_U": 0.001083326706915841,
+     "StO2_D": 1.8374751320734202,
+     "f_D": 0.014701860696045855,
+     "mua_DermR": 0.01959547891646437,
+     "mua_SubQ": 0.0632914226146178
+    },
+    "condition_number_Jw": 227.6104031889523,
+    "numerical_rank": 6,
+    "singular_values": [
+     122.55735864204108,
+     49.241774179603595,
+     18.284543944037473,
+     13.182489715641914,
+     1.3313440300285846,
+     0.5384523594921067
+    ],
+    "weakest_direction_scaled": [
+     0.012512022474069857,
+     -0.001634690650810049,
+     -0.9875526089115949,
+     0.1447412657713144,
+     0.0018588273819737252,
+     -0.060225679370753585
+    ]
+   },
+   "comparison": {
+    "abs_cosine_weakest_directions": 0.9999996843957084,
+    "abs_StO2_D_coefficient_ad": 0.9876572040043712,
+    "abs_StO2_D_coefficient_pmc": 0.9875526089115949,
+    "sqrt_crlb_ratio_pmc_over_ad": {
+     "StO2_U": 0.9973487332230079,
+     "f_U": 0.9948368849991862,
+     "StO2_D": 0.9936089137434733,
+     "f_D": 0.9896987150667124,
+     "mua_DermR": 0.9966219589678582,
+     "mua_SubQ": 0.9914142165654914
+    }
+   }
+  },
+  "diagonal_poisson": {
+   "ad": {
+    "sqrt_crlb_psi": {
+     "StO2_U": 0.08271374279714307,
+     "f_U": 0.0012658949211028486,
+     "StO2_D": 1.873168894940175,
+     "f_D": 0.015142719365103714,
+     "mua_DermR": 0.02187593141821768,
+     "mua_SubQ": 0.06419991434873816
+    },
+    "condition_number_Jw": 200.7939696790525,
+    "numerical_rank": 6,
+    "singular_values": [
+     105.972815895479,
+     42.43059409772375,
+     16.73031630918164,
+     11.184866538537113,
+     1.2976636263067771,
+     0.5277689168896114
+    ],
+    "weakest_direction_scaled": [
+     0.012798774243890202,
+     -0.0014789106675174653,
+     -0.9865769393130349,
+     0.15130845020669867,
+     0.0010272302263399675,
+     -0.060038693447849276
+    ]
+   },
+   "pmc": {
+    "sqrt_crlb_psi": {
+     "StO2_U": 0.08247170043401242,
+     "f_U": 0.0012592920508361066,
+     "StO2_D": 1.8612632604083956,
+     "f_D": 0.014986536638497777,
+     "mua_DermR": 0.021798806433684984,
+     "mua_SubQ": 0.063646623950197
+    },
+    "condition_number_Jw": 200.52397971733825,
+    "numerical_rank": 6,
+    "singular_values": [
+     106.49616611372896,
+     42.604204586956904,
+     16.80497594840117,
+     11.220223234158928,
+     1.3127008483560691,
+     0.5310894301212634
+    ],
+    "weakest_direction_scaled": [
+     0.012820394999699012,
+     -0.0014785406319500938,
+     -0.9864770448283643,
+     0.15201698239554023,
+     0.0010072817380802734,
+     -0.05988584025629803
+    ]
+   },
+   "comparison": {
+    "abs_cosine_weakest_directions": 0.9999997318867975,
+    "abs_StO2_D_coefficient_ad": 0.9865769393130349,
+    "abs_StO2_D_coefficient_pmc": 0.9864770448283643,
+    "sqrt_crlb_ratio_pmc_over_ad": {
+     "StO2_U": 0.9970737346063004,
+     "f_U": 0.9947840297352725,
+     "StO2_D": 0.9936441211660416,
+     "f_D": 0.9896859525135321,
+     "mua_DermR": 0.996474436536747,
+     "mua_SubQ": 0.9913817579952576
+    }
+   }
+  },
+  "raw_geometric": {
+   "ad": {
+    "normalized_singular_values": [
+     1.0,
+     0.22756932422979054,
+     0.083241103460577,
+     0.0027011733606229944,
+     0.00029414455497261423,
+     0.00015314916833489262
+    ],
+    "weakest_direction_scaled": [
+     0.0010393477229013591,
+     -0.0002152183427954153,
+     -0.9815561577951589,
+     0.14721339565348351,
+     0.0007537801052194608,
+     -0.12195913449801446
+    ]
+   },
+   "pmc": {
+    "normalized_singular_values": [
+     1.0,
+     0.2268252469117283,
+     0.08304083958016659,
+     0.0026972882910367936,
+     0.000295994382713854,
+     0.0001531926763408587
+    ],
+    "weakest_direction_scaled": [
+     0.0010425318357790564,
+     -0.0002155768355997215,
+     -0.9814543391290362,
+     0.14805864908850702,
+     0.0007542348568747807,
+     -0.1217551412411538
+    ]
+   },
+   "comparison": {
+    "abs_cosine_weakest_directions": 0.9999996167779336,
+    "abs_StO2_D_coefficient_ad": 0.9815561577951589,
+    "abs_StO2_D_coefficient_pmc": 0.9814543391290362
+   }
+  }
+ },
+ "frozen_ad_regression": {
+  "passes": true,
+  "relative_tolerance": 1e-12,
+  "recomputed_sqrt_crlb_psi": {
+   "StO2_U": 0.06672488477709707,
+   "f_U": 0.001088949076226428,
+   "StO2_D": 1.849294130374331,
+   "f_D": 0.014854885100113372,
+   "mua_DermR": 0.01966189761337211,
+   "mua_SubQ": 0.06383953503700525
+  },
+  "frozen_sqrt_crlb_psi": {
+   "StO2_U": 0.06672488477709665,
+   "f_U": 0.0010889490762264226,
+   "StO2_D": 1.8492941303743464,
+   "f_D": 0.014854885100113385,
+   "mua_DermR": 0.019661897613372063,
+   "mua_SubQ": 0.06383953503700517
+  },
+  "relative_difference": {
+   "StO2_U": 6.239555686386744e-15,
+   "f_U": 4.978204197769432e-15,
+   "StO2_D": 8.28482472754389e-15,
+   "f_D": 8.174458604021759e-16,
+   "mua_DermR": 2.470374847965671e-15,
+   "mua_SubQ": 1.3043128650392022e-15
+  },
+  "max_relative_difference": 8.28482472754389e-15,
+  "note": "Regression guard for platform-level linear-algebra roundoff; this is not an inferential tolerance or a changed scientific decision rule."
+ },
+ "pooled_jacobian_discrepancy": {
+  "max_abs_elementwise_diff_per_column": {
+   "StO2_U": 0.003737034361385727,
+   "f_U": 0.34891187276125635,
+   "StO2_D": 2.7049360132213782e-06,
+   "f_D": 0.000935723420026513,
+   "mua_DermR": 0.002814951501642682,
+   "mua_SubQ": 0.00011793734058313833
+  },
+  "max_relative_diff_per_column_vs_column_max": {
+   "StO2_U": 0.0067123528060282845,
+   "f_U": 0.006600614663194362,
+   "StO2_D": 0.002905602175929412,
+   "f_D": 0.012448409742787367,
+   "mua_DermR": 0.002050605934900098,
+   "mua_SubQ": 0.008873699580955097
+  },
+  "note": "relative to each column's own max magnitude; the paired pilot already established the two estimators are detectably different per photon"
+ }
+}

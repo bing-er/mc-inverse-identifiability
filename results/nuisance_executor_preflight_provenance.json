@@ -1,0 +1,143 @@
+{
+  "analysis": "MERGE_CHECKS item 2: real-executor preflight, and the GPU determinism it exposed",
+  "date": "2026-10-04",
+  "cluster_jobs": {
+    "preflight_first_attempt": "62919831, FAILED 00:02:02",
+    "determinism_probe": "62920246, COMPLETED",
+    "preflight_rerun": "62921054, COMPLETED 00:01:50"
+  },
+  "the_gate_itself_has_not_run": true,
+  "what_the_preflight_established": {
+    "executor_is_the_production_model": "at eta = 0 the executor reproduces the production forward solver, called directly with nothing from this module in the path, to a relative 1.464e-16 against a 1e-12 tolerance",
+    "ad_path_is_live": "the AD column norms are [2.636406, 1.296641, 0.364123, 7.160954, 1.046272], so all three geometry and both scattering columns are nonzero. A frozen eta would have made jacfwd return exactly zero there, which is the failure the jnp-only traced path exists to prevent",
+    "repeats_are_bitwise_identical": true,
+    "timings_s": {
+      "first_call_including_compile": 12.87,
+      "cached_call": 8.08,
+      "production_forward_direct": 8.94,
+      "ad_jacobian": 13.79
+    }
+  },
+  "first_attempt_failed_on_determinism": {
+    "symptom": "calling the forward model twice with the same photon keys did not give the same answer",
+    "my_artifact_was_defective": "I recorded only a boolean, which is not actionable: a 1e-16 jitter from scatter-add atomics is irrelevant to this design while a 1e-3 one would invalidate it. The magnitude is now measured and recorded.",
+    "probe": "scripts/probe_determinism.py, job 62920246"
+  },
+  "measured": {
+    "source_is_the_aggregation_not_the_transport": "per-photon detector ids and escaping weights are bitwise identical across repeats with a spread of exactly 0, while the binned sums are not. The non-determinism is the GPU scatter-add, consistent with what item 1's gate saw on GPU.",
+    "default": {
+      "binned_reflectance_max_relative_repeat_spread": 1.317e-15,
+      "difference_quotient_signal": 80.551,
+      "difference_quotient_repeat_jitter": 6.9278e-13,
+      "jitter_over_signal": 8.601e-15
+    },
+    "with_deterministic_ops_flag": {
+      "binned_reflectance_max_relative_repeat_spread": 0.0,
+      "bitwise_identical": true,
+      "difference_quotient_repeat_jitter": 4.4409e-16,
+      "jitter_over_signal": 5.513e-18
+    }
+  },
+  "why_the_criterion_was_not_relaxed": "the measured jitter-over-signal of 8.6e-15 sits far below the 1e-12 rounding floor already pre-registered, so relaxing the determinism requirement would have been numerically defensible. It was not relaxed, because the flag removes the non-determinism entirely at no measured cost and accepting a known defect to make a check pass is the thing these gates exist to prevent. The strict bitwise requirement stands and the flag is now required by the job scripts.",
+  "flag_cost": {
+    "first_call_including_compile_s": {
+      "without": 16.2,
+      "with": 12.87
+    },
+    "cached_call_s": {
+      "without": 8.8,
+      "with": 8.08
+    },
+    "production_forward_direct_s": {
+      "without": 9.95,
+      "with": 8.94
+    },
+    "ad_jacobian_s": {
+      "without": 13.72,
+      "with": 13.79
+    },
+    "conclusion": "no measurable cost; the differences are within run-to-run variation and the flagged run was marginally faster. The gate cost projection does not change on this account.",
+    "caveat": "these timings are at 2000 photons per wavelength and are dominated by fixed overhead, so they do NOT refine the 126.6 s per forward evaluation measured at 200000 photons in the item 1 pilot"
+  },
+  "preflight_is_now_a_precondition": "the gate's --run calls require_preflight_passed before anything else, reading the artifact rather than assuming. The mocked self-tests exercise control flow and statistics against an analytic response and say nothing about transport, so a passing preflight on the target hardware is a separate precondition from the citation gate.",
+  "probe_artifact_naming_defect": "the probe keyed its output filename off XLA_FLAGS being non-empty, but the module load sets --xla_gpu_cuda_data_dir so it is never empty, and the default run's artifact was overwritten by the flagged one. The naming now keys off the determinism flag itself. The overwritten file is kept as results/determinism_probe_default_and_deterministic_overwritten.json; the printed output in logs/mcii_detprobe_62920246.out carries both runs intact and is the source for the numbers above.",
+  "outputs": {
+    "results/nuisance_executor_preflight.json": "541520570d8cc0c342e4bfd360ce3e6ab73a274e29fdcb64bcfd2f98556039d3",
+    "results/nuisance_feasibility_gate_design.json": "af91c6c6ec634143eff78f950f3ff56a89e69c8760e2bfd81828f27cbcf57a30"
+  },
+  "code": {
+    "scripts/nuisance_feasibility_gate.py": "f78a4fda4f05403ecd027fec8d7450e8812264d1a9fe5e7b38fca46f568eeb47",
+    "scripts/probe_determinism.py": "dcd1fceca1983a13c4154770002c598ed0c3ae2844aaed5afd7bfd35d4feac8b",
+    "scripts/preflight_fir.sbatch": "a049162a9e1ec539bcc93e147698c95bfb2ba81c7783cfcac0800d8f34c1bd33",
+    "scripts/probe_determinism_fir.sbatch": "ac1bf66a30bec957823210505280620748ee07907a7781319a2024a250265346"
+  },
+  "selftests": "62 of 62, with RuntimeWarning promoted to an error",
+  "preconditions_for_the_gate": {
+    "real_executor_preflight_passed": true,
+    "citation_gate_open": false,
+    "blocking": "citation_gate.explicit_release_decision is null",
+    "both_required": true
+  },
+  "production_artifacts_unchanged": {
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "results/production_crb.json": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+    "results/production_crb_table.tsv": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4",
+    "results/unify_spectrum.json": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1",
+    "spec/nuisance_spec.json": "ef7dd7a8efd4b77a390a0240472d8d4c91e3686a5f6289ea76f2208aed775e55"
+  },
+  "reran_after_the_withdrawn_claim_cleanup": {
+    "why": "three hash-bound files changed in 993bde1 (spec/nuisance_spec.json, src/augmented.py, scripts/nuisance_feasibility_gate.py), so the previous record no longer described the code on disk and the gate would have refused on the mismatch",
+    "job": "62958624, COMPLETED",
+    "superseded_input_hashes": {
+      "spec/nuisance_spec.json": "e3970e0a2387b51b",
+      "src/augmented.py": "d22cb2300e6452aa",
+      "scripts/nuisance_feasibility_gate.py": "f293a233649947da"
+    },
+    "current_input_hashes": {
+      "spec/nuisance_spec.json": "96b32369b0d70493",
+      "src/augmented.py": "f5807ccac5211dc4",
+      "scripts/nuisance_feasibility_gate.py": "f5039efe5cec1781"
+    },
+    "selftests_on_the_cluster": "121/125 passed, 4 skipped, 0 failed",
+    "the_four_skips": "the two generated design artifacts are not produced on the cluster, so the whole-file withdrawn-claim regression and the design-content checks skip there. They run locally against artifacts regenerated from a bitwise-identical spec, so no coverage is lost, and the skips are counted and printed rather than silently passed.",
+    "real_executor": {
+      "eta0_vs_production_forward_max_rel_diff": 1.4635023881012331e-16,
+      "bitwise_identical": false,
+      "why_not_bitwise": "the traced eta path and the direct production call compile to different kernels, so agreement is to one ULP rather than bitwise. The bitwise requirement applies to repeated calls with the same keys, which did hold.",
+      "repeat_bitwise_over_three_calls": true,
+      "max_relative_repeat_spread": 0.0,
+      "ad_column_norms": [
+        2.636406161637684,
+        1.2966413849000025,
+        0.3641227807845396,
+        7.1609542079891595,
+        1.0462721776139772
+      ],
+      "all_five_columns_live": true
+    },
+    "the_gate_itself_still_has_not_run": true,
+    "explicit_release_decision": null
+  },
+  "reran_again_after_the_scope_release": {
+    "why": "the release decision and the fail-closed change altered spec/nuisance_spec.json and scripts/nuisance_feasibility_gate.py, so the binding changed a second time",
+    "job": "62960055, COMPLETED",
+    "current_input_hashes": {
+      "spec/nuisance_spec.json": "425085053153114d",
+      "scripts/nuisance_feasibility_gate.py": "631dae9c89365478",
+      "src/augmented.py": "f5807ccac5211dc4",
+      "spec/baseline_spec.json": "72327c1809387e2c"
+    },
+    "eta0_vs_production_forward_max_rel_diff": 1.4635023881012331e-16,
+    "repeat_bitwise_over_three_calls": true,
+    "max_relative_repeat_spread": 0.0,
+    "ad_column_norms": [
+      2.636406161637684,
+      1.2966413849000025,
+      0.3641227807845396,
+      7.1609542079891595,
+      1.0462721776139772
+    ],
+    "chained_to": "the feasibility gate was submitted with afterok on this job, so a hash or environment mismatch stops the chain before the long run starts",
+    "gate_job": "62960056"
+  }
+}

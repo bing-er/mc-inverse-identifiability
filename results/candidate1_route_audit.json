@@ -1,0 +1,93 @@
+{
+  "analysis_only": true,
+  "candidate1_verdict": null,
+  "coverage_claimed": false,
+  "coverage_evidence": {
+    "finding": "the only behavioural guard for the near-discrete failure was withdrawn as non-scale-invariant, so the conditional normality assumption is unguarded in the low-support regime",
+    "measured_simultaneous_coverage": {
+      "gaussian": 0.9737,
+      "laplace": 0.986,
+      "near_discrete_rademacher_mixture": 0.9283,
+      "t3": 0.9733
+    },
+    "near_discrete_component_coverage_recorded_in_note": 0.0283,
+    "registered_assumption": "per-component approximate normality",
+    "withdrawn_guard": {
+      "behavioural_effect_now": "none. The count is computed for reporting and no branch reads it: it does not affect support, the critical value, the bounds or the outcome. A behavioural scale-invariance test enforces this.",
+      "how_it_is_handled_instead": "a data-independent design-state precondition. While interval_criterion_registration.registered is false, --run refuses BEFORE any analysis, so the suspension cannot be triggered by, or confused with, a statistic computed from the data.",
+      "replacement_requirements": [
+        "scale invariant across components spanning many orders of magnitude",
+        "independently justified, not selected by testing candidates against job 62960056",
+        "pre-registered in this spec and hash-bound before any confirmatory run",
+        "accompanied by a measured coverage study under the same four error laws"
+      ],
+      "what_is_now_unguarded": "under a near-discrete error law the Bonferroni component's coverage was measured at 0.0283. No replacement guard exists, so this is an open limitation of the interval construction.",
+      "what_it_was": "a supported component whose absolute replicate standard deviation fell below 0.05 of the column median standard deviation blocked the comparison",
+      "why_withdrawn": "it is not scale invariant. The production observable is four wavelengths by thirty radial bins and spans 7.5 to 10.0 decades within a single column, so the outer bins have a genuinely tiny absolute spread because their signal is tiny, and the rule read that as a collapsed sample. In job 62960056 it fired on 26 to 29 components per column, every one below 1e-4 of the column maximum and none above 1e-2, and it blocked all five columns.",
+      "withdrawn_on": "2026-10-05"
+    }
+  },
+  "coverage_simulation_run_by_this_audit": false,
+  "current_formulation": {
+    "coverage_assumption": "per-component approximate normality of the replicate values",
+    "coverage_method": "larger of a Bonferroni-corrected t at alpha/(2m) on n-1 degrees of freedom and a centered sign-flip studentized-max quantile",
+    "registered": false,
+    "statistic": "max over retained components j of ( |mean_r (e3-e2)_rj| + c(n,k) se_j ) / max(|mean e2_j|, |mean e3_j|)",
+    "why_not_registered": "the route relies on an unguarded approximate-normality assumption in the measured low-support regime and all five historical columns remain unresolved under that assumption"
+  },
+  "decision": {
+    "authorizes_48_draw_study": false,
+    "authorizes_transport": false,
+    "current_candidate1_formulation": "retire_as_unsupported_and_uninformative",
+    "current_candidate1_route_selected": false,
+    "future_reopening_condition": "an independently justified error model or exact low-count construction, a predeclared support contract propagated through downstream Fisher analyses, and a newly frozen validation design",
+    "reason": "the route relies on an unguarded approximate-normality assumption exactly where nominal support is sparse, is not compatible with the literal full observable without a consequential support change, and all five historical columns remain unresolved even under that assumption"
+  },
+  "estimator_route_selected": false,
+  "historical_offline_reanalysis": {
+    "all_columns_outcome": "unresolved",
+    "all_lower_bounds": 0.0,
+    "largest_upper_multiple": 205.3,
+    "relative_margin": 0.05,
+    "simultaneous_upper_bounds_as_margin_multiples": {
+      "log_d_epidermis": 51.9,
+      "log_d_papillary": 205.3,
+      "log_d_reticular": 10.8,
+      "log_mus_scale": 9.3,
+      "mus_slope": 35.0
+    },
+    "smallest_upper_multiple": 9.3,
+    "support": {
+      "log_d_epidermis": "120/120",
+      "log_d_papillary": "120/120",
+      "log_d_reticular": "120/120",
+      "log_mus_scale": "120/120",
+      "mus_slope": "90/120, 30 components excluded",
+      "note": "this is the support the formal run actually used. Any calculation that retains a literal 120 for every column, mus_slope included, is a SEPARATE post-hoc diagnostic and is not the support of the formal run.",
+      "rule": "a component is excluded only when BOTH the reference and the quantity being checked are at or below 1e-12 of the largest magnitude across components"
+    }
+  },
+  "inputs": {
+    "canonical_digests": {
+      "diagnostic": "78bf19e403b97d00fb71786c6a8f54665d50bd7a89b0068d85e3aca0b56d86e9",
+      "gate_design": "2212f9696b63f13d58ab2bf8132efc2b8b505d9cdcc6d856af1e33870a772162",
+      "nuisance_spec": "b46740e7e0a03b8d0556538f5918b5fb14e7f43c256eb399b779c3eb02b1ab1f"
+    },
+    "historical_gate_artifact_sha256": "dda8bd26f4b70afeb49cd05dc02a1b6b8d4baf20e76f2ae116d00ffb84e79d78",
+    "production_pool_sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194"
+  },
+  "interval_criterion_registered": false,
+  "low_support_audit": {
+    "all_six_transport_replicates_components_below_one_expected_hit": 25,
+    "interpretation": "nominal support remains sparse in the outer bins even after pooling the six historical replicates; this is a support diagnostic, not a proof of any derivative error law",
+    "measurement_components_below_one_expected_count": 43,
+    "measurement_photons_per_wavelength": 100000,
+    "minimum_nominal_expected_hits_across_all_six_transport_replicates": 0.0017942212563134444,
+    "one_transport_replicate_components_below_one_expected_hit": 37,
+    "transport_photons_per_wavelength_per_replicate": 200000,
+    "transport_replicates": 6
+  },
+  "schema_version": "candidate1-route-audit-v1",
+  "status": "CANDIDATE 1 ROUTE AUDIT; NOT AN ESTIMATOR VERDICT",
+  "transport_run_by_this_audit": false
+}

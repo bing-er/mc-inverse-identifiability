@@ -1,0 +1,121 @@
+{
+  "analysis": "MERGE_CHECKS item 1: radial-observable pilot, verdict against the frozen bands",
+  "date": "2026-10-03",
+  "transport_rerun": false,
+  "cluster_job": "62596397, COMPLETED 04:31:10, GPU, ptxas 12.9.86",
+  "is_a_validation": false,
+  "question_it_answered": "whether radial information lowers the photon-budget requirement into a feasible range",
+  "answer": "no",
+  "inputs": {
+    "validation_spec": "spec/validation_spec.json",
+    "validation_spec_sha256": "372c8239c437c27294992e42182ad81790ab254087e8feed068697b307777529",
+    "gpu_equivalence_gate_sha256": "2896966c58481561ca3c4ed04bb443910e145d6d2470399de6c03f467964e190",
+    "previous_total_escape_pilot_retained": "results/jacobian_validation_pilot.json",
+    "previous_total_escape_pilot_sha256": "9c4fcb6b00c8a11c6124b2d82a1df0fea553381b9a9af7680a58adf26bdeebfe"
+  },
+  "outputs": {
+    "results/jacobian_validation_pilot_radial.json": "09ca4fa3970f72787b5e8999df5984c5a933d4c119267442abacd42bf79eb92d"
+  },
+  "code": {
+    "scripts/jacobian_validation.py": "182f1a75577cdd01b1e05aeee79e7a7aec02bf5f7d9c3cfa6c6641fb7dfa26c8",
+    "scripts/check_radial_pilot.py": "bcbcc8e623b5a263755702db7c1cb118ceecf722527c46ffb4d807c9818a537a",
+    "src/replay_kernel.py": "0860adda918c29dd33287664990091999cff654ba875cca7d86d3db31db29d07"
+  },
+  "artifact_checks": "15 of 15: both targets, 6 replicates each, seeds matching the frozen sequence, every array at (4, 120) or (120,), no non-finite value, every array_sha256 recomputing, unreduced flags set, and difference quotients following exactly from the stored plus and minus vectors",
+  "criteria_frozen_before_results": "commit 9927120 predates the artifact",
+  "verdict": {
+    "f_U": "close_the_route",
+    "StO2_D": "close_the_route"
+  },
+  "why_the_route_closes": {
+    "primary": "the detector grid has essentially no radial resolution where the light is. The innermost annulus, 0 to 0.40 cm, carries 98.2 to 100.0 percent of all escaped weight at every wavelength, and the outer three groups carry between 0.0 and 1.3 percent. There is no radial information to exploit, so the 16-component aggregates and the 120-component vector do not improve on total escaped weight.",
+    "aggregate_share_of_escaped_weight_by_wavelength_and_group": {
+      "f_U": [
+        [
+          0.99987,
+          0.00013,
+          0.0,
+          0.0
+        ],
+        [
+          0.99949,
+          0.00048,
+          2e-05,
+          0.0
+        ],
+        [
+          0.99358,
+          0.00573,
+          0.00059,
+          0.0001
+        ],
+        [
+          0.9826,
+          0.01255,
+          0.00358,
+          0.00127
+        ]
+      ],
+      "StO2_D": [
+        [
+          0.99985,
+          0.00015,
+          0.0,
+          0.0
+        ],
+        [
+          0.99942,
+          0.00055,
+          3e-05,
+          0.0
+        ],
+        [
+          0.99339,
+          0.00589,
+          0.00062,
+          0.0001
+        ],
+        [
+          0.98226,
+          0.01281,
+          0.00365,
+          0.00128
+        ]
+      ]
+    },
+    "f_U": "the only cheap aggregates are the innermost group at 540 and 580 nm, at 8.5 and 6.1 times this budget. Their neighbouring group at the same wavelength sits at 797.5 and 484.8, so the frozen adjacency requirement is not met. That requirement cannot be met by this geometry at all: the neighbour holds a thousandth of the light, so its multiplier is necessarily two orders of magnitude worse. The inability to corroborate is a property of the detector design, not an artifact of the rule.",
+    "StO2_D": "no component is cheap at any level. The best aggregate is 3409 times this budget and the best single bin 4905 times. The total-escape figure of 1580 from the previous pilot is not improved by radial information; it is the most favourable number available and it is already 15 times beyond the band where a targeted supplement would be considered.",
+    "finer_is_worse": "splitting the dominant annulus into 8 bins divides its signal, so the 120-component best multiplier, 28.8 for f_U, is worse than the 6.1 from the aggregate that contains it"
+  },
+  "pc_subspace_is_not_trustworthy_at_n_equals_6": {
+    "observation": "for f_U the PC-subspace multiplier reads 0.6 on total escape, 2.2 on the aggregates and 55.0 on the full vector. These are nested observables, each finer one containing strictly more information, so a monotone ordering is expected and this is not one.",
+    "cause": "with 6 replicates the paired scatter has 5 degrees of freedom and the retained rank is 4, so the subspace is fitted to nearly all of the available scatter and the standardized projections are inflated.",
+    "consequence": "the PC-subspace multiplier is reported but is not used to argue reachability. A value below 1 is read as a small-sample artifact, not as 'already resolved'. The per-component aggregate multipliers, whose paired-scatter ratios are 0.881 to 1.131, are the reliable read.",
+    "if_the_route_were_pursued": "a trustworthy subspace statistic would need substantially more replicates, which multiplies the budget again on top of the photon multiplier"
+  },
+  "component_admissibility_outcome": {
+    "f_U": {
+      "total_escape": "4/4",
+      "radial_aggregates": "16/16",
+      "full_radial_vector": "119/120"
+    },
+    "StO2_D": {
+      "total_escape": "4/4",
+      "radial_aggregates": "16/16",
+      "full_radial_vector": "115/120"
+    },
+    "note": "at 200000 photons per wavelength the degeneracies the 100-photon smoke run exposed are nearly absent; paired-scatter ratios sit between 0.88 and 1.13, far above the 0.1 floor, so the guard does not shape this result"
+  },
+  "field_rename_applied": {
+    "from": "budget_multiplier_to_resolve_ad_vs_pmc",
+    "to": "budget_multiplier_for_reference_resolution_at_ad_pmc_gap_scale",
+    "transport_rerun": false
+  },
+  "what_is_not_concluded": [
+    "that AD and the ensemble derivative agree. They were never resolved against each other's reference; the finding is that this measurement configuration cannot adjudicate them.",
+    "that pMC is correct and AD biased, or the reverse. AD and pMC differ resolvably from each other, and which of them matches the ensemble derivative remains unknown.",
+    "that the ensemble-derivative method is wrong. It worked; the geometry does not supply enough independent radial information for it to decide anything here."
+  ],
+  "recommendation": "close the ensemble-reference adjudication route for MERGE_CHECKS item 1 and report the limitation directly, including the detector-geometry reason",
+  "next_round_not_submitted": true
+}

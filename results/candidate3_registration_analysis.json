@@ -1,0 +1,138 @@
+{
+  "analysis_only": true,
+  "candidate3_verdict": null,
+  "coverage_claimed": false,
+  "coverage_run": false,
+  "fixed_decisions": {
+    "aggregate_margin": 0.04880884817015163,
+    "common_grid": [
+      0.5,
+      0.3,
+      0.1,
+      0.07
+    ],
+    "component_margin_measurement_sd": 0.5,
+    "likelihood": "multinomial_fixed_launch",
+    "observable_order": "wavelength-major: wavelength_index * 30 + bin_index",
+    "photons_per_transport_replicate_per_wavelength": 200000,
+    "q2": [
+      -0.11469833797867916,
+      0.24711678573292323,
+      0.42802434758872426,
+      0.4395572046570317
+    ],
+    "q3": [
+      0.01676700074559732,
+      -0.13767656460913683,
+      0.5307223069591468,
+      0.5901872569043931
+    ],
+    "qd": [
+      0.1314653387242765,
+      -0.3847933503420601,
+      0.10269795937042253,
+      0.15063005224736142
+    ],
+    "stopping_rule": "fixed design; no interim looks; no post-hoc replicate addition",
+    "support": "literal_all_120"
+  },
+  "inputs": {
+    "grid_analysis_digest": "a8ce00eb5c6b5e81f749a652bcf10462d2023a098e375698a8e6f9176ce3a267",
+    "grid_pilot_freeze_hash": "7f1407bbfcf92e1a375dcb69ced276a3d53b6990984214f5dc559eb02ad5827a",
+    "pilot_artifact_digest": "9c4acc00c4cebad69b40d95d66e6432849b1318b0c049b9ba3eb03523db5cf35"
+  },
+  "pilot_variance_projection": {
+    "interpretation": "design/resource projection from six non-confirmatory pilot replicates; not a coverage or Candidate 3 result",
+    "minimum_replicates_all_columns": 10972,
+    "per_column": {
+      "log_d_epidermis": {
+        "aggregate_minimum_replicates": 1349,
+        "both_minimum_replicates": 10842,
+        "component_minimum_replicates": 10842,
+        "metrics_at_both_minimum": {
+          "aggregate_zero_signal_upper": 0.005893919410808801,
+          "component_worst_index": 29,
+          "component_zero_signal_upper": 0.499986796172645,
+          "denominator_lower": 167.27503121105286
+        },
+        "pilot_variance_estimate_uses_replicates": 6
+      },
+      "log_d_papillary": {
+        "aggregate_minimum_replicates": 4357,
+        "both_minimum_replicates": 10879,
+        "component_minimum_replicates": 10879,
+        "metrics_at_both_minimum": {
+          "aggregate_zero_signal_upper": 0.018995341104032795,
+          "component_worst_index": 29,
+          "component_zero_signal_upper": 0.49996036459555243,
+          "denominator_lower": 51.20409478438453
+        },
+        "pilot_variance_estimate_uses_replicates": 6
+      },
+      "log_d_reticular": {
+        "aggregate_minimum_replicates": 3946,
+        "both_minimum_replicates": 10829,
+        "component_minimum_replicates": 10829,
+        "metrics_at_both_minimum": {
+          "aggregate_zero_signal_upper": 0.01684402904121379,
+          "component_worst_index": 29,
+          "component_zero_signal_upper": 0.4999949181200465,
+          "denominator_lower": 55.780905630597275
+        },
+        "pilot_variance_estimate_uses_replicates": 6
+      },
+      "log_mus_scale": {
+        "aggregate_minimum_replicates": 566,
+        "both_minimum_replicates": 10972,
+        "component_minimum_replicates": 10972,
+        "metrics_at_both_minimum": {
+          "aggregate_zero_signal_upper": 0.0024531059680156938,
+          "component_worst_index": 29,
+          "component_zero_signal_upper": 0.49996810350625753,
+          "denominator_lower": 400.42847476821487
+        },
+        "pilot_variance_estimate_uses_replicates": 6
+      },
+      "mus_slope": {
+        "aggregate_minimum_replicates": 3882,
+        "both_minimum_replicates": 10873,
+        "component_minimum_replicates": 10873,
+        "metrics_at_both_minimum": {
+          "aggregate_zero_signal_upper": 0.016916815392780348,
+          "component_worst_index": 29,
+          "component_zero_signal_upper": 0.49999007118298006,
+          "denominator_lower": 57.6075063803791
+        },
+        "pilot_variance_estimate_uses_replicates": 6
+      }
+    }
+  },
+  "range_only_hard_lower_bound": {
+    "derivation": "component empirical-Bernstein range term alone <= 0.5 production measurement SD, at zero discrepancy and zero variance",
+    "minimum_replicates": 10803,
+    "minimum_total_photons_at_worst_component": 2160579346,
+    "uses_pilot_variance": false,
+    "worst_component_index_wavelength_major": 29
+  },
+  "registration_recommendation": {
+    "do_not_change_silently": [
+      "support",
+      "component margin",
+      "range construction",
+      "grid"
+    ],
+    "freeze_current_design": false,
+    "reason": "literal all-120 support and the 0.5-SD component margin require more than ten thousand 200,000-photon transport replicates even before allowing any nonzero discrepancy; the design is operationally infeasible",
+    "required_next_action": "record the feasibility failure and make an explicit new design decision before any validation-suite freeze or run_gate wiring"
+  },
+  "resource_projection": {
+    "gpu_hours_at_pilot_projected_minimum_using_mean": 26092.633849555295,
+    "gpu_hours_at_range_only_minimum_using_mean": 25690.733091209062,
+    "measured_max_complete_shard_gpu_hours": 2.4286593649784725,
+    "measured_mean_complete_shard_gpu_hours": 2.3781109961315434,
+    "serial_years_at_pilot_projected_minimum_using_mean": 2.976572421806445
+  },
+  "schema_version": "candidate3-registration-resource-analysis-v1",
+  "status": "DESIGN FEASIBILITY ANALYSIS; NOT A CANDIDATE 3 VERDICT",
+  "transport_run_by_this_analysis": false
+}

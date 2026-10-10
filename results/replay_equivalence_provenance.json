@@ -1,0 +1,125 @@
+{
+  "analysis": "photon-level equivalence of the replay kernel against the production kernel",
+  "date": "2026-10-01",
+  "verdict": "pass, the gate can fail and the real replay is accepted; the pMC route is unblocked",
+  "all_passed": true,
+  "negative_control_rejected": true,
+  "production_kernel_is_the_only_physical_truth": true,
+  "production_physics_unmodified": "nothing under the production tree was edited; the replay module imports the Fresnel reflectance, the Henyey-Greenstein sampler, the direction update and the termination constants from it rather than copying them",
+  "other_projects_replay_kernels_not_used_as_truth": "P5's replay kernel was instrumented against a different production kernel. The method was borrowed; the implementation was written against this kernel and verified here.",
+  "production_source_hashes": {
+    "src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+    "src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+    "scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+    "scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844"
+  },
+  "replay_source_hash": {
+    "src/replay_kernel.py": "0860adda918c29dd33287664990091999cff654ba875cca7d86d3db31db29d07"
+  },
+  "gate_script_hash": {
+    "scripts/replay_equivalence.py": "da01e89c607f3723bf99007a554203491add6bcaac793a3c30e0b1abd002a113"
+  },
+  "spec_hashes": {
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "spec/validation_spec.json": "457798bedc078ce7527dfff4543512925a98f92d1eef5ccd6bdf101a57d51674"
+  },
+  "output_hashes": {
+    "results/replay_equivalence.json": "a294e5be898cea76aac15a257016c15b0c70d8cd37e532ff31eb0ea1b692cc0d"
+  },
+  "gate_backend": "cpu",
+  "backend_note": "bitwise agreement under one XLA backend does not carry over to another, so a pilot must run against a gate taken on its own backend",
+  "criteria": {
+    "det_id_mismatches_allowed": 0,
+    "escaped_flag_mismatches_allowed": 0,
+    "weight_max_abs": 1e-15,
+    "weight_max_rel": 1e-12,
+    "reflectance_max_rel": 1e-12,
+    "pathlength_identity_max_rel": 1e-10
+  },
+  "design": {
+    "n_photons_per_wavelength_per_seed": 4000,
+    "seeds": [
+      910000,
+      920007,
+      930014,
+      940021,
+      950028
+    ],
+    "n_wavelengths": 4,
+    "max_steps": 4000,
+    "radial_grid": {
+      "r_min_cm": 0.0,
+      "r_max_cm": 1.5,
+      "n_bins": 30,
+      "bin_centers_cut_cm": null
+    },
+    "layer_boundaries": [
+      0.002,
+      0.01,
+      0.025,
+      0.033,
+      0.183,
+      0.191,
+      0.8
+    ],
+    "psi_nominal": [
+      0.95,
+      0.0560139,
+      0.65,
+      0.0186713,
+      0.49,
+      0.45
+    ],
+    "blood_coordinate": "physical_bvf"
+  },
+  "summary": {
+    "n_cases": 20,
+    "n_passed": 20,
+    "all_passed": true,
+    "negative_control_rejected": true,
+    "total_photon_comparisons": 80000,
+    "det_id_mismatches_total": 0,
+    "escaped_flag_mismatches_total": 0,
+    "weight_bitwise_identical_in_all_cases": true,
+    "det_id_bitwise_identical_in_all_cases": true,
+    "worst_weight_max_abs_diff": 0.0,
+    "worst_reflectance_max_rel_diff": 0.0,
+    "worst_pathlength_identity_max_rel_diff": 1.3502716373736387e-14
+  },
+  "negative_control": {
+    "purpose": "confirm the gate can fail; a replay whose random-number stream differs must be rejected by the same criteria that accept the real one",
+    "defect_injected": "the outer loop swaps the two halves of the free-path key split, so the key carried forward and the key used for tau are exchanged. The physics is untouched; only the random-number consumption order changes.",
+    "a_rejected_candidate_control": {
+      "candidate": "split the key three ways and discard one output",
+      "why_it_was_rejected": "JAX's threefry split is a prefix, so split(k, 3)[:2] is bitwise equal to split(k, 2) and the stream is unchanged. The gate correctly reported zero mismatches for it, which is why it is not a usable control.",
+      "threefry_split_is_a_prefix": true
+    },
+    "n_photons": 400,
+    "det_id_mismatches": 296,
+    "escaped_flag_mismatches": 122,
+    "weight_max_abs_diff": 0.9598019272466205,
+    "rejected_by_the_gate": true,
+    "threefry_split_prefix_property_verified_in_run": true
+  },
+  "environment": {
+    "jax_version": "0.9.2",
+    "jax_backend": "cpu",
+    "jax_devices": [
+      "TFRT_CPU_0"
+    ],
+    "x64_enabled": true,
+    "numpy_version": "2.4.4",
+    "python": "3.14.6",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "trajectory_invariants_held_fixed": [
+    "same PRNG keys",
+    "same random-number consumption order",
+    "same branch order",
+    "same max_steps",
+    "same radial grid",
+    "same layer boundaries and optical properties",
+    "same detector definition"
+  ],
+  "consequence_for_the_pilot": "the pMC route is unblocked and the pilot may include it"
+}

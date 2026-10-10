@@ -1,0 +1,8 @@
+# Frozen CPU analysis and figure environment used for release verification.
+# Production GPU artifacts record JAX 0.9.1 and CUDA 12.9 in their provenance.
+jax==0.9.2
+jaxlib==0.9.2
+matplotlib==3.10.8
+numpy==2.4.4
+scipy==1.17.1
+tqdm==4.67.3

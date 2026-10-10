@@ -1,0 +1,642 @@
+{
+  "analysis": "does a column perturbation at the equivalence margin flip any pre-registered classification?",
+  "runs_transport": false,
+  "support_mask": {
+    "all_rows": true,
+    "n_rows": 120,
+    "rationale": "synthetic nuisance blocks: all rows intentionally used, declared explicitly rather than relying on a default",
+    "passed_explicitly": true
+  },
+  "why": "the margin was justified in words, by the two to three fold headroom of the final thresholds. That is not sufficient: the classifications come from a Schur complement of a near-singular Fisher matrix, where a small perturbation of the nuisance block can move a psi bound by much more than the perturbation, and the near-null direction is exactly what a near-singular matrix reports unstably.",
+  "psi_block": {
+    "source": "data/derived/production_pooled.npz",
+    "sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+    "whitening": "multinomial_fixed_launch, as the headline CRB uses",
+    "singular_values": [
+      121.97784319050035,
+      49.04420397627154,
+      18.205113890659412,
+      13.141307530339668,
+      1.3161624235331482,
+      0.5350677161239026
+    ],
+    "condition_number": 227.96711428251194
+  },
+  "eta_blocks": {
+    "n_blocks": 200,
+    "n_eta": 5,
+    "families": [
+      "generic",
+      "internally_collinear",
+      "nearly_inside_psi_span",
+      "tiny_relative_to_psi",
+      "one_column_nearly_degenerate"
+    ],
+    "families_include_the_dangerous_regimes": "internally_collinear gives a singular F_ee so the Schur complement divides by something small; nearly_inside_psi_span drives F_psi_eff itself toward singular; tiny_relative_to_psi and one_column_nearly_degenerate probe the ill-conditioned extremes. The first version of this analysis used only the generic family, which is the safe regime, and reported the margin as safe on that basis.",
+    "coupling_levels_relative_to_the_psi_block": [
+      0.05,
+      0.2,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "coupling_levels_note": "each family is built at every coupling level",
+    "why_a_family": "the real eta block is unknown until the gate runs, so the question is whether the margin is safe for the blocks that could turn up. A margin unsafe for some plausible block is not a safe margin."
+  },
+  "perturbation": {
+    "per_column_relative_size": "the margin",
+    "directions_searched_per_block": 66,
+    "search": "the direction that moves the deep StO2 bound the most is searched for, over the leading left singular directions of the psi block plus random directions. Random directions in a 120 by 5 space essentially never find the worst case, so a margin safe against random perturbations would be the wrong thing to report."
+  },
+  "classifications": {
+    "deep_StO2_not_tightly_constrained": "StO2_D ge 1.0",
+    "upper_StO2_well_conditioned": "StO2_U lt 0.2"
+  },
+  "near_null_cos_floor": 0.9,
+  "seed": 20261005,
+  "by_margin": {
+    "0.05": {
+      "margin": 0.05,
+      "n_blocks": 200,
+      "n_blocks_with_a_flip": 42,
+      "flip_rate": 0.21,
+      "worst_relative_bound_change": {
+        "deep_StO2_not_tightly_constrained": Infinity,
+        "upper_StO2_well_conditioned": Infinity
+      },
+      "worst_near_null_cosine": 0.999927,
+      "per_family": {
+        "generic": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "internally_collinear": {
+          "blocks": 40,
+          "flipped": 40
+        },
+        "nearly_inside_psi_span": {
+          "blocks": 40,
+          "flipped": 2
+        },
+        "tiny_relative_to_psi": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "one_column_nearly_degenerate": {
+          "blocks": 40,
+          "flipped": 0
+        }
+      },
+      "examples": [
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 40
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 41
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 42
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 43
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 44
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 45
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 46
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 47
+        }
+      ],
+      "safe": false
+    },
+    "0.02": {
+      "margin": 0.02,
+      "n_blocks": 200,
+      "n_blocks_with_a_flip": 42,
+      "flip_rate": 0.21,
+      "worst_relative_bound_change": {
+        "deep_StO2_not_tightly_constrained": 56760.914702,
+        "upper_StO2_well_conditioned": 20338.25094
+      },
+      "worst_near_null_cosine": 0.999933,
+      "per_family": {
+        "generic": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "internally_collinear": {
+          "blocks": 40,
+          "flipped": 40
+        },
+        "nearly_inside_psi_span": {
+          "blocks": 40,
+          "flipped": 2
+        },
+        "tiny_relative_to_psi": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "one_column_nearly_degenerate": {
+          "blocks": 40,
+          "flipped": 0
+        }
+      },
+      "examples": [
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 40
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 41
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 42
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 43
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 44
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 45
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 46
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 47
+        }
+      ],
+      "safe": false
+    },
+    "0.01": {
+      "margin": 0.01,
+      "n_blocks": 200,
+      "n_blocks_with_a_flip": 42,
+      "flip_rate": 0.21,
+      "worst_relative_bound_change": {
+        "deep_StO2_not_tightly_constrained": 28412.156714,
+        "upper_StO2_well_conditioned": 10180.177202
+      },
+      "worst_near_null_cosine": 0.999951,
+      "per_family": {
+        "generic": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "internally_collinear": {
+          "blocks": 40,
+          "flipped": 40
+        },
+        "nearly_inside_psi_span": {
+          "blocks": 40,
+          "flipped": 2
+        },
+        "tiny_relative_to_psi": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "one_column_nearly_degenerate": {
+          "blocks": 40,
+          "flipped": 0
+        }
+      },
+      "examples": [
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 40
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 41
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 42
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 43
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 44
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 45
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 46
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 47
+        }
+      ],
+      "safe": false
+    },
+    "0.005": {
+      "margin": 0.005,
+      "n_blocks": 200,
+      "n_blocks_with_a_flip": 42,
+      "flip_rate": 0.21,
+      "worst_relative_bound_change": {
+        "deep_StO2_not_tightly_constrained": 14221.041221,
+        "upper_StO2_well_conditioned": 5095.14327
+      },
+      "worst_near_null_cosine": 0.999945,
+      "per_family": {
+        "generic": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "internally_collinear": {
+          "blocks": 40,
+          "flipped": 40
+        },
+        "nearly_inside_psi_span": {
+          "blocks": 40,
+          "flipped": 2
+        },
+        "tiny_relative_to_psi": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "one_column_nearly_degenerate": {
+          "blocks": 40,
+          "flipped": 0
+        }
+      },
+      "examples": [
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 40
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 41
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 42
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 43
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 44
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 45
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 46
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 47
+        }
+      ],
+      "safe": false
+    },
+    "0.002": {
+      "margin": 0.002,
+      "n_blocks": 200,
+      "n_blocks_with_a_flip": 42,
+      "flip_rate": 0.21,
+      "worst_relative_bound_change": {
+        "deep_StO2_not_tightly_constrained": 5687.487029,
+        "upper_StO2_well_conditioned": 2037.35606
+      },
+      "worst_near_null_cosine": 0.999979,
+      "per_family": {
+        "generic": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "internally_collinear": {
+          "blocks": 40,
+          "flipped": 40
+        },
+        "nearly_inside_psi_span": {
+          "blocks": 40,
+          "flipped": 2
+        },
+        "tiny_relative_to_psi": {
+          "blocks": 40,
+          "flipped": 0
+        },
+        "one_column_nearly_degenerate": {
+          "blocks": 40,
+          "flipped": 0
+        }
+      },
+      "examples": [
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 40
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 41
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 42
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 43
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 44
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 45
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 46
+        },
+        {
+          "family": "internally_collinear",
+          "coupling_level": 0.05,
+          "flipped": [
+            "upper_StO2_well_conditioned",
+            "single_near_null_direction_reported",
+            "near_null_dominant"
+          ],
+          "block_index": 47
+        }
+      ],
+      "safe": false
+    }
+  },
+  "largest_safe_margin": null,
+  "verdict": "every margin tested flips at least one classification for some block in the family; the margin cannot be justified this way and the criterion must change",
+  "five_percent_is_safe": false
+}

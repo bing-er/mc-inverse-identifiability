@@ -1,0 +1,28 @@
+{
+  "step": "B",
+  "profile": "p1_legacy",
+  "transport_run": true,
+  "scale": 1.0,
+  "n_transport_photons": 30000,
+  "max_steps": 2000,
+  "n_observables": 152,
+  "per_wavelength_detection_probability": [
+    0.43016146838411723,
+    0.4297381033397486,
+    0.5666532905724951,
+    0.6746526428321944
+  ],
+  "R_min": 0.0,
+  "R_max": 65.39153827302454,
+  "jacobian_validation_against_frozen": {
+    "frozen_available": true,
+    "frozen_shape": [
+      152,
+      6
+    ],
+    "max_abs_diff": 8.881784197001252e-16,
+    "max_abs_diff_over_max_abs_J": 2.8860972031170934e-16,
+    "bitwise_identical": false
+  },
+  "artifact": "data/derived/p1_legacy_nominal.npz"
+}

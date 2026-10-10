@@ -1,0 +1,90 @@
+{
+  "purpose": "verify the real executor against the production forward solver at eta = 0",
+  "validates": "code, not priors",
+  "requires_citation_gate": false,
+  "cannot_write_the_gate_artifact": true,
+  "n_photons_per_wavelength": 2000,
+  "seed": 2600000,
+  "n_observables": 120,
+  "n_eta": 5,
+  "environment": {
+    "ptxas_version": "12.9.86",
+    "cuda_module": "cuda/12.9",
+    "backend": "gpu",
+    "jax_version": "0.9.1",
+    "device_kind": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+    "n_devices": 1
+  },
+  "executor_environment": {
+    "backend": "gpu",
+    "jax_version": "0.9.1",
+    "max_steps": 4000
+  },
+  "eta0_vs_production_forward": {
+    "max_abs_diff": 7.105427357601002e-15,
+    "max_rel_diff": 1.4635023881012331e-16,
+    "bitwise_identical": false,
+    "tolerance": 1e-12,
+    "passes": true,
+    "note": "the production solver is called directly here, with nothing from this module in the path, so a reordered layer or a misapplied scale would show up"
+  },
+  "repeat_determinism": {
+    "bitwise_identical_over_three_calls": true,
+    "max_relative_repeat_spread": 0.0,
+    "deterministic_ops_flag_set": true,
+    "requirement": "bitwise identical across repeated calls with the same photon keys",
+    "why_strict": "the ensemble method relies on common random numbers cancelling exactly between plus h and minus h. Measured on this hardware the GPU scatter-add is non-deterministic at a relative 1.3e-15 without the flag, which propagates to a difference-quotient jitter of 8.6e-15 of signal and would have been tolerable, but the flag removes it entirely so there is no reason to accept it.",
+    "measured_source": "the non-determinism is in the binned scatter-add, not the transport: per-photon detector ids and escaping weights are bitwise stable across repeats while the binned sums are not. See results/determinism_probe_default.json and results/determinism_probe_deterministic.json.",
+    "fix": "export XLA_FLAGS=--xla_gpu_deterministic_ops=true, which the job scripts now do",
+    "passes": true
+  },
+  "repeat_call_is_deterministic": true,
+  "ad_path": {
+    "compiles": true,
+    "all_finite": true,
+    "column_norms": [
+      2.636406161637684,
+      1.2966413849000025,
+      0.3641227807845396,
+      7.1609542079891595,
+      1.0462721776139772
+    ],
+    "geometry_columns_nonzero": true,
+    "scattering_columns_nonzero": true,
+    "why_this_matters": "a frozen eta would make jacfwd return exactly zero for the geometry columns, which is the failure mode the jnp-only traced path exists to prevent"
+  },
+  "timings_s": {
+    "first_call_including_compile": 8.74,
+    "cached_call": 8.18,
+    "production_forward_direct": 8.26,
+    "ad_jacobian": 9.53
+  },
+  "array_digests": {
+    "executor_eta0": "42f128c1d52bb0f672d07c07f8285cb73d659449af4db77bf264e369c023e110",
+    "production_direct": "0efe2c508f27f30ce098ed3cc8b80a20dea6a0ebebfe6e3952831c8f97a672b3",
+    "ad_jacobian": "a2faa143fa7d79e10e9797ac8f01a95bb5f4eaf1ae936d1afce4669e638383d7"
+  },
+  "input_hashes": {
+    "spec/nuisance_spec.json": "425085053153114d96780691a28cd729fae0741cbc587aceb5e750e5bf0ea368",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "src/augmented.py": "f5807ccac5211dc492fbe41896ba18b3d94bacab1c157764636e0946a146b8c6",
+    "scripts/nuisance_feasibility_gate.py": "631dae9c8936547899736fee74b28f44c51cd434a2d7c0069d58a8478dc52319"
+  },
+  "jaxpad_bound_hashes": {
+    "jaxpad:scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+    "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+    "jaxpad:src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+    "jaxpad:src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+    "jaxpad:src/pad/config_v4_633nm.py": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3"
+  },
+  "deterministic_flag_in_preflight_process": {
+    "xla_flags": "--xla_gpu_cuda_data_dir=/cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/cudacore/12.9.1 --xla_gpu_deterministic_ops=true ",
+    "flag": "xla_gpu_deterministic_ops=true",
+    "set_in_this_process": true,
+    "why_checked_here": "a preflight record describes the process that ran the preflight, not this one"
+  },
+  "hash_binding_contract": "the gate re-verifies every entry in input_hashes and jaxpad_bound_hashes against the files on disk at run time and refuses on any mismatch",
+  "passes": true,
+  "verdict": "the real executor reproduces the production forward solver at eta = 0, the AD path is live on every column, and repeated calls with the same keys are bitwise identical",
+  "timestamp": "2026-10-04T21:07:55-0700"
+}

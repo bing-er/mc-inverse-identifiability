@@ -1,0 +1,217 @@
+{
+  "SUPERSEDED": {
+    "status": "SUPERSEDED, retained as history only",
+    "superseded_on": "2026-10-04",
+    "corrective_provenance": "results/nuisance_review_fixes_provenance.json",
+    "statements_in_this_file_that_were_subsequently_DISPROVED": [
+      "that the centered sign-flip component of the critical value is valid independently of the error law. It is not: per-component approximate normality is the registered coverage assumption.",
+      "that each downstream classification can be established by propagating the admissible Jacobian set through to it. A heuristic directional search over a continuum cannot establish invariance; an explicit counterexample is committed."
+    ],
+    "what_still_stands": [
+      "the measured failure of the raw sign-flip bound (0.967 / 0.069 / 0.000)",
+      "the withdrawal of the verbal margin-headroom argument",
+      "the measured margin-safety numbers, including that tightening the margin does not help"
+    ],
+    "read_this_instead": "results/nuisance_review_fixes_provenance.json"
+  },
+  "analysis": "MERGE_CHECKS item 2: equivalence coverage, margin redefinition, manifest and design locking",
+  "date": "2026-10-04",
+  "cluster_jobs": {
+    "preflight_after_the_statistic_rewrite": "62949023, COMPLETED"
+  },
+  "the_gate_itself_has_not_run": true,
+  "two_things_i_had_written_were_wrong": {
+    "the_simultaneous_bound_had_no_coverage": {
+      "what_it_did": "sign-flipped the RAW paired differences, which contain the unknown mean",
+      "why_that_fails": "a sample with a nonzero mean inherits that mean's own variability under flipping, so the critical value comes out far too small",
+      "measured_coverage": {
+        "true_mean_0.0": 0.967,
+        "true_mean_0.05": 0.069,
+        "true_mean_0.2": 0.0
+      },
+      "note": "not a 91.6 percent miscalibration; broken wherever the discrepancy was real",
+      "fix": "the larger of a Bonferroni-corrected t at alpha/(2m) on n-1 degrees of freedom, exact under per-component normality and any dependence, and a quantile of the CENTERED sign-flip studentized-max null, which is mean-invariant",
+      "new_coverage": {
+        "true_mean_0.0": 0.95,
+        "true_mean_0.05": 0.955,
+        "true_mean_0.2": 0.945
+      },
+      "regression_tests": [
+        "simultaneous coverage over all 120 components at three mean levels",
+        "boundary misclassification rate at, above and below the margin",
+        "a check that the bound is built from centered residuals"
+      ],
+      "min_attainable_nonzero_p": "2 / 2^n = 0.03125 at six replicates, because max|t| is invariant under a global sign flip",
+      "minimum_replicates": 3,
+      "correction_to_this_entry": "the sign-flip component was described here as valid independently of the error law. That was disproved: centering makes the residuals dependent, so flipping them is not an exact randomization distribution. Measured coverage 0.9597 Gaussian, 0.9677 Laplace, 0.9443 t(3), 0.9283 under a near-discrete Rademacher mixture. Per-component approximate normality is now the REGISTERED coverage assumption. See results/nuisance_review_fixes_provenance.json."
+    },
+    "the_margin_could_not_be_justified_and_tightening_did_not_help": {
+      "withdrawn": "the verbal argument from two to three fold threshold headroom",
+      "my_first_analysis_was_also_wrong": "it used only well-conditioned nuisance blocks nearly orthogonal to psi, which is the safe regime, and reported the margin as safe on that basis. The families now include a singular F_ee, columns nearly inside the psi span and the ill-conditioned extremes, and the perturbation direction is searched rather than random.",
+      "measured": {
+        "five_percent_column_perturbation": "moved sqrt-CRLB(StO2_U) from 0.0744 to 369, a factor of about 5000, for a block nearly collinear with a leading psi singular direction",
+        "column_margin_for_40_percent_accuracy": "about 1e-5",
+        "column_margin_for_0.05_percent": "about 1e-6",
+        "flip_rate_at_margin_0.05": 0.21,
+        "flip_rate_at_margin_0.002": 0.21,
+        "tightening_is_useless": "the flip rate is the same at 0.002 as at 0.05, because the sensitivity is to the subspace angle rather than the column size"
+      },
+      "root_cause": "a relative error in a nuisance Jacobian column does not control the principal angle between the nuisance and physiological column spaces, and the Schur complement depends on that angle",
+      "redefinition": "column-level equivalence stays as a NECESSARY check that AD matches the ensemble reference; it is not sufficient for a classification. No downstream classification is established by this gate: see correction_to_this_entry.",
+      "conditioning_diagnostic": {
+        "quantity": "the smallest principal angle between the nuisance and physiological column spaces",
+        "measured": {
+          "nearly_orthogonal_block_70.8_deg": "the stress search found no flip at a five percent column margin, which is not a certification",
+          "nearly_collinear_block_0.0_deg": "flips found at every margin down to 1e-5",
+          "internally_collinear_68.4_deg": "upper StO2 flipped even at 1e-5"
+        },
+        "consequence": "whether a classification survives perturbation is a property of the measured geometry, not something a margin can guarantee in advance, and a heuristic search cannot establish it either way"
+      },
+      "artifacts": [
+        "results/margin_safety_analysis.json"
+      ],
+      "implemented_in": "src/augmented.py stress_search_classifications and nuisance_psi_principal_angles",
+      "correction_to_this_entry": "this entry claimed each classification could be established by propagating the admissible Jacobian set through to it. That was disproved by an explicit counterexample in scripts/stress_search_counterexample.py: the search is a heuristic over a continuum and finding no flip is not a proof of invariance. The routine was renamed to stress_search_classifications and never reports a classification as established. Every downstream classification remains unresolved absent an exhaustive invariance proof. See results/nuisance_review_fixes_provenance.json."
+    }
+  },
+  "manifest_is_exact": {
+    "expected_local_keys": 4,
+    "expected_jaxpad_keys": 5,
+    "rules": [
+      "the key sets must equal the expected sets exactly, no missing and no extra",
+      "any unavailable value is refused",
+      "the component conditions are re-derived rather than taken from the top-level passes flag",
+      "the backend, device kind, JAX version, ptxas version and CUDA module are bound and compared against the current process"
+    ],
+    "counterexamples_tested": 9,
+    "observed_behaviour": "reading the cluster artifact on a laptop now reports 11 problems and refuses, which is the chain working: a cluster preflight cannot license a local gate run"
+  },
+  "run_design_locked": {
+    "cli_arguments_removed": [
+      "--replicates",
+      "--photons",
+      "--seed-base"
+    ],
+    "read_from_spec": {
+      "n_replicates": 6,
+      "n_photons_per_wavelength": 200000,
+      "seed_base": 2600000,
+      "seed_stride": 7919,
+      "h_relative_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ]
+    },
+    "refusals": [
+      "a spec asking for fewer than three replicates, since one replicate gives no standard error and any constant offset came out equivalent with a critical value of zero",
+      "a spec step grid that differs from the one compiled into the runner"
+    ],
+    "checked_before_the_executor_is_built": true
+  },
+  "dry_run_artifact_corrected": {
+    "removed": [
+      "max-T failure-to-reject acceptance wording",
+      "1 / 2^n",
+      "reference-only support rule",
+      "the superseded simultaneous_test_rules block"
+    ],
+    "added": [
+      "the three-way equivalence rules with the margin and its basis",
+      "2 / 2^n",
+      "the two-sided support rule",
+      "frozen_run_design",
+      "column_margin_alone_does_not_certify_a_classification"
+    ],
+    "selftest": "searches the artifact for four superseded patterns and rejects them"
+  },
+  "downstream_mask_contract_enforced": {
+    "where": "src/augmented.py block_information, with support_mask and require_mask",
+    "study_sets_require_mask": true,
+    "test": "setting the excluded rows to 1e6 leaves both effective information matrices bitwise unchanged"
+  },
+  "conditional_skips_are_explicit": "the suite reported 98 on the cluster and 100 locally because two checks depend on the dry-run artifact existing. A conditional check that silently vanishes makes the suite look like a different one, so skips are now counted and printed as SKIP: the line reads passed, skipped and failed separately.",
+  "preflight_result": {
+    "job": "62949023",
+    "passes": true,
+    "eta0_vs_production_max_rel_diff": 1.4635023881012331e-16,
+    "repeat_bitwise_identical": true,
+    "repeat_spread": 0.0,
+    "deterministic_flag_set": true,
+    "ad_column_norms": [
+      2.636406161637684,
+      1.2966413849000025,
+      0.3641227807845396,
+      7.1609542079891595,
+      1.0462721776139772
+    ],
+    "ad_all_finite": true,
+    "input_hashes": {
+      "spec/nuisance_spec.json": "183862a237a9bc2234c06e828ba2aa985ecde5f59de7c9b3e6d8faeff2bb00db",
+      "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+      "src/augmented.py": "9959d20edb96bbf7110f75ac82647e045b1d21c4d9c0caab1cbd3b0929a5fde7",
+      "scripts/nuisance_feasibility_gate.py": "991561a561298a6c78e600f5f9062eced46b7498123cc30656259bd7dc2ca45e"
+    },
+    "jaxpad_bound_hashes": {
+      "jaxpad:scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+      "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+      "jaxpad:src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+      "jaxpad:src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+      "jaxpad:src/pad/config_v4_633nm.py": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3"
+    },
+    "environment": {
+      "ptxas_version": "12.9.86",
+      "cuda_module": "cuda/12.9",
+      "backend": "gpu",
+      "jax_version": "0.9.1",
+      "device_kind": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+      "n_devices": 1
+    },
+    "timings_s": {
+      "first_call_including_compile": 8.77,
+      "cached_call": 8.1,
+      "production_forward_direct": 8.17,
+      "ad_jacobian": 9.49
+    }
+  },
+  "selftests": {
+    "total": 100,
+    "passed": 100,
+    "skipped": 0,
+    "failed": 0,
+    "on_the_cluster": "98 passed, 2 skipped before the dry run had been produced"
+  },
+  "outputs": {
+    "results/nuisance_executor_preflight.json": "30bee5ebb5e85b79c490ac127b111abdb395e32f5402d5757395b71bd4f76f17",
+    "results/margin_safety_analysis.json": "9b6fb8370366f63d483abea3b629abe4c38f7396a7ffe121a6cc14197a98aff9",
+    "results/nuisance_feasibility_gate_design.json": "934a24497a08412fd93e0c97e3ee4896f976f0e41bf9aefcaeb7e9bd1a86fae4"
+  },
+  "code": {
+    "scripts/nuisance_feasibility_gate.py": "1bebf88f57bf8aafd79a3acca19df8e0a08a954c4c730786a322a52344577955",
+    "src/augmented.py": "9959d20edb96bbf7110f75ac82647e045b1d21c4d9c0caab1cbd3b0929a5fde7",
+    "scripts/margin_safety_analysis.py": "284e0e6fcf463139b72717b42daa9216a48a12aaac602980db47d1b073ba9445"
+  },
+  "nuisance_spec_sha256": "183862a237a9bc2234c06e828ba2aa985ecde5f59de7c9b3e6d8faeff2bb00db",
+  "preconditions_for_the_gate": {
+    "real_executor_preflight_passed_on_the_cluster": true,
+    "manifest_files_bound": 9,
+    "environment_bound": [
+      "backend",
+      "device_kind",
+      "jax_version",
+      "ptxas_version",
+      "cuda_module"
+    ],
+    "deterministic_flag_required_in_the_gates_own_process": true,
+    "frozen_run_design_enforced": true,
+    "citation_gate_open": false,
+    "blocking": "citation_gate.explicit_release_decision is null"
+  },
+  "production_artifacts_unchanged": {
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "results/production_crb.json": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+    "results/production_crb_table.tsv": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4",
+    "results/unify_spectrum.json": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1"
+  }
+}

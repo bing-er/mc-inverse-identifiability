@@ -1,0 +1,2198 @@
+{
+  "reported_quantity": "Cramer-Rao LOWER BOUNDS on the standard deviation of a locally unbiased estimator at the nominal parameter value, under the assumed photon budget and likelihood. Not confidence intervals, not achieved estimator errors, and no claim that any estimator attains them.",
+  "span_definition": "gaussian_equivalent_1p96_crlb_span is nominal +/- 1.96 sqrt(CRLB), a Gaussian-equivalent width for comparing the bound with the parameter's own scale. It is not a physical confidence interval and carries no coverage guarantee, so it may extend outside a parameter's physical range without that being a contradiction.",
+  "inputs": {
+    "pooled_artifact": "data/derived/production_pooled.npz",
+    "pooled_sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+    "spectrum_cross_check": {
+      "artifact": "results/unify_spectrum.json",
+      "role": "computational input, read and asserted against this recomputation",
+      "per_branch": {
+        "raw": {
+          "singular_values_normalized_max_diff": 0.0,
+          "passes": true
+        },
+        "diagonal_poisson": {
+          "singular_values_normalized_max_diff": 0.0,
+          "passes": true
+        },
+        "multinomial_fixed_launch": {
+          "singular_values_normalized_max_diff": 0.0,
+          "passes": true
+        }
+      },
+      "global": {
+        "coordinates": [
+          "psi",
+          "psi"
+        ],
+        "reparameterize_applied": [
+          false,
+          false
+        ],
+        "column_scale_D": 0.0,
+        "n_measurement_photons_per_wavelength": [
+          100000,
+          100000
+        ],
+        "passes": true
+      },
+      "all_passed": true,
+      "sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1"
+    },
+    "transport_rerun": false
+  },
+  "likelihood_selection": {
+    "headline": "multinomial_fixed_launch",
+    "sensitivity": "diagonal_poisson",
+    "basis": "spec/baseline_spec.json profiles.production.likelihood, fixed in the spec before the CRLB was computed"
+  },
+  "n_measurement_photons_per_wavelength": 100000,
+  "psi_labels": [
+    "StO2_U",
+    "f_U",
+    "StO2_D",
+    "f_D",
+    "mua_DermR",
+    "mua_SubQ"
+  ],
+  "psi_nominal": [
+    0.95,
+    0.0560139,
+    0.65,
+    0.0186713,
+    0.49,
+    0.45
+  ],
+  "column_scale_D": [
+    1.0,
+    0.0560139,
+    1.0,
+    0.0186713,
+    0.49,
+    0.45
+  ],
+  "coordinate_note": "psi = D z, so a target with gradient c is (D c)^T z in the whitened coordinate",
+  "branches": {
+    "raw": {
+      "geometry": {
+        "singular_values": [
+          4.841152053967418,
+          1.1016977014150287,
+          0.4029828389926863,
+          0.013076790962902086,
+          0.0014239985164690005,
+          0.0007414184108478504
+        ],
+        "numerical_rank": 6,
+        "numerical_rank_tolerance": 1.289942034246239e-13,
+        "numerical_rank_tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+        "condition_number_Jw": 6529.5816547518825,
+        "condition_number_I": 42635436.58607233,
+        "near_null": {
+          "near_null_direction_z_from_svd": [
+            -0.0010393477229015597,
+            0.00021521834279550128,
+            0.9815561577951633,
+            -0.14721339565345623,
+            -0.000753780105219602,
+            0.1219591344980106
+          ],
+          "near_null_tangent_psi_per_unit_z": [
+            -0.0010393477229015597,
+            1.2055218731512929e-05,
+            0.9815561577951633,
+            -0.002748665474264377,
+            -0.00036935225155760497,
+            0.05488161052410477
+          ],
+          "near_null_tangent_psi_unit_norm_display_only": [
+            -0.0010572214084927083,
+            1.2262532592496869e-05,
+            0.9984360005733903,
+            -0.0027959343347234095,
+            -0.00037570401033020656,
+            0.05582541078423834
+          ],
+          "tangent_norm": 0.9830937158029827,
+          "smallest_singular_value": 0.0007414184108478504,
+          "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+          "whitened_response_equals_smallest_singular_value": {
+            "response": 0.0007414184108478543,
+            "smallest_singular_value": 0.0007414184108478504,
+            "relative_difference": 5.264406391641107e-15,
+            "passes": true
+          },
+          "pushforward_consistency": {
+            "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+            "normalized_max_diff": 3.7400226283023596e-16,
+            "passes": true
+          }
+        },
+        "near_null_direction_z_from_svd": {
+          "StO2_U": -0.0010393477229015597,
+          "f_U": 0.00021521834279550128,
+          "StO2_D": 0.9815561577951633,
+          "f_D": -0.14721339565345623,
+          "mua_DermR": -0.000753780105219602,
+          "mua_SubQ": 0.1219591344980106
+        },
+        "near_null_tangent_psi_per_unit_z": {
+          "StO2_U": -0.0010393477229015597,
+          "f_U": 1.2055218731512929e-05,
+          "StO2_D": 0.9815561577951633,
+          "f_D": -0.002748665474264377,
+          "mua_DermR": -0.00036935225155760497,
+          "mua_SubQ": 0.05488161052410477
+        },
+        "near_null_tangent_psi_unit_norm_display_only": {
+          "StO2_U": -0.0010572214084927083,
+          "f_U": 1.2262532592496869e-05,
+          "StO2_D": 0.9984360005733903,
+          "f_D": -0.0027959343347234095,
+          "mua_DermR": -0.00037570401033020656,
+          "mua_SubQ": 0.05582541078423834
+        },
+        "near_null_coordinate_warning": "the right singular vectors of J_w live in the scaled coordinate z, where psi = D z. Any step taken in psi space must use the pushforward D v_z. The earlier field name near_null_direction_psi_from_svd was wrong: it held v_z."
+      },
+      "crlb": null,
+      "crlb_omitted_because": "the raw branch has no likelihood, so there is no Fisher information and no CRLB; only the geometric spectrum is meaningful"
+    },
+    "diagonal_poisson": {
+      "geometry": {
+        "singular_values": [
+          105.97281589547904,
+          42.43059409772375,
+          16.730316309181635,
+          11.184866538537113,
+          1.2976636263067767,
+          0.5277689168896097
+        ],
+        "numerical_rank": 6,
+        "numerical_rank_tolerance": 2.8236830445965667e-12,
+        "numerical_rank_tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+        "condition_number_Jw": 200.79396967905322,
+        "condition_number_I": 40318.218259472545,
+        "near_null": {
+          "near_null_direction_z_from_svd": [
+            -0.0127987742438891,
+            0.0014789106675169202,
+            0.9865769393130349,
+            -0.15130845020669836,
+            -0.0010272302263395617,
+            0.06003869344784911
+          ],
+          "near_null_tangent_psi_per_unit_z": [
+            -0.0127987742438891,
+            8.283955423922602e-05,
+            0.9865769393130349,
+            -0.002825125466344327,
+            -0.0005033428109063853,
+            0.0270174120515321
+          ],
+          "near_null_tangent_psi_unit_norm_display_only": [
+            -0.01296690357042965,
+            8.392776457872867e-05,
+            0.9995369707368514,
+            -0.002862237336043553,
+            -0.0005099549040806299,
+            0.027372322545813333
+          ],
+          "tangent_norm": 0.9870339649225156,
+          "smallest_singular_value": 0.5277689168896097,
+          "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+          "whitened_response_equals_smallest_singular_value": {
+            "response": 0.5277689168896111,
+            "smallest_singular_value": 0.5277689168896097,
+            "relative_difference": 2.7347005210513145e-15,
+            "passes": true
+          },
+          "pushforward_consistency": {
+            "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+            "normalized_max_diff": 6.790223437857781e-17,
+            "passes": true
+          }
+        },
+        "near_null_direction_z_from_svd": {
+          "StO2_U": -0.0127987742438891,
+          "f_U": 0.0014789106675169202,
+          "StO2_D": 0.9865769393130349,
+          "f_D": -0.15130845020669836,
+          "mua_DermR": -0.0010272302263395617,
+          "mua_SubQ": 0.06003869344784911
+        },
+        "near_null_tangent_psi_per_unit_z": {
+          "StO2_U": -0.0127987742438891,
+          "f_U": 8.283955423922602e-05,
+          "StO2_D": 0.9865769393130349,
+          "f_D": -0.002825125466344327,
+          "mua_DermR": -0.0005033428109063853,
+          "mua_SubQ": 0.0270174120515321
+        },
+        "near_null_tangent_psi_unit_norm_display_only": {
+          "StO2_U": -0.01296690357042965,
+          "f_U": 8.392776457872867e-05,
+          "StO2_D": 0.9995369707368514,
+          "f_D": -0.002862237336043553,
+          "mua_DermR": -0.0005099549040806299,
+          "mua_SubQ": 0.027372322545813333
+        },
+        "near_null_coordinate_warning": "the right singular vectors of J_w live in the scaled coordinate z, where psi = D z. Any step taken in psi space must use the pushforward D v_z. The earlier field name near_null_direction_psi_from_svd was wrong: it held v_z."
+      },
+      "crlb": {
+        "quantity": "lower bound on the standard deviation of a locally unbiased estimator at the nominal parameter value, under the assumed photon budget and likelihood",
+        "not_a_confidence_interval": true,
+        "not_an_achieved_estimator_error": true,
+        "method": "C_z = V diag(1 / s^2) V^T from the SVD of J_w, then C_psi = D C_z D",
+        "plain_matrix_inverse_used": false,
+        "singular_values_truncated": false,
+        "numerical_rank": 6,
+        "numerical_rank_tolerance": 2.8236830445965667e-12,
+        "numerical_rank_tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+        "numerical_rank_asserted_equal_to_n_parameters": true,
+        "independent_cholesky_check": {
+          "normalized_max_diff": 4.0501053915593105e-15,
+          "passes": true
+        },
+        "singular_values": [
+          105.97281589547904,
+          42.43059409772375,
+          16.730316309181635,
+          11.184866538537113,
+          1.2976636263067767,
+          0.5277689168896097
+        ],
+        "condition_number_Jw": 200.79396967905322,
+        "sqrt_crlb_psi": {
+          "StO2_U": 0.08271374279714243,
+          "f_U": 0.0012658949211028392,
+          "StO2_D": 1.873168894940181,
+          "f_D": 0.015142719365103715,
+          "mua_DermR": 0.021875931418217653,
+          "mua_SubQ": 0.0641999143487382
+        },
+        "gaussian_equivalent_1p96_crlb_span_psi": {
+          "StO2_U": [
+            0.7878840430910915,
+            1.1121159569089085
+          ],
+          "f_U": [
+            0.05353279154642626,
+            0.058495008453573735
+          ],
+          "StO2_D": [
+            -3.021343571043447,
+            4.321343571043447
+          ],
+          "f_D": [
+            -0.011007884583600518,
+            0.048350484583600514
+          ],
+          "mua_DermR": [
+            0.44712396229202517,
+            0.5328760377079749
+          ],
+          "mua_SubQ": [
+            0.32417048006591687,
+            0.5758295199340832
+          ]
+        },
+        "relative_sqrt_crlb_psi": {
+          "StO2_U": 0.08706709768120256,
+          "f_U": 0.022599656890572504,
+          "StO2_D": 2.8817982999079708,
+          "f_D": 0.8110158031365634,
+          "mua_DermR": 0.044644757996362555,
+          "mua_SubQ": 0.14266647633052934
+        },
+        "correlation_matrix": [
+          [
+            1.0,
+            -0.7229917273092555,
+            -0.30357752434290664,
+            -0.0709952790344832,
+            0.6786288888780734,
+            -0.24558613520918618
+          ],
+          [
+            -0.7229917273092555,
+            1.0,
+            0.1316721380549278,
+            0.09056979043887889,
+            -0.8528933478917429,
+            0.21952675442099495
+          ],
+          [
+            -0.30357752434290664,
+            0.1316721380549278,
+            1.0000000000000002,
+            -0.2929956389280052,
+            -0.06387773995494014,
+            0.7684461685499516
+          ],
+          [
+            -0.0709952790344832,
+            0.09056979043887889,
+            -0.2929956389280052,
+            1.0,
+            -0.3046841747796844,
+            -0.6674424651864868
+          ],
+          [
+            0.6786288888780734,
+            -0.8528933478917429,
+            -0.06387773995494014,
+            -0.3046841747796844,
+            1.0000000000000002,
+            -0.13473254929821235
+          ],
+          [
+            -0.24558613520918618,
+            0.21952675442099495,
+            0.7684461685499516,
+            -0.6674424651864868,
+            -0.13473254929821235,
+            1.0000000000000002
+          ]
+        ],
+        "correlation_labels": [
+          "StO2_U",
+          "f_U",
+          "StO2_D",
+          "f_D",
+          "mua_DermR",
+          "mua_SubQ"
+        ],
+        "correlation_meaning": "local coupling of the bound at the nominal point: the directions in which the Fisher information fails to separate two parameters. It is a statement about this geometry and photon budget, not evidence that two absorption spectra are similar or that the two parameters share a single degree of freedom",
+        "strongest_correlated_pairs": [
+          {
+            "a": "f_U",
+            "b": "mua_DermR",
+            "correlation": -0.8528933478917429
+          },
+          {
+            "a": "StO2_D",
+            "b": "mua_SubQ",
+            "correlation": 0.7684461685499516
+          },
+          {
+            "a": "StO2_U",
+            "b": "f_U",
+            "correlation": -0.7229917273092555
+          },
+          {
+            "a": "StO2_U",
+            "b": "mua_DermR",
+            "correlation": 0.6786288888780734
+          },
+          {
+            "a": "f_D",
+            "b": "mua_SubQ",
+            "correlation": -0.6674424651864868
+          },
+          {
+            "a": "f_D",
+            "b": "mua_DermR",
+            "correlation": -0.3046841747796844
+          },
+          {
+            "a": "StO2_U",
+            "b": "StO2_D",
+            "correlation": -0.30357752434290664
+          },
+          {
+            "a": "StO2_D",
+            "b": "f_D",
+            "correlation": -0.2929956389280052
+          },
+          {
+            "a": "StO2_U",
+            "b": "mua_SubQ",
+            "correlation": -0.24558613520918618
+          },
+          {
+            "a": "f_U",
+            "b": "mua_SubQ",
+            "correlation": 0.21952675442099495
+          },
+          {
+            "a": "mua_DermR",
+            "b": "mua_SubQ",
+            "correlation": -0.13473254929821235
+          },
+          {
+            "a": "f_U",
+            "b": "StO2_D",
+            "correlation": 0.1316721380549278
+          },
+          {
+            "a": "f_U",
+            "b": "f_D",
+            "correlation": 0.09056979043887889
+          },
+          {
+            "a": "StO2_U",
+            "b": "f_D",
+            "correlation": -0.0709952790344832
+          },
+          {
+            "a": "StO2_D",
+            "b": "mua_DermR",
+            "correlation": -0.06387773995494014
+          }
+        ],
+        "targets": {
+          "StO2_U": {
+            "value": 0.95,
+            "kind": "parameter",
+            "sqrt_crlb": 0.08271374279714243,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.7878840430910915,
+              1.1121159569089085
+            ],
+            "relative_sqrt_crlb": 0.08706709768120256
+          },
+          "f_U": {
+            "value": 0.0560139,
+            "kind": "parameter",
+            "sqrt_crlb": 0.0012658949211028392,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.05353279154642626,
+              0.058495008453573735
+            ],
+            "relative_sqrt_crlb": 0.022599656890572504
+          },
+          "StO2_D": {
+            "value": 0.65,
+            "kind": "parameter",
+            "sqrt_crlb": 1.873168894940181,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -3.021343571043447,
+              4.321343571043447
+            ],
+            "relative_sqrt_crlb": 2.8817982999079708
+          },
+          "f_D": {
+            "value": 0.0186713,
+            "kind": "parameter",
+            "sqrt_crlb": 0.015142719365103715,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.011007884583600518,
+              0.048350484583600514
+            ],
+            "relative_sqrt_crlb": 0.8110158031365634
+          },
+          "mua_DermR": {
+            "value": 0.49,
+            "kind": "parameter",
+            "sqrt_crlb": 0.021875931418217653,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.44712396229202517,
+              0.5328760377079749
+            ],
+            "relative_sqrt_crlb": 0.044644757996362555
+          },
+          "mua_SubQ": {
+            "value": 0.45,
+            "kind": "parameter",
+            "sqrt_crlb": 0.0641999143487382,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.32417048006591687,
+              0.5758295199340832
+            ],
+            "relative_sqrt_crlb": 0.14266647633052934
+          },
+          "StO2_D_minus_StO2_U": {
+            "value": -0.29999999999999993,
+            "kind": "linear contrast",
+            "sqrt_crlb": 1.8999141924713576,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -4.023763390960362,
+              3.4237633909603615
+            ],
+            "relative_sqrt_crlb": 6.33304730823786
+          },
+          "f_D_minus_f_U": {
+            "value": -0.037342600000000004,
+            "kind": "linear contrast",
+            "sqrt_crlb": 0.01508085403798233,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.06690053077055082,
+              -0.007784669229449193
+            ],
+            "relative_sqrt_crlb": 0.4038512058073709
+          },
+          "S_combined": {
+            "value": 0.875,
+            "kind": "nonlinear contrast, analytic gradient propagated",
+            "sqrt_crlb": 0.46962037369652276,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.04543901885142598,
+              1.795439018851426
+            ],
+            "relative_sqrt_crlb": 0.5367089985103117,
+            "definition": "(f_U * StO2_U + f_D * StO2_D) / (f_U + f_D)",
+            "gradient_wrt_psi": [
+              0.75,
+              1.0042150251991022,
+              0.25,
+              -3.012645075597307,
+              0.0,
+              0.0
+            ],
+            "analytic_gradient_vs_finite_difference": 1.5628136067944195e-10
+          }
+        }
+      },
+      "estimability_aware_separate": {
+        "threshold_grid": [
+          0.1,
+          0.03,
+          0.01,
+          0.003,
+          0.001,
+          0.0003,
+          0.0001,
+          1e-06,
+          1e-12
+        ],
+        "threshold_grid_fixed_before_threshold_sensitivity_bounds_were_evaluated": true,
+        "no_threshold_selected": true,
+        "leakage_tolerance": 1e-10,
+        "note": "reported as a curve; the headline bound is the full-rank one, because the numerical rank of J_w equals the number of parameters",
+        "warning": "where a target has a discarded component its bound is infinite; the diagonal of a thresholded pseudo-inverse is a bound on the variance of the target's projection onto the retained subspace, a different estimand",
+        "curve": [
+          {
+            "relative_threshold": 0.1,
+            "retained_rank": 4,
+            "discarded_singular_values": [
+              1.2976636263067767,
+              0.5277689168896097
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.023872059414131414,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.07753917673183726
+              },
+              "f_U": {
+                "discarded_component": 0.004449737235592942,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.001242994705795988
+              },
+              "StO2_D": {
+                "discarded_component": 0.9987358428877564,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.003619495919965
+              },
+              "f_D": {
+                "discarded_component": 0.9960143431757139,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 9.209344104540547e-05
+              },
+              "mua_DermR": {
+                "discarded_component": 0.019758830952527538,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0205458317703439
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.09747849781765196,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.02813973531759767
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7174812826849272,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.07557895206960633
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.31125169207827236,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.001238076536182315
+              },
+              "S_combined": {
+                "discarded_component": 0.31166823052001197,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.05772671806857855
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.03,
+            "retained_rank": 4,
+            "discarded_singular_values": [
+              1.2976636263067767,
+              0.5277689168896097
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.023872059414131414,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.07753917673183726
+              },
+              "f_U": {
+                "discarded_component": 0.004449737235592942,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.001242994705795988
+              },
+              "StO2_D": {
+                "discarded_component": 0.9987358428877564,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.003619495919965
+              },
+              "f_D": {
+                "discarded_component": 0.9960143431757139,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 9.209344104540547e-05
+              },
+              "mua_DermR": {
+                "discarded_component": 0.019758830952527538,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0205458317703439
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.09747849781765196,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.02813973531759767
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7174812826849272,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.07557895206960633
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.31125169207827236,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.001238076536182315
+              },
+              "S_combined": {
+                "discarded_component": 0.31166823052001197,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.05772671806857855
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.01,
+            "retained_rank": 5,
+            "discarded_singular_values": [
+              0.5277689168896097
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.012798774243889111,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.07907885943378923
+              },
+              "f_U": {
+                "discarded_component": 0.0014789106675169206,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0012561261670520957
+              },
+              "StO2_D": {
+                "discarded_component": 0.986576939313035,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.11978374983994237
+              },
+              "f_D": {
+                "discarded_component": 0.15130845020669836,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.014165019514033528
+              },
+              "mua_DermR": {
+                "discarded_component": 0.0010272302263394594,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.021855132052851837
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.060038693447849144,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.03874318262402459
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7066653440092457,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.1549414441979902
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.04925095103791622,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.014038266611621565
+              },
+              "S_combined": {
+                "discarded_component": 0.3091509146330839,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.06259622777866171
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.003,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.001,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.0003,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.0001,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 1e-06,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 1e-12,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.332440350260832e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.08271374279714243,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 7.683231125024568e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0012658949211028392,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 1.7159071428757305e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8731688949401812,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 4.620089027969186e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.015142719365103715,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 5.036516679601631e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.02187593141821765,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 4.320412854332997e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0641999143487382,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 3.208873869201535e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8999141924713578,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 7.525198275565444e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.01508085403798233,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 4.4284749799218693e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.4696203736965228,
+                "bound": "finite"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "multinomial_fixed_launch": {
+      "geometry": {
+        "singular_values": [
+          121.9778431905003,
+          49.04420397627152,
+          18.205113890659412,
+          13.14130753033968,
+          1.316162423533148,
+          0.5350677161239026
+        ],
+        "numerical_rank": 6,
+        "numerical_rank_tolerance": 3.250142640101047e-12,
+        "numerical_rank_tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+        "condition_number_Jw": 227.96711428251183,
+        "condition_number_I": 51969.00519429581,
+        "near_null": {
+          "near_null_direction_z_from_svd": [
+            -0.012485980766072708,
+            0.0016339418556145895,
+            0.987657204004372,
+            -0.14396757039827182,
+            -0.0018741602923100643,
+            0.060369728286669366
+          ],
+          "near_null_tangent_psi_per_unit_z": [
+            -0.012485980766072708,
+            9.152345570621006e-05,
+            0.987657204004372,
+            -0.0026880616971772524,
+            -0.0009183385432319315,
+            0.027166377729001216
+          ],
+          "near_null_tangent_psi_unit_norm_display_only": [
+            -0.01263617779737251,
+            9.262441458152119e-05,
+            0.9995379831568117,
+            -0.002720397073502978,
+            -0.0009293854706224025,
+            0.02749316898092691
+          ],
+          "tangent_norm": 0.9881137291902434,
+          "smallest_singular_value": 0.5350677161239026,
+          "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+          "whitened_response_equals_smallest_singular_value": {
+            "response": 0.5350677161239056,
+            "smallest_singular_value": 0.5350677161239026,
+            "relative_difference": 5.602285610133475e-15,
+            "passes": true
+          },
+          "pushforward_consistency": {
+            "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+            "normalized_max_diff": 1.4439030528070768e-16,
+            "passes": true
+          }
+        },
+        "near_null_direction_z_from_svd": {
+          "StO2_U": -0.012485980766072708,
+          "f_U": 0.0016339418556145895,
+          "StO2_D": 0.987657204004372,
+          "f_D": -0.14396757039827182,
+          "mua_DermR": -0.0018741602923100643,
+          "mua_SubQ": 0.060369728286669366
+        },
+        "near_null_tangent_psi_per_unit_z": {
+          "StO2_U": -0.012485980766072708,
+          "f_U": 9.152345570621006e-05,
+          "StO2_D": 0.987657204004372,
+          "f_D": -0.0026880616971772524,
+          "mua_DermR": -0.0009183385432319315,
+          "mua_SubQ": 0.027166377729001216
+        },
+        "near_null_tangent_psi_unit_norm_display_only": {
+          "StO2_U": -0.01263617779737251,
+          "f_U": 9.262441458152119e-05,
+          "StO2_D": 0.9995379831568117,
+          "f_D": -0.002720397073502978,
+          "mua_DermR": -0.0009293854706224025,
+          "mua_SubQ": 0.02749316898092691
+        },
+        "near_null_coordinate_warning": "the right singular vectors of J_w live in the scaled coordinate z, where psi = D z. Any step taken in psi space must use the pushforward D v_z. The earlier field name near_null_direction_psi_from_svd was wrong: it held v_z."
+      },
+      "crlb": {
+        "quantity": "lower bound on the standard deviation of a locally unbiased estimator at the nominal parameter value, under the assumed photon budget and likelihood",
+        "not_a_confidence_interval": true,
+        "not_an_achieved_estimator_error": true,
+        "method": "C_z = V diag(1 / s^2) V^T from the SVD of J_w, then C_psi = D C_z D",
+        "plain_matrix_inverse_used": false,
+        "singular_values_truncated": false,
+        "numerical_rank": 6,
+        "numerical_rank_tolerance": 3.250142640101047e-12,
+        "numerical_rank_tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+        "numerical_rank_asserted_equal_to_n_parameters": true,
+        "independent_cholesky_check": {
+          "normalized_max_diff": 1.7400552455633972e-14,
+          "passes": true
+        },
+        "singular_values": [
+          121.9778431905003,
+          49.04420397627152,
+          18.205113890659412,
+          13.14130753033968,
+          1.316162423533148,
+          0.5350677161239026
+        ],
+        "condition_number_Jw": 227.96711428251183,
+        "sqrt_crlb_psi": {
+          "StO2_U": 0.06672488477709665,
+          "f_U": 0.0010889490762264226,
+          "StO2_D": 1.8492941303743464,
+          "f_D": 0.014854885100113385,
+          "mua_DermR": 0.019661897613372063,
+          "mua_SubQ": 0.06383953503700517
+        },
+        "gaussian_equivalent_1p96_crlb_span_psi": {
+          "StO2_U": [
+            0.8192216289643056,
+            1.0807783710356942
+          ],
+          "f_U": [
+            0.053879599029598046,
+            0.05814820097040195
+          ],
+          "StO2_D": [
+            -2.9745498923550384,
+            4.274549892355038
+          ],
+          "f_D": [
+            -0.01044373979070291,
+            0.0477863397907029
+          ],
+          "mua_DermR": [
+            0.4514633888100767,
+            0.5285366111899232
+          ],
+          "mua_SubQ": [
+            0.32487681053768697,
+            0.575123189462313
+          ]
+        },
+        "relative_sqrt_crlb_psi": {
+          "StO2_U": 0.07023672081799648,
+          "f_U": 0.019440693760413446,
+          "StO2_D": 2.84506789288361,
+          "f_D": 0.7955999368074739,
+          "mua_DermR": 0.04012632165994299,
+          "mua_SubQ": 0.14186563341556704
+        },
+        "correlation_matrix": [
+          [
+            0.9999999999999998,
+            -0.7075903977406518,
+            -0.3590553627729917,
+            -0.04812356576142488,
+            0.7106755486363873,
+            -0.2811226123132094
+          ],
+          [
+            -0.7075903977406518,
+            0.9999999999999998,
+            0.16262817808027172,
+            0.054346247891658275,
+            -0.8579387072032769,
+            0.2417983908883004
+          ],
+          [
+            -0.3590553627729917,
+            0.16262817808027172,
+            0.9999999999999999,
+            -0.28022782739337304,
+            -0.10469600824864368,
+            0.7668937805606373
+          ],
+          [
+            -0.04812356576142488,
+            0.054346247891658275,
+            -0.28022782739337304,
+            1.0,
+            -0.2633250235983323,
+            -0.6708178630900462
+          ],
+          [
+            0.7106755486363873,
+            -0.8579387072032769,
+            -0.10469600824864368,
+            -0.2633250235983323,
+            0.9999999999999999,
+            -0.16144431943357956
+          ],
+          [
+            -0.2811226123132094,
+            0.2417983908883004,
+            0.7668937805606373,
+            -0.6708178630900462,
+            -0.16144431943357956,
+            1.0000000000000002
+          ]
+        ],
+        "correlation_labels": [
+          "StO2_U",
+          "f_U",
+          "StO2_D",
+          "f_D",
+          "mua_DermR",
+          "mua_SubQ"
+        ],
+        "correlation_meaning": "local coupling of the bound at the nominal point: the directions in which the Fisher information fails to separate two parameters. It is a statement about this geometry and photon budget, not evidence that two absorption spectra are similar or that the two parameters share a single degree of freedom",
+        "strongest_correlated_pairs": [
+          {
+            "a": "f_U",
+            "b": "mua_DermR",
+            "correlation": -0.8579387072032769
+          },
+          {
+            "a": "StO2_D",
+            "b": "mua_SubQ",
+            "correlation": 0.7668937805606373
+          },
+          {
+            "a": "StO2_U",
+            "b": "mua_DermR",
+            "correlation": 0.7106755486363873
+          },
+          {
+            "a": "StO2_U",
+            "b": "f_U",
+            "correlation": -0.7075903977406518
+          },
+          {
+            "a": "f_D",
+            "b": "mua_SubQ",
+            "correlation": -0.6708178630900462
+          },
+          {
+            "a": "StO2_U",
+            "b": "StO2_D",
+            "correlation": -0.3590553627729917
+          },
+          {
+            "a": "StO2_U",
+            "b": "mua_SubQ",
+            "correlation": -0.2811226123132094
+          },
+          {
+            "a": "StO2_D",
+            "b": "f_D",
+            "correlation": -0.28022782739337304
+          },
+          {
+            "a": "f_D",
+            "b": "mua_DermR",
+            "correlation": -0.2633250235983323
+          },
+          {
+            "a": "f_U",
+            "b": "mua_SubQ",
+            "correlation": 0.2417983908883004
+          },
+          {
+            "a": "f_U",
+            "b": "StO2_D",
+            "correlation": 0.16262817808027172
+          },
+          {
+            "a": "mua_DermR",
+            "b": "mua_SubQ",
+            "correlation": -0.16144431943357956
+          },
+          {
+            "a": "StO2_D",
+            "b": "mua_DermR",
+            "correlation": -0.10469600824864368
+          },
+          {
+            "a": "f_U",
+            "b": "f_D",
+            "correlation": 0.054346247891658275
+          },
+          {
+            "a": "StO2_U",
+            "b": "f_D",
+            "correlation": -0.04812356576142488
+          }
+        ],
+        "targets": {
+          "StO2_U": {
+            "value": 0.95,
+            "kind": "parameter",
+            "sqrt_crlb": 0.06672488477709665,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.8192216289643056,
+              1.0807783710356942
+            ],
+            "relative_sqrt_crlb": 0.07023672081799648
+          },
+          "f_U": {
+            "value": 0.0560139,
+            "kind": "parameter",
+            "sqrt_crlb": 0.0010889490762264226,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.053879599029598046,
+              0.05814820097040195
+            ],
+            "relative_sqrt_crlb": 0.019440693760413446
+          },
+          "StO2_D": {
+            "value": 0.65,
+            "kind": "parameter",
+            "sqrt_crlb": 1.8492941303743464,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -2.9745498923550384,
+              4.274549892355038
+            ],
+            "relative_sqrt_crlb": 2.84506789288361
+          },
+          "f_D": {
+            "value": 0.0186713,
+            "kind": "parameter",
+            "sqrt_crlb": 0.014854885100113385,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.01044373979070291,
+              0.0477863397907029
+            ],
+            "relative_sqrt_crlb": 0.7955999368074739
+          },
+          "mua_DermR": {
+            "value": 0.49,
+            "kind": "parameter",
+            "sqrt_crlb": 0.019661897613372063,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.4514633888100767,
+              0.5285366111899232
+            ],
+            "relative_sqrt_crlb": 0.04012632165994299
+          },
+          "mua_SubQ": {
+            "value": 0.45,
+            "kind": "parameter",
+            "sqrt_crlb": 0.06383953503700517,
+            "gaussian_equivalent_1p96_crlb_span": [
+              0.32487681053768697,
+              0.575123189462313
+            ],
+            "relative_sqrt_crlb": 0.14186563341556704
+          },
+          "StO2_D_minus_StO2_U": {
+            "value": -0.29999999999999993,
+            "kind": "linear contrast",
+            "sqrt_crlb": 1.8742869313592883,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -3.9735348821583014,
+              3.3735348821583018
+            ],
+            "relative_sqrt_crlb": 6.2476231045309625
+          },
+          "f_D_minus_f_U": {
+            "value": -0.037342600000000004,
+            "kind": "linear contrast",
+            "sqrt_crlb": 0.014835605428179565,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.06641985232807887,
+              -0.008265347671921129
+            ],
+            "relative_sqrt_crlb": 0.39728367677075416
+          },
+          "S_combined": {
+            "value": 0.875,
+            "kind": "nonlinear contrast, analytic gradient propagated",
+            "sqrt_crlb": 0.462093126646133,
+            "gaussian_equivalent_1p96_crlb_span": [
+              -0.0306858857299267,
+              1.7806858857299268
+            ],
+            "relative_sqrt_crlb": 0.5281064304527234,
+            "definition": "(f_U * StO2_U + f_D * StO2_D) / (f_U + f_D)",
+            "gradient_wrt_psi": [
+              0.75,
+              1.0042150251991022,
+              0.25,
+              -3.012645075597307,
+              0.0,
+              0.0
+            ],
+            "analytic_gradient_vs_finite_difference": 1.5628136067944195e-10
+          }
+        }
+      },
+      "estimability_aware_separate": {
+        "threshold_grid": [
+          0.1,
+          0.03,
+          0.01,
+          0.003,
+          0.001,
+          0.0003,
+          0.0001,
+          1e-06,
+          1e-12
+        ],
+        "threshold_grid_fixed_before_threshold_sensitivity_bounds_were_evaluated": true,
+        "no_threshold_selected": true,
+        "leakage_tolerance": 1e-10,
+        "note": "reported as a curve; the headline bound is the full-rank one, because the numerical rank of J_w equals the number of parameters",
+        "warning": "where a target has a discarded component its bound is infinite; the diagonal of a thresholded pseudo-inverse is a bound on the variance of the target's projection onto the retained subspace, a different estimand",
+        "curve": [
+          {
+            "relative_threshold": 0.1,
+            "retained_rank": 4,
+            "discarded_singular_values": [
+              1.316162423533148,
+              0.5350677161239026
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.019944271172049655,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.06138440608747234
+              },
+              "f_U": {
+                "discarded_component": 0.0033198015718103146,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0010683753028980225
+              },
+              "StO2_D": {
+                "discarded_component": 0.9987310778311719,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.003362829845704611
+              },
+              "f_D": {
+                "discarded_component": 0.9958779705297797,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 9.373439058990351e-05
+              },
+              "mua_DermR": {
+                "discarded_component": 0.016425771760483997,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.01862083228849853
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.10042261186946366,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.027292144416326932
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7166374690067039,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.05982906581090601
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.31244154716248834,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0010544759479528603
+              },
+              "S_combined": {
+                "discarded_component": 0.3115511137138705,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.04569219873487245
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.03,
+            "retained_rank": 4,
+            "discarded_singular_values": [
+              1.316162423533148,
+              0.5350677161239026
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.019944271172049655,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.06138440608747234
+              },
+              "f_U": {
+                "discarded_component": 0.0033198015718103146,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0010683753028980225
+              },
+              "StO2_D": {
+                "discarded_component": 0.9987310778311719,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.003362829845704611
+              },
+              "f_D": {
+                "discarded_component": 0.9958779705297797,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 9.373439058990351e-05
+              },
+              "mua_DermR": {
+                "discarded_component": 0.016425771760483997,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.01862083228849853
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.10042261186946366,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.027292144416326932
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7166374690067039,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.05982906581090601
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.31244154716248834,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0010544759479528603
+              },
+              "S_combined": {
+                "discarded_component": 0.3115511137138705,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.04569219873487245
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.01,
+            "retained_rank": 5,
+            "discarded_singular_values": [
+              0.5350677161239026
+            ],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 0.01248598076607272,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.06251138061360846
+              },
+              "f_U": {
+                "discarded_component": 0.001633941855614753,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.0010754310343116873
+              },
+              "StO2_D": {
+                "discarded_component": 0.9876572040043715,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.11273679073339103
+              },
+              "f_D": {
+                "discarded_component": 0.14396757039827207,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.013979601594965028
+              },
+              "mua_DermR": {
+                "discarded_component": 0.001874160292309978,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.019586845595444786
+              },
+              "mua_SubQ": {
+                "discarded_component": 0.06036972828666941,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.03870020024671177
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 0.7072080281086913,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.13813225965881631
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 0.0470766365143248,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.013896364370521379
+              },
+              "S_combined": {
+                "discarded_component": 0.3092773457331945,
+                "inside_retained_subspace": false,
+                "sqrt_crlb": null,
+                "bound": "infinite",
+                "status": "not estimable under this threshold",
+                "projected_subspace_sqrt_crlb_not_a_parameter_bound": 0.05101215310499537
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.003,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.001,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.0003,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 0.0001,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 1e-06,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          },
+          {
+            "relative_threshold": 1e-12,
+            "retained_rank": 6,
+            "discarded_singular_values": [],
+            "targets": {
+              "StO2_U": {
+                "discarded_component": 4.796326513371574e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06672488477709665,
+                "bound": "finite"
+              },
+              "f_U": {
+                "discarded_component": 5.882021591738646e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.0010889490762264226,
+                "bound": "finite"
+              },
+              "StO2_D": {
+                "discarded_component": 9.491103652744332e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8492941303743464,
+                "bound": "finite"
+              },
+              "f_D": {
+                "discarded_component": 7.315267746738768e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014854885100113385,
+                "bound": "finite"
+              },
+              "mua_DermR": {
+                "discarded_component": 4.818832255173318e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.019661897613372066,
+                "bound": "finite"
+              },
+              "mua_SubQ": {
+                "discarded_component": 2.4269428805631864e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.06383953503700517,
+                "bound": "finite"
+              },
+              "StO2_D_minus_StO2_U": {
+                "discarded_component": 7.600885022118963e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 1.8742869313592883,
+                "bound": "finite"
+              },
+              "f_D_minus_f_U": {
+                "discarded_component": 6.328846999141958e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.014835605428179563,
+                "bound": "finite"
+              },
+              "S_combined": {
+                "discarded_component": 5.247214519923846e-16,
+                "inside_retained_subspace": true,
+                "sqrt_crlb": 0.462093126646133,
+                "bound": "finite"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

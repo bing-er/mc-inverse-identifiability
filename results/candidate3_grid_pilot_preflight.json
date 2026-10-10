@@ -1,0 +1,96 @@
+{
+  "candidate3_verdict": null,
+  "coverage_claimed": false,
+  "environment": {
+    "backend": "gpu",
+    "cuda_module": "cuda/12.9",
+    "deterministic_flag_set": true,
+    "device_kind": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+    "gpu_memory_total_mib": 81559,
+    "gpu_memory_used_mib": 9890,
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "jax_version": "0.9.1",
+    "nvidia_smi_error": null,
+    "ptxas_version": "12.9.86",
+    "visible_gpu_count": 1,
+    "xla_python_client_preallocate": "false"
+  },
+  "environment_stable": true,
+  "freeze_hash": "7f1407bbfcf92e1a375dcb69ced276a3d53b6990984214f5dc559eb02ad5827a",
+  "normative_input_hashes": {
+    "docs/planning/CANDIDATE3_GRID_PILOT_PLAN.md": "acc34eb5fa761c645180000843b0965a3a8fa56e67af0aff8c778cc24af1051d",
+    "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+    "jaxpad:scripts/inverse/phase2_v12_runner.py": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+    "jaxpad:src/pad/config_v4_633nm.py": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3",
+    "jaxpad:src/pad/mc_forward.py": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+    "jaxpad:src/pad/physics_engine_v4.py": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+    "scripts/candidate3_executor.py": "df3596dfef9267ec9d1e8a5dc8be2137528ec65317f417f79dd9eb32bbf8a431",
+    "scripts/candidate3_grid_analysis.py": "93f12e0913cd1782742dc3cea3217cf7d4c6ace2555b2011e9ec7af410922ba7",
+    "scripts/candidate3_grid_pilot.py": "1f8c1cabec36265f45ea5e0406ee96191e03e12eb845d0168a1fa39eee7e64b8",
+    "scripts/candidate3_grid_pilot_audit.py": "984f5a77d62d5710aa6763d3cc12b35695f013a32d825a4102b71a04c9e086a5",
+    "scripts/candidate3_grid_pilot_fir.sbatch": "490f4008ea2a3647e32b37d7f38fae7a332377e5a8f73a25406538cd7ccd62ae",
+    "scripts/candidate3_grid_preflight.py": "8df92151474b9fb11b9c976bbd9e95bd90f46098cf8c375d0cdb008b37238084",
+    "scripts/candidate3_grid_preflight_fir.sbatch": "548fb2e7ff0bebe289a2a802993a624c8c13c535684a3abd9c4315baeb0fbdf0",
+    "scripts/nuisance_feasibility_gate.py": "3501dce0744b124b4f847a4339677f7ee8bd16b3ee133d1817fac1b662c27986",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "spec/nuisance_spec.json": "75d6589066f98fbcb9822f650238df459b6832a19787bf0754e9151a9f3ec911",
+    "src/augmented.py": "f5807ccac5211dc492fbe41896ba18b3d94bacab1c157764636e0946a146b8c6"
+  },
+  "passes": true,
+  "pilot_transport_run": false,
+  "preflight_seed": 3100000000,
+  "preflight_seed_reused_by_pilot": false,
+  "preflight_transport_run": true,
+  "probe_records": [
+    {
+      "column": "log_d_papillary",
+      "output_digests": {
+        "max_abs_Y": "f249725d7398978cc193d4ca5185fbae03298f1f08b0555558b797fb7d0c2302",
+        "sum_Y": "c01e64f420df15ac8a3fdb5957db9489f42382f86acd88b7c70b6f4bda6ac241",
+        "sum_Y2": "2b49f4ef05a0b40156559dc1453e94dc657d7c50824c966b6d13a11b9706e634",
+        "sum_minus": "12fa8eb3c9e4d1153d85bfd20ddbbd259021eaeb0113a63ef9e48d374a3e1dd3",
+        "sum_plus": "0b4cc09e247f7c7ed12dd15a48db390eeab03c4e2b308ea5eec6f91c08868944"
+      },
+      "parameter_digest": "c2ee003a11a95d6c628108c6b4033cb69fb0428de64f716dd26398de0dd7bbfa",
+      "sequence_index": 0,
+      "wall_seconds": 355.24891448020935,
+      "wavelength_index": 0
+    },
+    {
+      "column": "log_d_papillary",
+      "output_digests": {
+        "max_abs_Y": "f249725d7398978cc193d4ca5185fbae03298f1f08b0555558b797fb7d0c2302",
+        "sum_Y": "c01e64f420df15ac8a3fdb5957db9489f42382f86acd88b7c70b6f4bda6ac241",
+        "sum_Y2": "2b49f4ef05a0b40156559dc1453e94dc657d7c50824c966b6d13a11b9706e634",
+        "sum_minus": "12fa8eb3c9e4d1153d85bfd20ddbbd259021eaeb0113a63ef9e48d374a3e1dd3",
+        "sum_plus": "0b4cc09e247f7c7ed12dd15a48db390eeab03c4e2b308ea5eec6f91c08868944"
+      },
+      "parameter_digest": "c2ee003a11a95d6c628108c6b4033cb69fb0428de64f716dd26398de0dd7bbfa",
+      "sequence_index": 1,
+      "wall_seconds": 355.42801332473755,
+      "wavelength_index": 0
+    },
+    {
+      "column": "mus_slope",
+      "output_digests": {
+        "max_abs_Y": "9870f3b5ca4786d4fa207f62532f730129a5d51b36e03d141242e3dcdf2a8b96",
+        "sum_Y": "982b92c7c37e3120bcc4af62f1f0abd14caf7ab6c7aeea6fbd078969b1ae8074",
+        "sum_Y2": "c251eadca9a720d46225eafedc00dea982f7b48d85fa650313200de92b62342d",
+        "sum_minus": "ee8a4c7413fbf592593bdd5e76c8459f14f7b37bb4f517db1d43e623aaccb69d",
+        "sum_plus": "c2a9cc6eca98eeeaed80841ef41891fcedb51f4cfb956c842a8e8e31562e890b"
+      },
+      "parameter_digest": "f9978b5d602cd1d48a96bba602d3a03a2eaa9f9f27945c443687735b4e830214",
+      "sequence_index": 2,
+      "wall_seconds": 353.73667454719543,
+      "wavelength_index": 0
+    }
+  ],
+  "production_call_count": 120,
+  "production_call_count_per_shard": 20,
+  "projected_shard_wall_seconds": 7408.381167650223,
+  "projection_formula": "300 s overhead + first compile+call + 19 * max(two cached calls)",
+  "repeat_bitwise_identical": true,
+  "schema_version": "candidate3-grid-pilot-preflight-v1",
+  "status": "TARGET-GPU PREFLIGHT; NOT THE GRID PILOT",
+  "timestamp": "2026-10-07T17:26:11-0700"
+}

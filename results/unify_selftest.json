@@ -1,0 +1,247 @@
+{
+  "mode": "selftest",
+  "results": [
+    {
+      "grid_bins_per_wavelength": 30,
+      "branch": "raw",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          11.451969838132959,
+          10.347270719091641,
+          5.364713236264648,
+          4.407101959012424,
+          0.20893270323412064,
+          3.4306328952736626e-16
+        ],
+        "eigenvalues": [
+          131.14761317350712,
+          107.0660113341713,
+          28.780148107353117,
+          19.42254767713114,
+          0.043652874480719334,
+          3.49225717212879e-14
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 8.668616604650627e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 2.9672744886136256e+17,
+        "eigenvector_vs_right_singular_abs_residual": 4.284784109315604e-14,
+        "Jw_v_minus_s_u_rel_residual": 1.1633523737671583e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 3.338150769180283e+16,
+        "condition_number_I": 1.1143250557778917e+33,
+        "eigh_resolvable_floor": 2.9120619953972196e-14,
+        "smallest_eigenvalue_below_eigh_floor": false,
+        "near_null_must_be_read_from_svd": false,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": null
+    },
+    {
+      "grid_bins_per_wavelength": 30,
+      "branch": "diagonal_poisson",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          10530.932319671678,
+          8457.90085327727,
+          4632.68578271634,
+          3112.289841627827,
+          192.89714985775487,
+          1.8076993007067307e-13
+        ],
+        "eigenvalues": [
+          110900535.52150556,
+          71536086.84386842,
+          21461777.561382107,
+          9686348.058299763,
+          37209.31042324169,
+          3.6029593204814067e-09
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 5.374603873200618e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 1.1025720491762344e+17,
+        "eigenvector_vs_right_singular_abs_residual": 5.01172461889766e-14,
+        "Jw_v_minus_s_u_rel_residual": 2.59092359773503e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 5.825599598093858e+16,
+        "condition_number_I": 3.3937610677311317e+33,
+        "eigh_resolvable_floor": 2.462486559584709e-08,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": {
+        "max_abs_diff": 2.9802322387695312e-08,
+        "normalized_max_diff": 2.757052420857619e-16,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      }
+    },
+    {
+      "grid_bins_per_wavelength": 30,
+      "branch": "multinomial_fixed_launch",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          10640.09968469535,
+          8531.246224489367,
+          4649.480162966423,
+          3122.1370066370505,
+          196.09725358299303,
+          1.5139873494896649e-12
+        ],
+        "eigenvalues": [
+          113211721.30025406,
+          72782162.14286411,
+          21617665.785818283,
+          9747739.48821256,
+          38454.13286279257,
+          3.0934616215224867e-09
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 2.6324414155540647e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 1349584991058977.5,
+        "eigenvector_vs_right_singular_abs_residual": 3.9765006095192294e-14,
+        "Jw_v_minus_s_u_rel_residual": 2.0200861264166296e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 7027865647808693.0,
+        "condition_number_I": 4.93908955636495e+31,
+        "eigh_resolvable_floor": 2.5138051928997668e-08,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": {
+        "max_abs_diff": 7.450580596923828e-08,
+        "normalized_max_diff": 6.754792658691841e-16,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      }
+    },
+    {
+      "grid_bins_per_wavelength": 38,
+      "branch": "raw",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          13.986242699824874,
+          12.532496956585629,
+          6.642578250332492,
+          6.104681751705475,
+          0.23331204500123257,
+          8.923316605222752e-16
+        ],
+        "eigenvalues": [
+          195.61498485840457,
+          157.06347996682814,
+          44.12384581179029,
+          37.267139289605836,
+          0.0544345103426589,
+          2.9977528380429123e-15
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 4.3588239598786853e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 3764811341740634.0,
+        "eigenvector_vs_right_singular_abs_residual": 8.252574165724779e-14,
+        "Jw_v_minus_s_u_rel_residual": 1.5479031391655767e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 1.5673816495134588e+16,
+        "condition_number_I": 2.456685235231531e+32,
+        "eigh_resolvable_floor": 4.343525203030043e-14,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": null
+    },
+    {
+      "grid_bins_per_wavelength": 38,
+      "branch": "diagonal_poisson",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          11016.53132094912,
+          9991.659894045037,
+          4942.606634436861,
+          4849.680259550969,
+          164.88500617798869,
+          4.821664413013189e-13
+        ],
+        "eigenvalues": [
+          121363962.345453,
+          99833267.43826796,
+          24429360.342779286,
+          23519398.619878374,
+          27187.065262317887,
+          -1.30981199276053e-08
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 9.82246189453352e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 5.633976121770706e+16,
+        "eigenvector_vs_right_singular_abs_residual": 1.6716043742035824e-13,
+        "Jw_v_minus_s_u_rel_residual": 1.238358983344548e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 2.284798438318645e+16,
+        "condition_number_I": 5.220303903743318e+32,
+        "eigh_resolvable_floor": 2.6948213071132476e-08,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": {
+        "max_abs_diff": 5.960464477539063e-08,
+        "normalized_max_diff": 5.17118701249321e-16,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      }
+    },
+    {
+      "grid_bins_per_wavelength": 38,
+      "branch": "multinomial_fixed_launch",
+      "pass": true,
+      "identities": {
+        "singular_values": [
+          11062.943799929604,
+          10075.166714738296,
+          4964.424401973169,
+          4882.259552199767,
+          165.09200885552283,
+          1.7953409040335115e-14
+        ],
+        "eigenvalues": [
+          122388725.52040082,
+          101508984.32977045,
+          24645509.642906614,
+          23836458.3350459,
+          27255.37138795346,
+          3.1731846558838795e-09
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 3.652581836395656e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 9.844677508914342e+18,
+        "eigenvector_vs_right_singular_abs_residual": 4.9112867635606183e-14,
+        "Jw_v_minus_s_u_rel_residual": 1.8497455252390507e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 6.162029604001661e+17,
+        "condition_number_I": 3.7970608840592875e+35,
+        "eigh_resolvable_floor": 2.7175756205455507e-08,
+        "smallest_eigenvalue_below_eigh_floor": true,
+        "near_null_must_be_read_from_svd": true,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct": {
+        "max_abs_diff": 3.585591912269592e-08,
+        "normalized_max_diff": 3.0844788971637847e-16,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      }
+    }
+  ],
+  "failures": [],
+  "reparameterization": {
+    "T_max_rel_err": 3.043112704716577e-10,
+    "pushforward_cosine": 1.0,
+    "pass": true
+  }
+}

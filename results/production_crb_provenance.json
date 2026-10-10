@@ -1,0 +1,145 @@
+{
+  "analysis": "Cramer-Rao lower bounds from the frozen 32-seed pool",
+  "date": "2026-10-01",
+  "transport_rerun": false,
+  "note": "no transport was run; this consumes the frozen pool and the frozen spectrum artifact only",
+  "what_the_numbers_are": {
+    "quantity": "lower bounds on the standard deviation of a locally unbiased estimator at the nominal parameter value, under the assumed photon budget and the assumed likelihood",
+    "field_name": "sqrt_crlb",
+    "not_a_confidence_interval": true,
+    "not_an_achieved_estimator_error": true,
+    "no_claim_that_any_estimator_attains_them": true,
+    "span_field_name": "gaussian_equivalent_1p96_crlb_span",
+    "span_definition": "nominal +/- 1.96 sqrt(CRLB), a Gaussian-equivalent width for comparing a bound with the parameter's own scale",
+    "span_caveat": "it carries no coverage guarantee and is not a physical confidence interval, so it may extend outside a parameter's physical range without that being a contradiction"
+  },
+  "inputs": {
+    "pooled_artifact": "data/derived/production_pooled.npz",
+    "pooled_sha256": "9d9cbe8a89a0488203a7ad78ec0090341e9d8849af1c027028909c34216c8194",
+    "jacobian_coordinates": "psi",
+    "reparameterize_applied": false,
+    "spectrum_artifact": "results/unify_spectrum.json",
+    "spectrum_sha256": "29b35a4d9c99661e5e501f6cb9df6a9cf126812f686d37f90c61995925d304e1",
+    "spectrum_role": "computational input: the file is read and asserted against this recomputation, not merely hashed",
+    "spectrum_assertions": {
+      "jacobian_coordinates": "equal",
+      "reparameterize_applied": "both false",
+      "column_scale_D": "normalized max difference below 1e-14",
+      "n_measurement_photons_per_wavelength": "equal",
+      "singular_values_per_branch": "normalized max difference below 1e-12 for raw, diagonal_poisson and multinomial_fixed_launch",
+      "on_failure": "the script exits rather than reporting bounds"
+    }
+  },
+  "outputs": {
+    "results/production_crb.json": "859a1b44073840f151ebdb2aad3ba5f9c042bda2e7a523413d69deb03794e12f",
+    "results/production_crb_table.tsv": "f325b8ae7a108040a0befe6eaa619d502768f1b6ee0f2dd1a2c46babcb3dfae4"
+  },
+  "code": {
+    "scripts/production_crb.py": "8fed29c84660669fd9780e777b4c3b5c3a20705cd931ab892e75a428f710958c",
+    "scripts/unify_spectrum.py": "a85d7fc6b9992066547813e891f5da2465649fc85dae8c1d26a02af176fd5a6f",
+    "src/unify.py": "d5feeb57f429bcf8486b5f7f3f2ffe9261f792c8cdb6ad223e42850537b7ffca",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5"
+  },
+  "likelihood_selection": {
+    "headline": "multinomial_fixed_launch",
+    "sensitivity": "diagonal_poisson",
+    "basis": "spec/baseline_spec.json profiles.production.likelihood was fixed in the spec before the CRLB was computed",
+    "spec_field": "profiles.production.likelihood",
+    "fixed_in_commit": "159270c",
+    "fixed_at": "2026-09-30 12:47:28 -0700",
+    "crlb_script_first_committed": "0afe58b",
+    "crlb_script_first_committed_at": "2026-10-01 00:00:47 -0700",
+    "verifiable_by": "git show 159270c:spec/baseline_spec.json"
+  },
+  "covariance_method": {
+    "form": "C_z = V diag(1 / s^2) V^T from the SVD of J_w, then C_psi = D C_z D",
+    "plain_matrix_inverse_used": false,
+    "singular_values_truncated": false,
+    "numerical_rank": {
+      "computed_not_assumed": true,
+      "tolerance_rule": "max(m, n) * finfo(float64).eps * s_max",
+      "tolerance_multinomial_fixed_launch": 3.25e-12,
+      "tolerance_diagonal_poisson": 2.824e-12,
+      "rank_multinomial_fixed_launch": 6,
+      "rank_diagonal_poisson": 6,
+      "asserted": "the script exits if the rank is below the number of parameters, rather than reporting a full-rank bound"
+    },
+    "independent_cholesky_cross_check": {
+      "multinomial_fixed_launch": 1.74e-14,
+      "diagonal_poisson": 4.05e-15,
+      "note": "a second route to the same covariance; reported values come from the SVD"
+    },
+    "coordinate_pushforward": "psi = D z, so a target with gradient c is (D c)^T z; every target gradient is mapped through D before it touches the singular subspace"
+  },
+  "targets": {
+    "parameters": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "linear_contrasts": [
+      "StO2_D_minus_StO2_U",
+      "f_D_minus_f_U"
+    ],
+    "nonlinear_contrast": {
+      "name": "S_combined",
+      "definition": "(f_U * StO2_U + f_D * StO2_D) / (f_U + f_D)",
+      "rationale": "A BVF-weighted descriptive contrast in the nominal two-plexus parameterization. It does not include layer-thickness, photon-pathlength, or measurement-sensitivity weights and is not asserted to equal an instrument-effective saturation.",
+      "propagation": "full analytic gradient, dS/dStO2_U = f_U/(f_U+f_D), dS/df_U = f_D(StO2_U-StO2_D)/(f_U+f_D)^2, dS/dStO2_D = f_D/(f_U+f_D), dS/df_D = f_U(StO2_D-StO2_U)/(f_U+f_D)^2",
+      "analytic_gradient_vs_central_finite_difference": 1.563e-10,
+      "nominal": 0.875,
+      "sqrt_crlb_multinomial_fixed_launch": 0.462093,
+      "sqrt_crlb_diagonal_poisson": 0.46962
+    }
+  },
+  "headline_sqrt_crlb_multinomial_fixed_launch": {
+    "StO2_U": 0.066725,
+    "f_U": 0.001089,
+    "StO2_D": 1.849294,
+    "f_D": 0.014855,
+    "mua_DermR": 0.019662,
+    "mua_SubQ": 0.06384,
+    "S_combined": 0.462093
+  },
+  "sensitivity_sqrt_crlb_diagonal_poisson": {
+    "StO2_U": 0.082714,
+    "f_U": 0.001266,
+    "StO2_D": 1.873169,
+    "f_D": 0.015143,
+    "mua_DermR": 0.021876,
+    "mua_SubQ": 0.0642,
+    "S_combined": 0.46962
+  },
+  "estimability_aware_analysis": {
+    "reported_separately_from_headline": true,
+    "threshold_grid": [
+      0.1,
+      0.03,
+      0.01,
+      0.003,
+      0.001,
+      0.0003,
+      0.0001,
+      1e-06,
+      1e-12
+    ],
+    "threshold_grid_fixed_before_threshold_sensitivity_bounds_were_evaluated": true,
+    "no_threshold_selected": true,
+    "leakage_tolerance": 1e-10,
+    "rule": "a target whose gradient direction has any component in the discarded subspace has an INFINITE bound and is labelled 'not estimable under this threshold'; the diagonal of a thresholded pseudo-inverse is never reported as a finite bound on that parameter",
+    "why_the_rule_matters_here": "at a relative threshold of 0.01 the retained rank is 5 and deep StO2 has 98.77 percent of its direction in the discarded subspace, yet a thresholded pseudo-inverse diagonal would read 0.112737, about 16 times tighter than the full-rank 1.849294; that number bounds the variance of the projection of deep StO2 onto the retained subspace, a different estimand"
+  },
+  "interpretation_constraints": {
+    "deep_StO2": "under the assumed photon budget and within a local unbiased-estimator framework, the data do not tightly constrain deep StO2 at this geometry. The statement is about the information content of this measurement configuration, not about any particular estimator.",
+    "spans_outside_physical_range": "a Gaussian-equivalent span that extends beyond a parameter's physical range is not a physical confidence interval and must not be presented as one; it indicates only that the bound is large relative to the parameter's own scale",
+    "correlations": "correlation entries describe local coupling of the bound at the nominal point, that is, directions in which the Fisher information fails to separate two parameters under this geometry and photon budget. They are not on their own evidence that two absorption spectra are similar, nor that the coupled parameters carry only one degree of freedom."
+  },
+  "checks": {
+    "raw_branch_crlb": "omitted; the raw branch has no likelihood, so there is no Fisher information and no CRLB. Only its geometric spectrum and near-null direction are reported.",
+    "non_finite_values_in_output": 0
+  },
+  "near_null_coordinates": "the right singular vectors of J_w = C^{-1/2} J_psi D live in the scaled coordinate z, where psi = D z, so the psi-space direction is the pushforward D v_z. The field previously named near_null_direction_psi_from_svd held v_z and was mislabelled; it is now near_null_direction_z_from_svd, with near_null_tangent_psi_per_unit_z alongside it. The tangent is stored unnormalized so a unit step along it is a unit displacement in z; a unit-norm copy is kept for display only. Two checks are recorded per branch: J_psi @ (D v_z) equals (J_psi D) @ v_z, and the whitened response along the direction equals the smallest singular value."
+}

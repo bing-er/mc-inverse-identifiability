@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software or its archived artifacts, please cite this record
+  and the associated article.
+title: >-
+  Auditing local identifiability in layered diffuse-reflectance inversion with
+  differentiable Monte Carlo: code and frozen artifacts
+type: software
+version: 1.0.0
+authors:
+  - family-names: Yu
+    given-names: Binger
+    affiliation: British Columbia Institute of Technology
+repository-code: "https://github.com/bing-er/mc-inverse-identifiability"
+license: MIT
+keywords:
+  - differentiable Monte Carlo
+  - diffuse reflectance
+  - identifiability
+  - Fisher information
+  - inverse problems
+abstract: >-
+  Frozen code, production stream artifacts, machine-readable results, and
+  executable checks supporting an audit of local identifiability in layered
+  diffuse-reflectance inversion.

@@ -1,0 +1,579 @@
+{
+  "spec_version": "3.1.0",
+  "supersedes": "3.0.0 as an executable study state: version 3.1.0 retains its frozen design and evidence for audit but closes execution after all three estimator-route candidates failed to produce a registerable construction. Earlier history is unchanged: version 1.0.0 swept nuisance values and recomputed the six-parameter bound at each one, which treats the nuisance as KNOWN inside every draw; version 2.0.0 used bare F_ee and erased otherwise estimable bounds after any rank loss; version 2.1.0 carried a nonexistent log_f_melanin production column; and version 3.0.0 corrected those issues before the estimator-route audits closed the study.",
+  "frozen": "2026-10-04",
+  "closed": "2026-10-08",
+  "status": "CLOSED WITHOUT THE 48-DRAW STUDY. The nominal feasibility gate ran as job 62960056, but no estimator route was selected. Candidate 1 is retired because its approximate-normality construction is unsupported in the measured low-support regime and all five historical columns remain unresolved. Candidate 2 is not registerable because its six-replicate coverage heuristic is invalid and a valid rare-event necessary condition cannot support the illustrative margin. Candidate 3 is retired as operationally infeasible under the literal all-120, 0.5-SD formulation. No interval criterion is registered, no downstream classification is established, no new transport is authorized, and the manuscript may report only the resulting feasibility limitation.",
+  "purpose": "Durable record for MERGE_CHECKS item 2. The originally frozen nuisance-marginalization design is retained for audit, while version 3.1.0 records that all three estimator-route candidates closed without a registerable construction and the planned 48-draw study will not be executed under this design.",
+  "parameterization": {
+    "production_psi_unchanged": true,
+    "production_psi": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "production_artifacts_must_not_be_modified": [
+      "spec/baseline_spec.json",
+      "results/production_crb.json",
+      "results/production_crb_table.tsv",
+      "results/unify_spectrum.json",
+      "data/derived/production_pooled.npz"
+    ],
+    "augmented_vector_is_for_this_check_only": true,
+    "theta": "[psi, eta], 6 + 5 = 11 components",
+    "eta": [
+      {
+        "index": 0,
+        "name": "log_d_epidermis",
+        "coordinate": "log multiplicative scale"
+      },
+      {
+        "index": 1,
+        "name": "log_d_papillary",
+        "coordinate": "log multiplicative scale"
+      },
+      {
+        "index": 2,
+        "name": "log_d_reticular",
+        "coordinate": "log multiplicative scale"
+      },
+      {
+        "index": 3,
+        "name": "log_mus_scale",
+        "coordinate": "log multiplicative scale"
+      },
+      {
+        "index": 4,
+        "name": "mus_slope",
+        "coordinate": "additive shift in the exponent"
+      }
+    ],
+    "why_log_coordinates": "every strictly positive quantity is carried in log coordinates, so positivity is automatic for any finite eta and no draw can drive a thickness or a scattering coefficient non-positive. It also makes eta dimensionless, so its column scale is unity by construction rather than by a choice that would need justifying.",
+    "theta_column_scale": "the psi part is the production D = [1, f_U, 1, f_D, mua_DermR, mua_SubQ]; the eta part is unity",
+    "prior_is_normal_in_eta": "every prior is normal in the eta coordinate. For a log coordinate that is a lognormal on the underlying positive quantity; for the additive exponent shift it is a normal on the exponent. The numeric width is carried in prior_sd as a field, not parsed from prose."
+  },
+  "nuisance_marginalization": {
+    "why": "sweeping nuisance values and recomputing the six-parameter bound at each one treats the nuisance as known inside every draw. The reviewer's question is a joint estimation problem.",
+    "block_fisher": "F = [[F_pp, F_pe], [F_ep, F_ee]] from the whitened augmented Jacobian J_w_theta = C^{-1/2} J_theta D_theta",
+    "effective_information": "F_eff = F_pp - F_pe pinv(F_ee) F_ep",
+    "interpretation": "F_eff is the information about psi that survives having to estimate eta from the same data. It is never larger than F_pp in the positive-semidefinite order, so marginalized bounds are never tighter than conditional ones, and the gap is what the reviewer is asking about.",
+    "two_independent_routes": {
+      "schur": "F_eff from the blocks of F, with pinv at a recorded rank tolerance",
+      "projection": "F_eff = J_perp^T J_perp with J_perp = (I - P_eta) J_w_psi, P_eta the orthogonal projector onto the column space of J_w_eta",
+      "reported": "projection",
+      "why": "algebraically identical and numerically better behaved; forming F squares the condition number and pinv of a near-singular F_ee is the worst place to be careless. The Schur route is kept as evidence, not as the source.",
+      "agreement_tolerance": 1e-08
+    },
+    "must_also_report": [
+      "the conditional result from F_pp, labelled as conditional",
+      "the marginalized result from F_eff, labelled as marginalized",
+      "the rank, condition number and singularity of F_ee",
+      "the rank of the nuisance column space",
+      "the change marginalization makes to StO2_U, to StO2_D and to the near-null direction"
+    ],
+    "rank_deficiency_is_not_an_error": "a rank-deficient F_ee means some nuisance combination is itself unidentifiable, and marginalization then removes only the identifiable part of the nuisance span. A rank-deficient F_eff means the bound is infinite along at least one psi direction, and no finite diagonal is reported for it.",
+    "both_directions_required": true,
+    "F_psi_eff": "F_pp - F_pe pinv(F_ee) F_ep; the information about psi that survives estimating eta",
+    "F_eta_eff": "F_ee - F_ep pinv(F_pp) F_pe; the information about eta that survives estimating psi",
+    "numerical_main_path": {
+      "psi": "J_psi_perp = (I - P_eta) J_w_psi, F_psi_eff = J_psi_perp^T J_psi_perp",
+      "eta": "J_eta_perp = (I - P_psi) J_w_eta, F_eta_eff = J_eta_perp^T J_eta_perp"
+    },
+    "schur_is_cross_check_only": true,
+    "scattering_claim_must_use_F_eta_eff": "the scattering_nuisance_remains_weakly_constrained classification uses the estimable bound on log_mus_scale from F_eta_eff, never from bare F_ee. Bare F_ee assumes psi is known. A constructed case in the self-tests shows F_ee giving log_mus_scale a sqrt-CRLB of 0.028, well inside its 0.20 prior so it would read as measured, while F_eta_eff shows it not estimable at all with a null-space leakage of 1.0.",
+    "prior_informed_posterior": {
+      "definition": "Cov_eta_posterior = inverse(F_eta_eff + diag(1 / prior_sd^2))",
+      "purpose": "to say whether the data narrowed the prior, by comparing posterior SD against prior SD",
+      "named_separately_from": "data_only_crlb",
+      "why_separately": "the prior precision is positive definite, so the posterior is finite even where the data alone identify nothing. Only the data-only bound says what the measurement constrains. Reporting them under one name would let a prior masquerade as a measurement.",
+      "invariants": [
+        "the posterior SD is never wider than the prior SD",
+        "with zero information the posterior equals the prior exactly"
+      ]
+    }
+  },
+  "nominal_derivative_feasibility_gate": {
+    "must_pass_before_any_draw": true,
+    "runs_at_the_nominal_point_only": true,
+    "n_draws_in_this_gate": 0,
+    "checks": [
+      "every eta parameter has a declared scale, bounds and coordinate",
+      "layer boundaries are strictly increasing at every evaluated point",
+      "the reduced scattering factor is strictly positive at every evaluated point and every wavelength",
+      "each column of J_eta passes a multi-step symmetric finite-difference convergence check, with independent replicate streams and an h^2 extrapolation, as in item 1",
+      "if AD is used for a column, the discrete layer-crossing branches must be shown not to invalidate the pathwise derivative for that column",
+      "AD and pMC are compared only on columns each mathematically supports",
+      "per-column cost and noise are reported and the 48-draw cost is re-estimated from them"
+    ],
+    "why_the_geometry_columns_are_suspect": "a layer boundary position enters the kernel through a searchsorted layer index and through the distance-to-interface comparison, both discrete branches that MOVE with the parameter. The pathwise derivative drops the boundary term those branches generate, which is the same mechanism that makes common-random-number finite differences unable to validate pathwise AD. A thickness derivative taken by AD is therefore suspect by construction and must be demonstrated, not assumed.",
+    "consequence_if_AD_fails_on_a_column": "that column is built by the ensemble central difference instead, which costs far more per draw. The cost re-estimate must be produced after the gate, not before it.",
+    "pmc_term_removed": "the cost projection carries no pMC term this round, because no eta column is a pMC-supported absorption column",
+    "convergence_is_a_hard_gate": "a column whose h^2 extrapolation is not established receives no AD comparison and no estimator route, and the runner refuses to write a success artifact if any column is unresolved. What needs changing in that case is the step grid or the replicate count, not the result.",
+    "equivalence_design": {
+      "criterion": "a pre-registered equivalence test, not failure to reject",
+      "why": "a max-T test that does not reject shows absence of evidence; at six replicates that is mostly a statement about power and cannot certify agreement",
+      "equivalence_margin_relative": 0.05,
+      "margin_basis": "a relative discrepancy of five percent in a nuisance Jacobian column. This is a NECESSARY column-level agreement criterion only, and it carries no claim about any downstream classification. The earlier justification from the headroom of the final thresholds is WITHDRAWN: it was measured to be false. The phrase is not restated here so that a search for it finds nothing. See column_margin_alone_does_not_certify_a_classification.",
+      "bound": "the larger of a Bonferroni-corrected t and a data-adaptive centered sign-flip quantile, with per-component approximate normality as the REGISTERED coverage assumption. Measured coverage is 0.9737 under Gaussian errors, 0.9860 Laplace, 0.9733 t(3) and 0.9283 under a near-discrete Rademacher mixture. The near-discrete shortfall is UNGUARDED: see withdrawn_degenerate_spread_rule.",
+      "three_way_outcome": {
+        "equivalent": "the simultaneous upper bound falls inside the margin",
+        "inequivalent": "the simultaneous lower bound exceeds the margin",
+        "unresolved": "the bound straddles the margin; the data cannot place it and this is NOT a pass"
+      },
+      "sign_flip_assumption": "per-replicate discrepancies independent and each symmetric about zero under the null. Exchangeability alone would not justify sign flipping.",
+      "min_attainable_nonzero_p": "2 / 2^n, which is 0.03125 at six replicates",
+      "support_rule": "a component is excluded only when BOTH the reference and the quantity being checked are negligible. Masking on the reference alone would hide a component where the reference vanishes and the alternative does not, which is a disagreement rather than an absence of signal. The mask is saved and any downstream Fisher matrix must apply it.",
+      "critical_value": "the LARGER of a Bonferroni-corrected t at alpha/(2m) on n-1 degrees of freedom and a data-adaptive quantile of the CENTERED sign-flip studentized-max null. The larger is used because it only widens the interval. Neither component is valid independently of the error law: centering makes the sign-flip residuals dependent, so flipping them is not an exact randomization distribution, and the Bonferroni component needs the registered normality.",
+      "why_centered": "sign-flipping the RAW paired differences inherits the unknown mean's own variability, which shrinks the critical value and destroys coverage. Measured: 6.9 percent simultaneous coverage at a true mean of 0.05 and 0 percent at 0.2. The first version of this gate did exactly that.",
+      "minimum_replicates": 3,
+      "column_margin_alone_does_not_certify_a_classification": {
+        "finding": "a relative error in a nuisance Jacobian column does not control the principal angle between the nuisance and physiological column spaces, and the Schur complement depends on that angle. The verbal argument from threshold headroom was not sufficient and is withdrawn.",
+        "measured_on_the_frozen_production_psi_block": {
+          "five_percent_column_perturbation_moved_upper_StO2_bound_by": "a factor of about 5000, from 0.0744 to 369, for a nuisance block nearly collinear with a leading psi singular direction",
+          "column_margin_needed_to_hold_that_bound_within_40_percent": "about 1e-5",
+          "column_margin_needed_to_hold_it_within_0.05_percent": "about 1e-6",
+          "tightening_does_not_help": "at a margin of 0.002 the flip rate over the block family was the same 21 percent as at 0.05, because the sensitivity is to the subspace angle rather than to the column size",
+          "artifact": "results/margin_safety_analysis.json"
+        },
+        "redefinition": "column-level equivalence stays as a NECESSARY check that AD matches the ensemble reference. It is not sufficient for a classification, and no complete-set certification exists. A heuristic stress search over the leading psi singular directions plus random directions can only find a flip, never establish invariance, so every classification downstream of it is reported as UNRESOLVED until an exhaustive invariance argument exists.",
+        "conditioning_diagnostic": "the smallest principal angle between the nuisance and physiological column spaces is reported. Measured on the frozen psi block, a nearly orthogonal nuisance block at 70.8 degrees had no flip found at a 5 percent column margin, which is weak evidence and not a certification, while a nearly collinear block at 0.0 degrees had none certified at any margin tested down to 1e-5. Whether a classification is certifiable is therefore a property of the measured geometry, not something a margin can be chosen to guarantee in advance.",
+        "implemented_in": "src/augmented.py stress_search_classifications and nuisance_psi_principal_angles",
+        "no_certification_is_claimed": true,
+        "stress_search_only": "src/augmented.py stress_search_classifications. It returns no_flip_found or flip_found and never a certification. A deterministic counterexample against the earlier version reported a searched maximum of 0.3772730688 against a threshold of 0.3876343099 while an admissible untested direction reached 0.3979955510."
+      },
+      "coverage_assumption": "per-component approximate normality of the replicate values",
+      "measured_coverage_by_error_distribution": {
+        "gaussian": 0.9737,
+        "laplace": 0.986,
+        "t3": 0.9733,
+        "rademacher_plus_small_normal": 0.9283,
+        "note": "only the Gaussian case is at or above the nominal level by construction. The Rademacher mixture is a near-discrete two-point law, which the average of 200000 photons is not, and the mechanism that causes its shortfall, a collapsed replicate sample, is detected and blocked by the degenerate-spread guard."
+      },
+      "degenerate_spread_guard": "WITHDRAWN 2026-10-05. See withdrawn_degenerate_spread_rule. The count is reported and no branch reads it.",
+      "assumption_free_guarantee": false
+    },
+    "h_relative_grid": [
+      0.4,
+      0.3,
+      0.2,
+      0.1
+    ],
+    "downstream_mask_contract": {
+      "enforced_in_code": true,
+      "where": "src/augmented.py block_information takes support_mask and a require_mask flag; the nuisance study sets require_mask so a Fisher matrix cannot be built without it",
+      "test": "setting the excluded rows to 1e6 leaves both effective information matrices bitwise unchanged",
+      "why": "a Fisher matrix built without the mask the equivalence test produced would let components that were never compared contribute information, and the gate's mask would be a record of nothing",
+      "default": "require_mask defaults to TRUE in block_information. It defaulted to False, which left every production caller permissive and contradicted this spec. A synthetic analysis that genuinely wants every row passes an explicit all-true mask and says why."
+    },
+    "principal_angles": "computed from singular vectors retained at the declared rank tolerance, not from a full QR. A QR factor of a rank-deficient block carries arbitrary completion vectors and angles measured against those are an artifact of the factorization.",
+    "withdrawn_degenerate_spread_rule": {
+      "withdrawn_on": "2026-10-05",
+      "what_it_was": "a supported component whose absolute replicate standard deviation fell below 0.05 of the column median standard deviation blocked the comparison",
+      "why_withdrawn": "it is not scale invariant. The production observable is four wavelengths by thirty radial bins and spans 7.5 to 10.0 decades within a single column, so the outer bins have a genuinely tiny absolute spread because their signal is tiny, and the rule read that as a collapsed sample. In job 62960056 it fired on 26 to 29 components per column, every one below 1e-4 of the column maximum and none above 1e-2, and it blocked all five columns.",
+      "behavioural_effect_now": "none. The count is computed for reporting and no branch reads it: it does not affect support, the critical value, the bounds or the outcome. A behavioural scale-invariance test enforces this.",
+      "what_is_now_unguarded": "under a near-discrete error law the Bonferroni component's coverage was measured at 0.0283. No replacement guard exists, so this is an open limitation of the interval construction.",
+      "how_it_is_handled_instead": "a data-independent design-state precondition. While interval_criterion_registration.registered is false, --run refuses BEFORE any analysis, so the suspension cannot be triggered by, or confused with, a statistic computed from the data.",
+      "replacement_requirements": [
+        "scale invariant across components spanning many orders of magnitude",
+        "independently justified, not selected by testing candidates against job 62960056",
+        "pre-registered in this spec and hash-bound before any confirmatory run",
+        "accompanied by a measured coverage study under the same four error laws"
+      ]
+    },
+    "interval_criterion_registration": {
+      "registered": false,
+      "rule": "a confirmatory feasibility gate may not run while this is false. The check is on the DESIGN STATE and is evaluated before any data is read, so it is independent of every statistic computed from the data.",
+      "why_false": "all three audited routes closed without a registerable construction: Candidate 1 leaves approximate-normality unguarded in the measured low-support regime, Candidate 2's six-replicate coverage heuristic is invalid, and Candidate 3's literal all-120, 0.5-SD construction has a 10,803-replicate range-term hard lower bound. No replacement has been justified, pre-registered or hash-bound.",
+      "what_this_does_not_block": "the offline diagnostic reanalysis of job 62960056, which computes no verdict, and the dry run, which computes nothing."
+    },
+    "historical_run_62960056": {
+      "formal_analysis": "INVALIDATED. Its refusal was produced by the degenerate-spread rule, which is withdrawn as not scale invariant. The run is a valid fail-closed EXECUTION and is not evidence that the five columns physically failed to converge.",
+      "offline_reanalysis": "under the UNCHANGED interval construction, with the withdrawn rule having no behavioural effect, all five columns are UNRESOLVED on the original registered support mask: 120/120 components for the first four columns and 90/120 for mus_slope. Simultaneous upper bounds: log_d_epidermis 51.9, log_d_papillary 205.3, log_d_reticular 10.8, log_mus_scale 9.3, mus_slope 35.0, all as relative multiples against a margin of 0.05. Every lower bound is 0, so no column is inequivalent either.",
+      "consequence": "no estimator route exists for any column and no downstream authorization follows. Unresolved is not passed, not failed and not inequivalent.",
+      "raw_evidence": "results/nuisance_feasibility_gate_BLOCKED.json, sha256 dda8bd26f4b70afeb49cd05dc02a1b6b8d4baf20e76f2ae116d00ffb84e79d78, immutable",
+      "role_going_forward": "pilot evidence for choosing a revised step grid and for estimating replicate variance. It may not serve as the confirmatory analysis.",
+      "registered_support_mask_in_the_formal_run": {
+        "log_d_epidermis": "120/120",
+        "log_d_papillary": "120/120",
+        "log_d_reticular": "120/120",
+        "log_mus_scale": "120/120",
+        "mus_slope": "90/120, 30 components excluded",
+        "rule": "a component is excluded only when BOTH the reference and the quantity being checked are at or below 1e-12 of the largest magnitude across components",
+        "note": "this is the support the formal run actually used. Any calculation that retains a literal 120 for every column, mus_slope included, is a SEPARATE post-hoc diagnostic and is not the support of the formal run."
+      }
+    }
+  },
+  "estimator_column_support": {
+    "pmc_not_used_this_round": true,
+    "why": "the replay kernel accumulates per-layer pathlength and the escaping weight is w0 exp(-sum_j mua_j L_j), so its moments give derivatives with respect to absorption and nothing else. With log_f_melanin removed, none of the five remaining eta columns is an absorption column: three move layer boundaries and two move scattering. The replay kernel supports neither geometry nor scattering derivatives.",
+    "pmc_supports_this_round": [],
+    "consequence": "every eta column is compared between AD and the ensemble central difference, which is the only estimator-independent reference available for them",
+    "pmc_remains_available_for_psi": "the six psi columns are absorption columns and pMC does support them; that is the item 1 comparison and is unaffected"
+  },
+  "nuisance_dimensions": [
+    {
+      "index": 0,
+      "eta_name": "log_d_epidermis",
+      "what": "multiplicative scale on the stratum corneum and living epidermis thicknesses; deeper boundaries shift by the same absolute amount so every other layer thickness is preserved",
+      "why": "it sets the optical path traversed before light reaches either plexus, and it is the layer thickness the reviewer named first",
+      "prior_family": "normal in the eta coordinate",
+      "prior_sd": 0.1684,
+      "prior_kind": "evidence_based_population_prior",
+      "citation": "Sandby-Moller J, Poulsen T, Wulf HC. Epidermal thickness at different body sites: relationship to age, gender, pigmentation, blood content, skin type and smoking habits. Acta Dermato-Venereologica 2003;83(6):410-413. PMID 14690333.",
+      "source_locator": "Table II, total epidermis",
+      "raw_statistic": "total epidermis 74.9 +/- 12.7 um, n = 71, dorsal forearm, biopsy microscopy",
+      "conversion": "CV = 12.7 / 74.9 = 0.169559; log-SD = sqrt(log(1 + CV^2)) = 0.168359",
+      "conversion_is_exact": true,
+      "dispersion_kind": "between-subject population variation",
+      "definition_match": "matches: this design scales the stratum corneum and the living epidermis together, so total epidermis is the right statistic",
+      "source_verified": true,
+      "conversion_verified": true,
+      "nominal_mismatch": "the model's 100 um nominal is 33.5 percent thicker than the measured 74.9 um; recorded separately and not addressed here",
+      "evidence_table": "docs/planning/NUISANCE_PRIOR_EVIDENCE.md",
+      "numeric_range_implied": "total epidermis from about 0.054 to 0.148 mm against a nominal 0.100 mm over plus or minus two prior standard deviations",
+      "numeric_range_basis": "plus or minus two prior standard deviations in the eta coordinate"
+    },
+    {
+      "index": 1,
+      "eta_name": "log_d_papillary",
+      "what": "multiplicative scale on the papillary dermis thickness, the depth of the upper plexus below the epidermis; deeper boundaries shift by the same absolute amount",
+      "why": "it sets the depth of StO2_U and f_U. The upper plexus is the well conditioned part of the problem, so moving it tests whether that conditioning is a property of the method or of an assumed depth",
+      "prior_family": "normal in the eta coordinate",
+      "prior_sd": 0.25,
+      "prior_kind": "evidence_anchored_sensitivity_scenario",
+      "citation": "Arnal-Forne M, et al. Changes in human skin composition due to intrinsic aging: a histologic and morphometric study. Histochemistry and Cell Biology 2024;162(4):259-271. doi 10.1007/s00418-024-02305-w. PMC11364716.",
+      "source_locator": "Table 5, papillary dermis",
+      "raw_statistic": "77.18 +/- 14.82, 70.95 +/- 4.65, 74.85 +/- 13.50 and 101.2 +/- 21.43 um across four age groups of 25 periumbilical autopsy samples",
+      "conversion": "within-group log-SD 0.1903, 0.0655, 0.1789, 0.2094; pooled over 25 samples mean 79.81 um, log-SD 0.2175 including the age effect",
+      "anchor": "the declared 0.25 sits just above the pooled 0.2175",
+      "dispersion_kind": "between-specimen variation within age groups; the pooled figure also carries the age effect",
+      "definition_match": "does NOT match: periumbilical rather than the forearm-like geometry here, autopsy rather than living, n = 25",
+      "source_verified": true,
+      "anchor_source_verified": true,
+      "population_prior_phrasing_forbidden": true,
+      "nominal_mismatch": "the model's 150 um nominal is 88 percent above the pooled 79.8 um, but site dominates: see the site reconciliation note",
+      "evidence_table": "docs/planning/NUISANCE_PRIOR_EVIDENCE.md",
+      "numeric_range_implied": "papillary dermis from about 0.091 to 0.247 mm against a nominal 0.150 mm",
+      "numeric_range_basis": "plus or minus two prior standard deviations in the eta coordinate"
+    },
+    {
+      "index": 2,
+      "eta_name": "log_d_reticular",
+      "what": "multiplicative scale on the reticular dermis thickness, the separation between the two plexuses; the subcutis boundary shifts by the same absolute amount",
+      "why": "it sets the depth of StO2_D, the column that dominates the near-null direction and carries the manuscript's conclusion. This is the dimension most likely to change that conclusion and the one it would be most convenient to omit",
+      "prior_family": "normal in the eta coordinate",
+      "prior_sd": 0.3,
+      "prior_kind": "evidence_anchored_sensitivity_scenario",
+      "scenario_subtype": "one_factor",
+      "citation": "Wang et al. Quantification of normal skin thickness using very high-frequency ultrasound: a clinical study in Chinese adults. Quantitative Imaging in Medicine and Surgery 2025;15(6):5218-5231. doi 10.21037/qims-2024-2637. With Arnal-Forne et al. 2024 Table 5 as the direct reticular comparison.",
+      "source_locator": "Wang Table 3 longitudinal, forearm dermis; Arnal-Forne Table 5 reticular dermis",
+      "raw_statistic": "Wang: right forearm dermis 1.6138 +/- 0.4217 mm between subjects, n = 74. Arnal-Forne reticular: 1521 +/- 766, 3806 +/- 557, 3521 +/- 1087 and 2627 +/- 759 um by age group",
+      "conversion": "Wang total-dermis CV 0.2613 gives log-SD 0.2570. The modelled dermis is 150 + 80 + 1500 + 80 = 1810 um and the reticular layer is 1500 of it, so d ln T / d ln s = 0.8287 and reproducing the measured total spread by scaling the reticular layer alone requires 0.3101. Arnal-Forne's direct reticular measurements give within-adult-group log-SD 0.1454 to 0.3017 and 0.3830 pooled.",
+      "one_factor_assumption": "the derivation assigns ALL of the measured total-dermis variance to the reticular layer. The papillary layer demonstrably varies too, so this misattributes part of it. That is why the width is a scenario and not a measured reticular population SD.",
+      "dispersion_kind": "between-subject for Wang; between-specimen by age group for Arnal-Forne",
+      "definition_match": "partial: Wang measures total dermis rather than the reticular layer, and Arnal-Forne is a different site and preparation",
+      "source_verified": true,
+      "anchor_source_verified": true,
+      "population_prior_phrasing_forbidden": true,
+      "nominal_mismatch": "the model's 1500 um is half Arnal-Forne's pooled 2999 um, but site dominates",
+      "evidence_table": "docs/planning/NUISANCE_PRIOR_EVIDENCE.md",
+      "numeric_range_implied": "reticular dermis from about 0.823 to 2.73 mm against a nominal 1.50 mm, so the deep plexus depth spans roughly a factor of three",
+      "numeric_range_basis": "plus or minus two prior standard deviations in the eta coordinate"
+    },
+    {
+      "index": 3,
+      "eta_name": "log_mus_scale",
+      "what": "global multiplicative scale on the reduced scattering coefficient of every layer",
+      "why": "this is the scattering coefficient the reviewer named. It is the quantity the method cannot measure and must therefore survive",
+      "prior_family": "normal in the eta coordinate",
+      "prior_sd": 0.2,
+      "prior_kind": "evidence_based_population_prior",
+      "citation": "Jonasson H, Fredriksson I, Bergstrand S, Ostgren CJ, Larsson M, Stromberg T. Absorption and reduced scattering coefficients in epidermis and dermis from a Swedish cohort study. Journal of Biomedical Optics 2023;28(11):115001. doi 10.1117/1.JBO.28.11.115001.",
+      "source_locator": "scattering amplitude parameter alpha",
+      "raw_statistic": "alpha = 1.99, IQR 1.78 to 2.38, n = 3526; spatially resolved diffuse reflectance 475 to 850 nm, inverse Monte Carlo, three-layer model with mu_s' shared across layers",
+      "conversion": "log-space IQR = ln(2.38) - ln(1.78) = 0.290487; under a lognormal approximation sigma = 0.290487 / 1.3489795 = 0.215338",
+      "conversion_is_exact": false,
+      "conversion_approximation_declared": "derived from an interquartile range under a LOGNORMAL APPROXIMATION, not from a reported standard deviation. If the distribution departs from lognormal this value is biased, and the declared 0.20 is slightly conservative against it.",
+      "dispersion_kind": "between-subject population variation",
+      "definition_match": "close: a layered inverse Monte Carlo model whose mu_s' amplitude is shared across layers, which corresponds to the global scattering scale here",
+      "narrow_cohort_comparison": "Phan T et al., J Biomed Opt 2021;26(2):026001, doi 10.1117/1.JBO.26.2.026001, Table 1, dorsal forearm 1.38 (0.120) per mm at 851 nm intersubject over n = 15, giving log-SD 0.0868, 2.5 times narrower. Recorded as a narrow-cohort comparison only: n = 15, a single wavelength, and a bulk rather than layer-resolved coefficient.",
+      "source_verified": true,
+      "conversion_verified": true,
+      "evidence_table": "docs/planning/NUISANCE_PRIOR_EVIDENCE.md",
+      "numeric_range_implied": "a factor from about 0.67 to 1.49 on the nominal reduced scattering at every wavelength",
+      "numeric_range_basis": "plus or minus two prior standard deviations in the eta coordinate"
+    },
+    {
+      "index": 4,
+      "eta_name": "mus_slope",
+      "what": "additive shift in the exponent b of the reduced scattering wavelength dependence, mu_s' proportional to lambda to the power minus b, renormalized at 633 nm",
+      "why": "perturbing magnitude alone is flat in wavelength and can be absorbed into the absorption scales, which would leave the four-wavelength conclusion untested. The slope must move independently for the spectral argument to be probed at all",
+      "prior_family": "normal in the eta coordinate",
+      "prior_sd": 0.25,
+      "prior_kind": "evidence_anchored_sensitivity_scenario",
+      "stress_prior_sd": 0.48,
+      "stress_prior_kind": "preregistered_stress_scenario",
+      "citation": "Jonasson H, et al. Journal of Biomedical Optics 2023;28(11):115001. doi 10.1117/1.JBO.28.11.115001.",
+      "source_locator": "Mie scattering exponent beta",
+      "raw_statistic": "beta = 0.82, IQR 0.55 to 1.20, n = 3526",
+      "conversion": "normal approximation SD = (1.20 - 0.55) / 1.3489795 = 0.481846",
+      "parameterization_mismatch": "Jonasson decomposes scattering into Mie plus Rayleigh terms and beta is the Mie exponent. This project uses a single power law with an ADDITIVE exponent shift renormalized at 633 nm. They are not the same quantity, so beta's dispersion cannot be the population SD of this project's exponent shift.",
+      "anchor": "0.25 as the main scenario, 0.48 as the pre-registered stress scenario anchored to the normal-approximation SD",
+      "dispersion_kind": "between-subject for beta, in a different parameterization",
+      "definition_match": "does NOT match: different scattering decomposition",
+      "source_verified": true,
+      "anchor_source_verified": true,
+      "preregistered": true,
+      "population_prior_phrasing_forbidden": true,
+      "population_distribution_phrasing_forbidden": true,
+      "evidence_table": "docs/planning/NUISANCE_PRIOR_EVIDENCE.md",
+      "numeric_range_implied": "exponent shifts from about -0.50 to +0.50 about the nominal, and -0.96 to +0.96 under the stress scenario, giving scattering factors between about 0.94 and 1.07 at 540 nm relative to 633 nm",
+      "numeric_range_basis": "plus or minus two prior standard deviations in the eta coordinate"
+    }
+  ],
+  "citation_gate": {
+    "decided_by_prior_kind": true,
+    "rules": {
+      "evidence_based_population_prior": "source_verified and conversion_verified must both be true, and an inexact conversion must carry conversion_approximation_declared",
+      "evidence_anchored_sensitivity_scenario": "anchor_source_verified must be true and population_prior_phrasing_forbidden must be true",
+      "preregistered_stress_scenario": "preregistered must be true and population_distribution_phrasing_forbidden must be true",
+      "unresolved": "blocks the gate unconditionally"
+    },
+    "release_also_requires_an_explicit_decision": true,
+    "explicit_release_decision": "released",
+    "why_an_explicit_decision": "the per-dimension bookkeeping now reflects the accepted evidence table, so the rules above would pass. Releasing the design is a judgement about whether that evidence is good enough to spend GPU time on, and that judgement is recorded here explicitly rather than inferred from the bookkeeping.",
+    "currently_released": true,
+    "rule": "No transport may be submitted while this gate is closed. The release above covers the feasibility gate only, within release_scope.",
+    "release_decided_on": "2026-10-04",
+    "release_scope": {
+      "authorizes_only": [
+        "per-column AD-versus-ensemble equivalence testing",
+        "finite-difference convergence testing",
+        "estimator-route selection and cost measurement"
+      ],
+      "does_not_authorize_or_establish": "any downstream scientific classification",
+      "stress_search_wording_rule": "a stress-search result must not be described as a certification, whether or not it finds a flip. Finding no flip is not a proof of invariance; every downstream classification remains unresolved absent an exhaustive invariance proof.",
+      "does_not_authorize_the_48_draw_study": "the nuisance study is a separate decision and must not be launched automatically after this gate completes",
+      "basis": "the gate establishes an engineering result about the derivative route. It does not validate any scientific conclusion, and the equivalence bound itself holds only under the registered per-component approximate normality assumption."
+    }
+  },
+  "draw_design": {
+    "n_draws": 48,
+    "n_draws_basis": "the verdict is a per-draw qualitative classification, not a quantile estimate, so the count is set so that a single discordant draw is about two percent. Fixed before any draw was evaluated. It will be re-examined after the feasibility gate reports per-column cost, since geometry columns built by ensemble differences would change what is affordable.",
+    "draw_seed": 5150317,
+    "row_zero_is_nominal": true,
+    "sampling": "independent draws per dimension with exactly the declared marginal; no Latin hypercube",
+    "transport_seed": 2600000,
+    "common_random_numbers_across_draws": true,
+    "why_common_random_numbers": "the photon keys are identical for every draw, so Monte Carlo error is common mode and the spread across draws is prior sensitivity rather than transport noise",
+    "n_photons_per_wavelength": 200000,
+    "seeds_disjoint_from_prior_work": "the production pool used 43000 to 74000; item 1 used 910000 plus 10007 per replicate; P5's 20 draws and its draw seed are not reused",
+    "n_eta": 5,
+    "n_replicates_for_the_gate": 6,
+    "gate_seed_base": 2600000,
+    "gate_seed_stride": 7919,
+    "gate_design_is_frozen": "the gate reads its replicate count, photon budget, seed base and seed stride from here. The command line offers none of them, so changing a design parameter means changing this file, which changes its hash, which invalidates the preflight."
+  },
+  "qualitative_classifications": {
+    "defined_before_any_draw_was_evaluated": true,
+    "two_groups": "the reviewer's question is answered by the marginalized group. The conditional group is supplementary and must be labelled as such wherever it appears.",
+    "conditional": {
+      "answers": "how the conclusion moves across plausible FIXED nuisance operating points",
+      "computed_from": "F_pp at each draw, that is the six-parameter information with eta held at the drawn value",
+      "role": "supplementary only",
+      "classifications": [
+        {
+          "name": "conditional_near_null_still_deep_StO2_dominated",
+          "test": "the near-null psi tangent from F_pp has StO2_D as its largest-magnitude component and |cos| at least 0.90 with the nominal conditional tangent"
+        },
+        {
+          "name": "conditional_rank_unchanged",
+          "test": "the numerical rank of F_pp equals 6 at the recorded tolerance"
+        },
+        {
+          "name": "conditional_deep_StO2_not_tightly_constrained",
+          "test": "the conditional sqrt-CRLB for StO2_D is at least 1.0, the full physical range of the parameter"
+        },
+        {
+          "name": "conditional_upper_StO2_well_conditioned",
+          "test": "the conditional sqrt-CRLB for StO2_U is below 0.2"
+        }
+      ]
+    },
+    "marginalized": {
+      "answers": "the reviewer's question: what the method is worth when thickness and scattering are jointly unknown",
+      "computed_from": "F_eff at each draw",
+      "role": "primary",
+      "classifications": [
+        {
+          "name": "marginalized_near_null_still_deep_StO2_dominated",
+          "test": "reported only when F_psi_eff is full rank and its smallest eigenvalue is separated from the next by at least 10. Then the near-null psi tangent must have StO2_D as its largest-magnitude component with |cos| at least 0.90 against the nominal marginalized tangent. Otherwise the near-null structure is reported as a subspace and this classification is recorded as not applicable rather than forced."
+        },
+        {
+          "name": "marginalized_rank_unchanged",
+          "test": "the rank of F_psi_eff equals 6. If it does not, the nullity and the null-space basis are reported, per-parameter estimability decides which psi parameters keep a finite bound, and no single near-null direction is reported."
+        },
+        {
+          "name": "marginalized_deep_StO2_not_tightly_constrained",
+          "test": "the marginalized sqrt-CRLB for StO2_D is at least 1.0, or not individually estimable under F_psi_eff, decided by its null-space leakage",
+          "per_parameter_rule": "decided from this parameter's own estimability, not from the rank of the whole matrix"
+        },
+        {
+          "name": "marginalized_upper_StO2_well_conditioned",
+          "test": "the marginalized sqrt-CRLB for StO2_U is below 0.2. This is the classification most likely to fail, because the upper plexus conclusion is the one the manuscript relies on and the nuisance lies on the path to it",
+          "per_parameter_rule": "decided from this parameter's own estimability, not from the rank of the whole matrix"
+        },
+        {
+          "name": "scattering_nuisance_remains_weakly_constrained",
+          "test": "the data-only estimable bound on log_mus_scale from F_eta_eff is at least its prior sd of 0.20, or log_mus_scale is not individually estimable at all under F_eta_eff. Bare F_ee must not be used.",
+          "also_report": "the prior-informed posterior SD for log_mus_scale against its prior SD, named as the posterior and not as a bound"
+        }
+      ]
+    },
+    "overall_rule": "a classification is reported as qualitatively stable if it holds in at least 44 of 48 draws. The count is reported whether or not the rule is met, and a classification that fails is reported as prior-sensitive rather than omitted.",
+    "stability_threshold_fraction": 0.9,
+    "language": "no classification is described as validated. One that survives is reported as qualitatively stable across this prior; one that does not is reported as prior-sensitive."
+  },
+  "phantom_scattering": {
+    "handled_separately": true,
+    "p1_p2_empirical_result_stays": "the measured-phantom scattering recovery failure from P1 and P2 remains an existing empirical result and stays in section 3.4",
+    "mandatory_label": "not re-evaluated under the nuisance prior",
+    "what_this_round_may_and_may_not_claim": "if this round produces only scattering Fisher columns, the classification is named 'scattering nuisance remains weakly constrained'. It must NOT be written as 'phantom scattering recovery still fails', because no recovery was run.",
+    "forbidden_phrasing": [
+      "phantom scattering recovery still fails",
+      "phantom scattering still fails"
+    ],
+    "why": "a Fisher statement about a nuisance column and an empirical recovery failure on measured phantom data are different claims on different data, and conflating them would overstate what this round did"
+  },
+  "estimator_choice_sensitivity": {
+    "why_required": "MERGE_CHECKS item 1 closed with unresolved adjudication: AD and perturbation Monte Carlo differ resolvably from each other and the ensemble reference could not say which is right within acceptable resources. Every identifiability conclusion is therefore computed with an estimator whose correctness is not established, and the remaining honest defence is to show the conclusions do not depend on which is used.",
+    "pre_registered": true,
+    "both_estimators_on_every_draw": "on the seven columns pMC supports; the five geometry and scattering columns are compared between AD and the ensemble central difference instead",
+    "shared_random_numbers": "within a draw, every estimator uses the same photon keys",
+    "comparisons": [
+      {
+        "name": "near_null_direction_agreement",
+        "test": "|cos| between the AD-derived and pMC-derived near-null psi tangents from F_psi_eff, reported only where a single direction is well defined for both. Where either has a null space or insufficient eigenvalue separation, the comparison uses principal angles between the near-null subspaces and the projector distance instead.",
+        "threshold": 0.99
+      },
+      {
+        "name": "rank_and_near_null_classification_agreement",
+        "test": "identical rank of F_psi_eff, identical per-parameter estimability pattern, and identical largest-magnitude near-null component where one is reported",
+        "threshold": "exact agreement"
+      },
+      {
+        "name": "qualitative_classification_agreement",
+        "test": "every marginalized classification gives the same answer under both estimators",
+        "threshold": "exact agreement"
+      }
+    ],
+    "overall_rule": "the estimator choice is reported as not affecting the conclusions if every comparison agrees in at least 90 percent of draws. Any disagreeing draw is listed, not summarized away.",
+    "what_this_does_not_establish": "agreement between AD and pMC does not make either correct. It establishes only that the conclusions are insensitive to the unresolved choice between them.",
+    "subspace_comparison_rule": "principal angles and projector distance whenever the least-identifiable structure is a subspace. A cosine between chosen basis vectors would measure the eigensolver's choice, not the geometry."
+  },
+  "outputs": {
+    "design": "results/nuisance_design.json",
+    "feasibility_gate": "results/nuisance_feasibility_gate.json",
+    "result": "results/nuisance_sensitivity.json",
+    "provenance": "results/nuisance_sensitivity_provenance.json",
+    "table": "results/nuisance_sensitivity_table.tsv"
+  },
+  "estimator_route_disposition": {
+    "decision_date": "2026-10-08",
+    "overall": "closed_without_registerable_route",
+    "candidate1": {
+      "status": "retired_as_unsupported_and_uninformative",
+      "reason": "the route relies on an unguarded approximate-normality assumption in the measured low-support regime and all five historical columns remain unresolved under that assumption",
+      "evidence": "results/candidate1_route_audit.json",
+      "note": "docs/planning/CANDIDATE1_ROUTE_AUDIT_NOTE.md"
+    },
+    "candidate2": {
+      "status": "current_six_replicate_formulation_not_registerable",
+      "reason": "the centered-sign-flip heuristic is invalid and six replicates cannot support the illustrative rare-event margin under a valid one-sided necessary condition",
+      "evidence": "results/candidate2_coverage_feasibility.json",
+      "note": "docs/planning/CANDIDATE2_COVERAGE_FEASIBILITY_NOTE.md"
+    },
+    "candidate3": {
+      "status": "retired_as_operationally_infeasible",
+      "reason": "the literal all-120, 0.5-SD formulation has a 10,803-replicate range-term hard lower bound and no audited alternative preserves the estimand while removing the resource gap",
+      "evidence": "results/candidate3_alternative_design_analysis.json",
+      "note": "docs/planning/CANDIDATE3_ALTERNATIVE_DESIGN_NOTE.md"
+    },
+    "estimator_route_selected": false,
+    "interval_criterion_registered": false,
+    "downstream_48_draw_study_authorized": false,
+    "coverage_claimed": false,
+    "scientific_verdict_emitted": false,
+    "closeout_note": "docs/planning/NUISANCE_ESTIMATOR_ROUTE_CLOSEOUT.md",
+    "manuscript_disposition": "report a nuisance-sensitivity feasibility limitation, not nuisance-sensitivity results",
+    "reopening_rule": "requires a new independently justified estimator construction, support contract and stochastic assumptions; independent coverage validation; a newly frozen design; and a new hash-bound preflight before any transport"
+  },
+  "not_started": [
+    "any manuscript text",
+    "any future nuisance design reopened under a new registration"
+  ],
+  "closed_without_starting": [
+    "the 48-draw nuisance study",
+    "a confirmatory feasibility gate under a frozen replacement design"
+  ],
+  "scope_decisions_confirmed": {
+    "melanin": "log_f_melanin is NOT in eta. It was removed in 3.0.0 because the frozen production forward model does not expose a separately perturbable melanin component; see melanin_not_evaluated. The prohibition on tone stratification, population ratios and equity claims stands regardless.",
+    "phantom_scattering": "separated from this round. The P1 and P2 measured-phantom recovery result stays in section 3.4 labelled 'not re-evaluated under the nuisance prior'. This round may report only 'scattering nuisance remains weakly constrained'. No new phantom recovery is to be run.",
+    "decided_by": "high-level scope decision, 2026-10-03",
+    "superseded_note": "an earlier version of this field said melanin stays in eta as a jointly unknown nuisance. That is no longer true and the sentence is removed rather than softened."
+  },
+  "estimability_rules": {
+    "per_parameter_not_all_or_nothing": "a rank-deficient information matrix makes infinite exactly those parameters whose unit vector has a component in the null space. The bound of a parameter that is still identifiable must not be erased because some other direction is not.",
+    "rule": "from the SVD take a null-space basis N. Parameter j is individually estimable when ||N^T e_j|| is below the recorded leakage tolerance; then a finite e_j^T F^+ e_j is reported. Otherwise bound is 'infinite', value is null, and the null-space leakage is recorded.",
+    "null_space_leakage_tolerance": 1e-08,
+    "nullity_greater_than_one": {
+      "no_unique_near_null_direction": "with a null space of dimension above one there is no unique least-identifiable direction, and any single eigenvector the solver returns is a basis artifact. No single near-null vector and no dominant component are reported.",
+      "report_instead": [
+        "null space dimension",
+        "null space basis and the subspace it spans"
+      ],
+      "estimator_comparison": "principal angles between the subspaces, and the projector distance, never a cosine between chosen basis vectors"
+    },
+    "single_direction_is_reported_only_when": "the matrix is full rank AND its smallest eigenvalue is separated from the next by the declared ratio. Otherwise the two smallest eigenvalues are effectively degenerate and the direction is not determined.",
+    "near_null_separation_ratio": 10.0,
+    "separation_ratio_is_declared_in_advance": true
+  },
+  "melanin_not_evaluated": {
+    "statement": "Melanin was not evaluated as a nuisance parameter because the frozen production forward model does not expose a separately perturbable melanin component. Adding one would require a new absorption decomposition, nominal recalibration, and independent validation; it is outside this merge check.",
+    "evidence_in_the_code": [
+      "scripts/inverse/phase2_v12_runner.py _build_mu concatenates v12.MUA_FIXED_TOP_WL[k] for the top three layers, so their absorption is a fixed constant and carries no melanin parameter",
+      "the version 2.1.0 executor computed a melanosome fraction from eta and then never used it, so the column would have been exactly zero"
+    ],
+    "why_this_mattered": "an exactly zero Jacobian column would have made F_ee rank deficient and that rank deficiency would have read as 'the melanin nuisance is unidentifiable', an identifiability finding, when the truth is that the parameter is absent from the model. The removal is a correction of scope, not of evidence.",
+    "not_claimed": [
+      "that melanin is known",
+      "that melanin has no effect",
+      "that melanin has been validated",
+      "any skin-tone, fairness or equity conclusion"
+    ],
+    "previous_reason_superseded": "version 2.1.0 recorded log_f_melanin as unresolved for a citation reason, the f_mel times epidermal-thickness product identifiability problem in Jonasson's model. That remains true of that literature, but it is not why the column is removed here."
+  },
+  "completed": {
+    "citation_review": "done; see docs/planning/NUISANCE_PRIOR_EVIDENCE.md. All five dimensions have a verified source or a verified anchor and their conversions are written out.",
+    "phantom_scattering_decision": "done; separated from this round. The P1 and P2 measured-phantom recovery result stays in section 3.4 labelled 'not re-evaluated under the nuisance prior', and this round may report only 'scattering nuisance remains weakly constrained'. No new phantom recovery is run.",
+    "melanin_decision": "done; removed from eta as a model-scope matter, not a citation matter",
+    "feasibility_gate_implementation": "done; scripts/nuisance_feasibility_gate.py has a real executor, a real runner and a real AD comparison. It was exercised by job 62960056, but no rerun is authorized under this closed design.",
+    "nominal_feasibility_gate_transport": "ran as job 62960056 for 9:00:50 and refused. The raw arrays are preserved in results/nuisance_feasibility_gate_BLOCKED.json, which is not a success artifact.",
+    "estimator_route_audits": "done; Candidate 1, Candidate 2 and Candidate 3 all closed without a registerable route. See estimator_route_disposition."
+  },
+  "executor_verification_status": {
+    "mocked_selftests": "exercise the control flow, the statistics and the artifact handling against an analytic response. They do NOT verify the real executor.",
+    "real_executor_preflight_is_a_precondition": true,
+    "preflight_artifact": "results/nuisance_executor_preflight.json",
+    "closeout_effect": "version 3.1.0 changes the bound spec hash, so every earlier preflight is stale by construction. Reopening requires a newly generated preflight after a new design has been registered.",
+    "status_is_not_recorded_here": "whether the preflight has passed is read from its artifact at run time, with every bound hash re-verified against the files on disk. A status string in this spec would go stale the moment any file changed, and a stale pass is worse than no record.",
+    "what_the_gate_checks_before_running": [
+      "the citation gate, by prior_kind, plus the explicit release decision",
+      "the deterministic XLA flag in the gate's OWN process, not in the preflight's",
+      "the preflight artifact passes AND every bound hash still matches, covering the nuisance runner, this spec, the baseline spec, src/augmented.py, and the jax-pad runner, forward solver, physics engine and config resolved from the modules actually imported"
+    ]
+  }
+}

@@ -1,0 +1,348 @@
+{
+  "spec_version": "1.0.0",
+  "frozen": "2026-10-01",
+  "purpose": "Independent validation of the production Jacobian, column by column, against an estimator-independent reference. MERGE_CHECKS item 1.",
+  "why_this_design": {
+    "problem": "A common-random-number finite difference converges to the PATHWISE derivative as h approaches zero wherever the realised estimator is differentiable. Using small-h CRN finite differences to validate pathwise AD is therefore close to circular: it confirms that AD differentiates the realised sample correctly, not that the pathwise derivative is unbiased for the derivative of the expectation.",
+    "resolution": "The expectation is smooth even where each realisation is not, so a central difference of the EXPECTATION admits an expansion in h^2 and can be extrapolated from moderate step sizes. Moderate h keeps discontinuity crossings well sampled instead of appearing as rare spikes of order 1/h.",
+    "deliberate_non_goal": "No attempt is made to drive h toward zero. That limit is exactly the degenerate one."
+  },
+  "method_provenance": {
+    "method_reused_from": "mc-oximetry-equity/scripts/p5_ensemble_derivative.py",
+    "what_is_reused": "the independent-stream ensemble central difference with h^2 extrapolation, and the rule that verdicts come from replicate standard error rather than a relative-percent cutoff",
+    "what_is_NOT_reused": [
+      "any numerical result, step size, photon budget, replicate count or draw from that study",
+      "its step-size selection code, which guards only the lower bound of a parameter",
+      "its conclusions, which were measured on a different column at a different operating point"
+    ],
+    "reason": "the quantities validated here are six physiological parameters at the production operating point of this repository, and they must produce their own numbers"
+  },
+  "operating_point": {
+    "source": "spec/baseline_spec.json profiles.production",
+    "psi_labels": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "nominal_psi": [
+      0.95,
+      0.0560139,
+      0.65,
+      0.0186713,
+      0.49,
+      0.45
+    ],
+    "blood_coordinate": "physical_bvf",
+    "wavelengths_nm": [
+      540.0,
+      580.0,
+      633.0,
+      800.0
+    ],
+    "radial_grid": {
+      "r_min_cm": 0.0,
+      "r_max_cm": 1.5,
+      "n_bins": 30
+    },
+    "max_steps": 4000,
+    "coordinates": "psi, identical to the production pool; no reparameterization is applied"
+  },
+  "coverage_requirement": {
+    "all_six_parameters_must_be_validated": true,
+    "statement": "the merged manuscript's subject is these six parameters, so every column is validated and every unresolved column is reported as unresolved",
+    "near_null_columns_expected_hardest": "StO2_D dominates the near-null direction, so it is expected to need the largest budget and may remain unresolved; that outcome is a reportable result, not a failure of the check"
+  },
+  "parameter_bounds": {
+    "rationale": "every parameter carries an explicit physical bound, and every perturbed point is checked against it before any transport is run. StO2_U sits at 0.95 with an upper bound of 1.0, so a step-size rule based only on the parameter's own magnitude would evaluate saturations above unity.",
+    "bounds": {
+      "StO2_U": {
+        "lo": 0.0,
+        "hi": 1.0,
+        "basis": "saturation is a fraction of hemoglobin in the oxygenated state"
+      },
+      "f_U": {
+        "lo": 0.0,
+        "hi": 1.0,
+        "basis": "blood volume fraction"
+      },
+      "StO2_D": {
+        "lo": 0.0,
+        "hi": 1.0,
+        "basis": "saturation is a fraction of hemoglobin in the oxygenated state"
+      },
+      "f_D": {
+        "lo": 0.0,
+        "hi": 1.0,
+        "basis": "blood volume fraction"
+      },
+      "mua_DermR": {
+        "lo": 0.0,
+        "hi": 5.0,
+        "basis": "dimensionless multiplier on a reference absorption spectrum; strictly positive, with a generous upper bound that never binds at the nominal point"
+      },
+      "mua_SubQ": {
+        "lo": 0.0,
+        "hi": 5.0,
+        "basis": "dimensionless multiplier on a reference absorption spectrum; strictly positive, with a generous upper bound that never binds at the nominal point"
+      }
+    }
+  },
+  "step_size_rule": {
+    "h_relative_grid": [
+      0.4,
+      0.3,
+      0.2,
+      0.1
+    ],
+    "grid_basis": "moderate steps only. Large enough that discontinuity crossings are well sampled, small enough that the h^2 term dominates the expansion.",
+    "scale_rule": "scale = min(value_fraction * |psi_i|, headroom_fraction * min(psi_i - lo_i, hi_i - psi_i) / max(h_relative_grid))",
+    "value_fraction": 0.3,
+    "headroom_fraction": 0.8,
+    "directional_scale_rule": "for a unit direction u, the same two caps are applied componentwise and the minimum is taken over components with |u_i| above 1e-6: scale = min over i of min(value_fraction * |psi_i| / |u_i|, headroom_fraction * min(psi_i - lo_i, hi_i - psi_i) / (|u_i| * max(h_relative_grid)))",
+    "mandatory_precheck": "every psi +/- h point, for every parameter and every direction, is asserted strictly inside its bounds before transport is launched; the run aborts otherwise",
+    "no_step_is_silently_dropped": "if a step would leave the feasible region the run stops rather than quietly shortening the grid, because a shortened grid changes the extrapolation"
+  },
+  "random_number_design": {
+    "independent_replicates": "replicate r uses jax.random.PRNGKey(seed_base + stride * r); the streams are independent across replicates, which is what gives the extrapolated derivative an error bar",
+    "seed_base": 910000,
+    "stride": 10007,
+    "common_random_numbers_within_a_replicate": "the +h, -h, AD and pMC evaluations of one replicate share the same key array",
+    "why_common_random_numbers_are_safe_here": "they reduce the variance of the difference quotient without biasing it; what they degenerate is the h -> 0 limit, and that limit is deliberately not taken",
+    "seeds_disjoint_from_production_pool": "the production pool used seeds 43000 to 74000 in steps of 1000, so a base of 71000 would have collided with production seed 43000 + 1000 * 28. The validation base is 910000 with stride 10007, which is disjoint from that range for any replicate count."
+  },
+  "extrapolation": {
+    "model": "D(h) = a0 + a1 h^2 + a2 h^4 + ...",
+    "primary": {
+      "name": "two_term",
+      "fit": "least squares of D against [1, h^2]",
+      "estimate": "a0"
+    },
+    "diagnostic_only": {
+      "name": "three_term",
+      "fit": "least squares of D against [1, h^2, h^4]",
+      "role": "truncation diagnostic only, never the headline estimate",
+      "reason": "three coefficients through four step sizes amplifies replicate noise badly",
+      "reported_as": "|a0_three_term - a0_two_term| / se_two_term"
+    }
+  },
+  "acceptance_criteria": {
+    "basis": "replicate standard error of the relevant PAIRED difference",
+    "no_relative_percent_cutoff": true,
+    "why": "a fixed percentage threshold would declare agreement or disagreement without reference to how precisely the comparison is known, and that precision varies by orders of magnitude between columns",
+    "threshold_sigma": 3.0,
+    "dominance_ratio": 2.0,
+    "comparisons_reported_separately": {
+      "ad_vs_reference": {
+        "resolved disagreement": "|z_AD| >= threshold_sigma",
+        "unresolved": "|z_AD| < threshold_sigma; consistent within current resolution"
+      },
+      "pmc_vs_reference": {
+        "resolved disagreement": "|z_pMC| >= threshold_sigma",
+        "unresolved": "|z_pMC| < threshold_sigma; consistent within current resolution",
+        "unavailable": "the replay kernel has not been shown equivalent to this production kernel"
+      },
+      "ad_vs_pmc": {
+        "resolved separation": "|separation_z| >= threshold_sigma",
+        "unresolved": "|separation_z| < threshold_sigma",
+        "unavailable": "pMC unavailable"
+      }
+    },
+    "preference_rule": {
+      "requires": "ad_vs_pmc resolved AND the paired differences against the reference support the direction",
+      "favours AD": "ad_vs_pmc resolved, |z_AD| < threshold_sigma, |z_pMC| >= threshold_sigma, and |z_AD| < |z_pMC| / dominance_ratio",
+      "favours pMC": "ad_vs_pmc resolved, |z_pMC| < threshold_sigma, |z_AD| >= threshold_sigma, and |z_pMC| < |z_AD| / dominance_ratio",
+      "no preference": "any other outcome, including both resolved against the reference"
+    },
+    "language_rule": "a comparison that detects no difference is reported as 'unresolved' or 'consistent within current resolution'. The word 'validated' is not used, because failing to resolve a difference at a finite budget is not evidence that none exists."
+  },
+  "observables": {
+    "rationale": "agreement on total escaped weight does not by itself validate the radial structure of the Jacobian, and the radial structure is what produces the near-null spectrum. Total escape is therefore a low-variance pilot observable, not the final evidence.",
+    "total_escape_per_wavelength": {
+      "definition": "sum_i A_i R_i per wavelength",
+      "n_components": 4,
+      "role": "primary pilot observable, lowest variance",
+      "sufficient_on_its_own": false
+    },
+    "radial_aggregates": {
+      "definition": "sum of A_i R_i over each predefined bin group, per wavelength",
+      "bin_group_edges_index": [
+        0,
+        8,
+        15,
+        22,
+        30
+      ],
+      "bin_group_edges_cm": [
+        0.0,
+        0.4,
+        0.75,
+        1.1,
+        1.5
+      ],
+      "n_components": 16,
+      "role": "required for the final validation",
+      "groups_fixed_before_any_validation_transport_or_validation_result_was_generated": true
+    },
+    "full_radial_vector": {
+      "definition": "all 120 observables, compared through the PAIRED difference vectors rather than componentwise",
+      "statistic_name": "PC-standardized paired-mean discrepancy",
+      "statistic": "for a given estimator, form delta_r = estimator_r - reference_r per replicate; take the mean paired difference m and the replicate scatter about it; project m onto the leading principal components of that scatter and standardize each projection by its own replicate standard error; report the sum of squares",
+      "retained_components_rule": "k = min(n_replicates - 2, declared_max)",
+      "declared_max_retained_components": 8,
+      "retained_rule_fixed_before_any_validation_transport": true,
+      "why_k_at_most_n_minus_2": "the mean and the scatter are estimated from the same replicates, leaving n-1 degrees of freedom in the scatter; retaining all of them lets the subspace absorb the mean and the statistic degenerates",
+      "not_a_chi_square": true,
+      "no_p_value_reported": "the covariance comes from the same small set of replicates as the mean, so the statistic has no calibrated null distribution here; it is reported as a standardized discrepancy and compared against the threshold on the same scale as the scalar z statistics",
+      "role": "required for the final validation"
+    },
+    "near_null_directional_derivative": {
+      "definition": "directional derivative along the production near-null direction, taken in psi space as the pushforward D v_z of the last right singular vector of the headline whitened Jacobian",
+      "coordinate_correction": "J_w = C^{-1/2} J_psi D, so the right singular vectors live in the scaled coordinate z with psi = D z. The psi-space direction is D v_z, not v_z. Using v_z directly reweights the direction by D and, at this operating point, inflates the f_D component by about a factor of 50 relative to StO2_D, which then falsely appears to limit the step.",
+      "direction_source_file": "results/production_crb.json",
+      "direction_source_pointer": [
+        "branches",
+        "multinomial_fixed_launch",
+        "geometry",
+        "near_null_tangent_psi_per_unit_z"
+      ],
+      "normalization": "the tangent is used UNNORMALIZED, so a scalar step t means a displacement of t in the z coordinate, which is the coordinate the singular value belongs to. A unit-norm version exists in the artifact for display only and must not be used for the directional derivative.",
+      "required_checks": [
+        "J_psi @ (D v_z) equals (J_psi D) @ v_z",
+        "the whitened response along the direction equals the smallest singular value of the headline branch"
+      ],
+      "role": "required; this is the direction the manuscript's conclusion rests on",
+      "unresolved_is_an_acceptable_outcome": true
+    }
+  },
+  "estimators_compared": {
+    "reference": "ensemble central difference extrapolated in h^2 from independent replicates",
+    "under_test": [
+      "pathwise_AD",
+      "perturbation_mc"
+    ],
+    "pmc_precondition": "the replay kernel must reproduce THIS production kernel photon by photon, identical detector bin assignment and identical escaping weight, before any pMC number is reported",
+    "pmc_status": "gated; availability is decided by results/replay_equivalence.json, not by the presence of a kernel file",
+    "pmc_cannot_be_assumed_from_P5": "P5's replay kernel was instrumented against a different production kernel and cannot be assumed equivalent here",
+    "pilot_may_run_without_pmc": true,
+    "label_required_when_pmc_absent": "pMC unavailable; comparison incomplete",
+    "no_pmc_verdict_without_equivalence": "the pilot must emit 'unavailable' for both pmc_vs_reference and ad_vs_pmc, and no preference, rather than any pMC number",
+    "pmc_gate_artifact": "results/replay_equivalence.json",
+    "pmc_gate_requirements": [
+      "every photon agrees on escaped or not",
+      "every photon agrees on detector bin exactly",
+      "escaping weight agrees to the recorded tolerance",
+      "aggregate reflectance agrees, as a consequence rather than as the test",
+      "the recorded pathlengths reproduce the escaping weight through w0 exp(-sum_j mua_j L_j)",
+      "a deliberately defective replay is REJECTED by the same criteria, so the gate is shown to be able to fail"
+    ],
+    "pooled_reflectance_alone_is_not_accepted": "two kernels can agree on an aggregate while disagreeing per photon, and a pathlength moment is a per-photon quantity",
+    "production_physics_must_not_be_modified": true,
+    "other_projects_replay_kernels_are_not_truth_here": "P5's kernel was instrumented against a different production kernel; the method may be borrowed, the implementation may not be assumed correct"
+  },
+  "pilot": {
+    "purpose": "estimate replicate standard error and cost only; it forms no conclusion about any column",
+    "columns": {
+      "f_U": "comparatively strong column, used to verify the pipeline end to end",
+      "StO2_D": "dominates the near-null direction, used to size the photon and replicate budget"
+    },
+    "observable": "total_escape_per_wavelength",
+    "forms_final_conclusions": false,
+    "full_six_column_run_requires": "design review after the pilot reports measured standard errors and measured cost",
+    "pmc_included": "decided at run time by the gate result",
+    "label": "pMC unavailable; comparison incomplete",
+    "cost_reported_as": [
+      "AD_only, the plan that can actually run now",
+      "future_AD_plus_pMC, for budgeting once the replay kernel is vendored and verified"
+    ],
+    "single_run_requirement": "the reference, AD and pMC must be produced in ONE run on the SAME replicates, with one PRNG key array per replicate shared by the plus-h and minus-h forward evaluations, the AD jvp and the pMC replay. Every raw per-replicate array is stored so the three paired differences are constructed from the stored numbers rather than reassembled from separate runs."
+  },
+  "outputs": {
+    "pilot": "results/jacobian_validation_pilot.json",
+    "final": "results/jacobian_validation.json",
+    "provenance": "results/jacobian_validation_provenance.json",
+    "replay_equivalence": "results/replay_equivalence.json",
+    "replay_equivalence_provenance": "results/replay_equivalence_provenance.json"
+  },
+  "paired_replicate_inference": {
+    "why": "within one replicate the AD, pMC and extrapolated reference evaluations share the same random numbers, so their errors are strongly correlated. Dividing all three comparisons by SE(reference) discards that pairing and gives the wrong denominator for every one of them: it is too large where the shared noise cancels and can be too small where it does not.",
+    "per_replicate_quantities_stored": [
+      "reference_r (two-term h^2 extrapolation)",
+      "AD_r",
+      "pMC_r"
+    ],
+    "paired_differences": {
+      "delta_AD_r": "AD_r - reference_r",
+      "delta_pMC_r": "pMC_r - reference_r",
+      "delta_AD_pMC_r": "AD_r - pMC_r"
+    },
+    "statistics": {
+      "z_AD": "mean(delta_AD) / SE(delta_AD)",
+      "z_pMC": "mean(delta_pMC) / SE(delta_pMC)",
+      "separation_z": "mean(delta_AD_pMC) / SE(delta_AD_pMC)",
+      "SE": "std(ddof=1) / sqrt(n_replicates), computed on each paired difference separately"
+    },
+    "forbidden": "SE(reference) must not serve as the denominator for all three comparisons",
+    "reference_SE_still_reported": "as a descriptive scale for the reference itself, never as a comparison denominator"
+  },
+  "component_admissibility": {
+    "why": "a per-component budget calculation is meaningless where the reference is not actually an ensemble estimate. In a radial bin reached by only a few photons, the common-random-number central difference samples no discontinuity crossing, so the h^2 extrapolation collapses onto the realised pathwise derivative and AD equals the reference to machine precision. The paired standard error there measures rounding, not statistics, and a naive multiplier comes out near zero, which would read as 'already resolvable' when nothing has been resolved.",
+    "observed": "at 100 photons per wavelength the StO2_D total escape gave SE(AD - reference) / SE(reference) of 4.4e-06 at 540 nm and 9.1e-05 at 800 nm with multipliers of 0.0, while 580 and 633 nm were healthy at 1.03 and 1.16. Separately, radial bin 38 had a reference nonzero in only 2 of 6 replicates with an AD-minus-reference paired difference of order 1e-19.",
+    "rules_fixed_before_the_radial_pilot_was_run": true,
+    "rule_1_ensemble_support": "every replicate must have a nonzero reference value in the component; otherwise the component is not estimated from an ensemble",
+    "consequence": "components failing either rule are marked degenerate with the reason, excluded from the best-multiplier selection and from the principal-subspace multiplier, and counted in the report. They are not silently dropped.",
+    "applies_to": [
+      "total_escape_per_wavelength",
+      "radial_aggregates",
+      "full_radial_vector"
+    ],
+    "rule_2_reference_is_not_just_AD": "the ratio SE(AD - reference) / SE(reference) must be at least paired_scatter_floor. The ratio is about 1 when AD and the h^2-extrapolated reference are two nearly independent estimates, and falls to 0 when the central difference has sampled no discontinuity crossing and the extrapolation has merely returned AD. In the latter regime the paired standard error is not a measure of reference uncertainty and a budget multiplier computed from it is meaningless, coming out near zero and reading as 'already resolvable'.",
+    "paired_scatter_floor": 0.1,
+    "floor_justification": "a floor of 0.1 admits any component where the paired difference retains at least a tenth of the reference's own replicate scatter. It is a statement about which regime the estimator is in, not about the answer. The threshold is not tuned to the result: in the 200000-photon total-escape pilot the ratio is 0.9796 to 0.9912 at every wavelength, an order of magnitude above the floor, so the conclusion of that run is unchanged by the rule. The rule was added because the 100-photon smoke run produced ratios of 4.4e-06 and 9.1e-05 together with multipliers of 0.0."
+  },
+  "resource_decision_criteria": {
+    "frozen_before_the_radial_pilot_results_were_seen": true,
+    "frozen_at": "2026-10-02",
+    "job_running_when_frozen": "62596397, RUNNING, no result artifact yet existed",
+    "verifiable_by": "the commit that adds this block predates the commit that adds results/jacobian_validation_pilot_radial.json",
+    "primary_evidence_in_order": [
+      "the 16-component pre-registered radial aggregates",
+      "the PC-subspace multiplier",
+      "whether adjacent radial groups give a consistent answer"
+    ],
+    "best_multiplier_is_not_decisive": "best_multiplier is a minimum taken over many components, so it is optimistic by construction: with 120 bins, the smallest of 120 noisy multipliers is biased low whether or not any real signal is present. A single cheap raw bin is not evidence.",
+    "single_cheap_bin_rule": "if an isolated 120-component bin comes in at or below 10x while the aggregates and the PC-subspace multiplier remain large, the outcome is recorded as NOT reachable",
+    "adjacency_requirement": "a low aggregate multiplier must be corroborated by its neighbouring radial group at the same wavelength; an isolated group is treated the same way as an isolated bin",
+    "bands": {
+      "reachable": {
+        "multiplier": "<= 10",
+        "action": "formal validation may be considered",
+        "cost_note": "about 155 H100-hours for all seven targets"
+      },
+      "targeted_only": {
+        "multiplier": "> 10 and <= 100",
+        "action": "a targeted supplement only; the seven-target full run is not recommended"
+      },
+      "close_the_route": {
+        "multiplier": "> 100",
+        "action": "close the ensemble-reference adjudication route"
+      }
+    },
+    "post_completion_checks_before_any_further_submission": [
+      "the raw arrays are present and complete for all 6 replicates of both targets",
+      "each replicate's array_sha256 recomputes from the stored arrays",
+      "every stored array has the expected 120-component shape and no non-finite value",
+      "the seeds match the frozen sequence 910000 + 10007 r",
+      "the aggregates and the PC-subspace multiplier are read together, not the best bin alone"
+    ],
+    "no_automatic_next_submission": "the next round is not submitted automatically on completion. None of these checks needs further transport."
+  },
+  "field_rename_pending": {
+    "from": "budget_multiplier_to_resolve_ad_vs_pmc",
+    "to": "budget_multiplier_for_reference_resolution_at_ad_pmc_gap_scale",
+    "why": "AD and pMC are already separated at this budget; what the quantity estimates is the budget needed for the REFERENCE to resolve a discrepancy of the size of the AD-minus-pMC gap. The old name described the wrong comparison.",
+    "applied_offline_without_rerunning_transport": true
+  }
+}

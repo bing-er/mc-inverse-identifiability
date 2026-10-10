@@ -1,0 +1,953 @@
+{
+  "mode": "dry run; zero draws, no transport",
+  "is_the_nuisance_study": false,
+  "evaluates": "the nominal point only",
+  "n_eta": 5,
+  "eta_names": [
+    "log_d_epidermis",
+    "log_d_papillary",
+    "log_d_reticular",
+    "log_mus_scale",
+    "mus_slope"
+  ],
+  "eta_columns": [
+    {
+      "eta_name": "log_d_epidermis",
+      "eta_index": 0,
+      "units": "dimensionless, log of a thickness scale",
+      "coordinate": "log of a thickness scale",
+      "bounds": [
+        -2.0,
+        2.0
+      ],
+      "h_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "n_evaluations": 8,
+      "all_points_feasible": true,
+      "points": [
+        {
+          "h": 0.4,
+          "sign": 1,
+          "eta": [
+            0.4,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.4,
+          "sign": -1,
+          "eta": [
+            -0.4,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": 1,
+          "eta": [
+            0.3,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": -1,
+          "eta": [
+            -0.3,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": 1,
+          "eta": [
+            0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": -1,
+          "eta": [
+            -0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": 1,
+          "eta": [
+            0.1,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": -1,
+          "eta": [
+            -0.1,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        }
+      ],
+      "pmc_supported": false,
+      "estimator_plan": "AD against the ensemble central difference; pMC cannot differentiate this column"
+    },
+    {
+      "eta_name": "log_d_papillary",
+      "eta_index": 1,
+      "units": "dimensionless, log of a thickness scale",
+      "coordinate": "log of a thickness scale",
+      "bounds": [
+        -2.0,
+        2.0
+      ],
+      "h_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "n_evaluations": 8,
+      "all_points_feasible": true,
+      "points": [
+        {
+          "h": 0.4,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.4,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.4,
+          "sign": -1,
+          "eta": [
+            0.0,
+            -0.4,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.3,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": -1,
+          "eta": [
+            0.0,
+            -0.3,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.2,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": -1,
+          "eta": [
+            0.0,
+            -0.2,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.1,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": -1,
+          "eta": [
+            0.0,
+            -0.1,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        }
+      ],
+      "pmc_supported": false,
+      "estimator_plan": "AD against the ensemble central difference; pMC cannot differentiate this column"
+    },
+    {
+      "eta_name": "log_d_reticular",
+      "eta_index": 2,
+      "units": "dimensionless, log of a thickness scale",
+      "coordinate": "log of a thickness scale",
+      "bounds": [
+        -2.0,
+        2.0
+      ],
+      "h_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "n_evaluations": 8,
+      "all_points_feasible": true,
+      "points": [
+        {
+          "h": 0.4,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.4,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.4,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            -0.4,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.3,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            -0.3,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.2,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            -0.2,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.1,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            -0.1,
+            0.0,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        }
+      ],
+      "pmc_supported": false,
+      "estimator_plan": "AD against the ensemble central difference; pMC cannot differentiate this column"
+    },
+    {
+      "eta_name": "log_mus_scale",
+      "eta_index": 3,
+      "units": "dimensionless, log of a reduced-scattering scale",
+      "coordinate": "log of a reduced-scattering scale",
+      "bounds": [
+        -2.0,
+        2.0
+      ],
+      "h_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "n_evaluations": 8,
+      "all_points_feasible": true,
+      "points": [
+        {
+          "h": 0.4,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.4,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.4,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            -0.4,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.3,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            -0.3,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            -0.2,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.1,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            -0.1,
+            0.0
+          ],
+          "feasible": true,
+          "reasons": []
+        }
+      ],
+      "pmc_supported": false,
+      "estimator_plan": "AD against the ensemble central difference; pMC cannot differentiate this column"
+    },
+    {
+      "eta_name": "mus_slope",
+      "eta_index": 4,
+      "units": "dimensionless, additive shift in the power-law exponent",
+      "coordinate": "additive shift in the power-law exponent",
+      "bounds": [
+        -3.0,
+        3.0
+      ],
+      "h_grid": [
+        0.4,
+        0.3,
+        0.2,
+        0.1
+      ],
+      "n_evaluations": 8,
+      "all_points_feasible": true,
+      "points": [
+        {
+          "h": 0.4,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.4
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.4,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.4
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.3
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.3,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.3
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.2,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.2
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": 1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1
+          ],
+          "feasible": true,
+          "reasons": []
+        },
+        {
+          "h": 0.1,
+          "sign": -1,
+          "eta": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.1
+          ],
+          "feasible": true,
+          "reasons": []
+        }
+      ],
+      "pmc_supported": false,
+      "estimator_plan": "AD against the ensemble central difference; pMC cannot differentiate this column"
+    }
+  ],
+  "step_grid": [
+    0.4,
+    0.3,
+    0.2,
+    0.1
+  ],
+  "eta_bounds": {
+    "log_d_epidermis": [
+      -2.0,
+      2.0
+    ],
+    "log_d_papillary": [
+      -2.0,
+      2.0
+    ],
+    "log_d_reticular": [
+      -2.0,
+      2.0
+    ],
+    "log_mus_scale": [
+      -2.0,
+      2.0
+    ],
+    "mus_slope": [
+      -3.0,
+      3.0
+    ]
+  },
+  "eta_units": {
+    "log_d_epidermis": "dimensionless, log of a thickness scale",
+    "log_d_papillary": "dimensionless, log of a thickness scale",
+    "log_d_reticular": "dimensionless, log of a thickness scale",
+    "log_mus_scale": "dimensionless, log of a reduced-scattering scale",
+    "mus_slope": "dimensionless, additive shift in the power-law exponent"
+  },
+  "pmc_used_anywhere": false,
+  "pmc_note": "the replay kernel accumulates per-layer pathlength and the escaping weight is w0 exp(-sum_j mua_j L_j), so its moments give derivatives with respect to absorption and nothing else. With log_f_melanin removed, none of the five remaining eta columns is an absorption column: three move layer boundaries and two move scattering. The replay kernel supports neither geometry nor scattering derivatives.",
+  "melanin_not_evaluated": "Melanin was not evaluated as a nuisance parameter because the frozen production forward model does not expose a separately perturbable melanin component. Adding one would require a new absorption decomposition, nominal recalibration, and independent validation; it is outside this merge check.",
+  "why_thickness_columns_are_suspect": "a layer boundary position enters the kernel through a searchsorted layer index and through the distance-to-interface comparison, both discrete branches that MOVE with the parameter. The pathwise derivative drops the boundary term those branches generate, which is the same mechanism that makes common-random-number finite differences unable to validate pathwise AD. A thickness derivative taken by AD is therefore suspect by construction and must be demonstrated, not assumed.",
+  "convergence_rule": "converged when the simultaneous upper confidence bound on the relative truncation, |e3 - e2| over the reference magnitude, falls inside the pre-registered equivalence margin. Failure to reject a zero-difference null is NOT convergence: at six replicates that would mostly report low power. A column that is blocked, inequivalent or unresolved is not converged and the gate refuses to proceed for it.",
+  "ad_agreement_rule": "AD is accepted for a column only when the simultaneous upper confidence bound on the relative discrepancy against the ensemble reference falls inside the pre-registered equivalence margin of 0.05. Failure to reject a zero-difference null is NOT acceptance: at six replicates that would mostly report low power. A column whose bound straddles the margin is unresolved and receives no estimator route.",
+  "equivalence_rules": {
+    "scope": "COLUMN LEVEL ONLY. This block describes whether AD reproduces the ensemble reference for each eta Jacobian column, and whether the h^2 extrapolation converged. It establishes nothing about any downstream scientific classification.",
+    "design": "pre-registered equivalence, three-way outcome",
+    "margin_relative": 0.05,
+    "margin_basis": "a relative discrepancy of five percent in a nuisance Jacobian column. This is a NECESSARY column-level agreement criterion and nothing more: it carries no claim about any downstream classification. The earlier justification from the headroom of the final thresholds is WITHDRAWN, having been measured to be false, and is not restated here so that a search for it finds nothing. See results/margin_safety_analysis.json and, in the spec, column_margin_alone_does_not_certify_a_classification.",
+    "outcomes": {
+      "equivalent": "the simultaneous upper bound is inside the margin",
+      "inequivalent": "the simultaneous lower bound is above the margin",
+      "unresolved": "the bound straddles the margin; NOT a pass"
+    },
+    "critical_value": "the LARGER of a Bonferroni-corrected t at alpha / (2 m) on n - 1 degrees of freedom and a data-adaptive quantile of the CENTERED sign-flip studentized-max null. The larger is used because it only widens the interval.",
+    "coverage_assumption": "per-component approximate normality of the replicate values. This is the REGISTERED assumption and the coverage claim is conditional on it. Under it the Bonferroni component is simultaneously valid for any dependence between components.",
+    "no_assumption_free_guarantee": "neither component is valid independently of the error law. Centering makes the sign-flip residuals dependent, so flipping them is not an exact randomization distribution, and the Bonferroni component needs the registered normality.",
+    "measured_coverage_by_error_distribution": {
+      "gaussian": 0.9737,
+      "laplace": 0.986,
+      "t3": 0.9733,
+      "rademacher_plus_small_normal": 0.9283,
+      "note": "the Rademacher mixture falls short. It is near-discrete, which collapses the replicate sample and made the Bonferroni component cover 0.0283. That regime is NOT guarded: the rule that used to block it is withdrawn as not scale invariant and has no replacement."
+    },
+    "degenerate_spread_guard": "WITHDRAWN. It compared an absolute replicate standard deviation against a fraction of the column median, which is not scale invariant. The count is reported and no branch reads it. The near-discrete coverage shortfall is therefore unguarded and suspends confirmatory gates by a design-state precondition.",
+    "why_centered": "sign-flipping the raw paired differences inherits the unknown mean's own variability, which shrinks the critical value and destroys coverage. Measured: 6.9 percent simultaneous coverage at a true mean of 0.05 and 0 percent at 0.2.",
+    "min_attainable_nonzero_p": "2 / 2^n, which is 0.03125 at six replicates, because max|t| is invariant under a global sign flip",
+    "minimum_replicates": 3,
+    "support_rule": "a component is excluded only when BOTH the reference and the quantity being checked are negligible. Masking on the reference alone would hide a component where the reference vanishes and the alternative does not, which is a disagreement, not an absence of signal. The mask is saved and any downstream Fisher matrix must apply it.",
+    "convergence_denominator": "the paired standard error of e3 - e2, not SE(e2)",
+    "no_classification_is_certified": {
+      "statement": "no downstream classification is certified by this gate, by propagation or otherwise. There is no complete-set invariance argument, so every classification remains UNRESOLVED.",
+      "what_exists_instead": "a HEURISTIC stress search over the leading psi singular directions plus random ones. It can only find a flip; finding none is weak evidence and never establishes invariance.",
+      "counterexample": "results/stress_search_counterexample.json shows a searched maximum below a threshold while an untested admissible direction crosses it, constructed by assigning a different psi singular direction to each eta column, which the search set does not contain.",
+      "why_the_column_margin_cannot_close_this": "a relative error in a nuisance column does not control the principal angle between the nuisance and physiological column spaces, and the Schur complement depends on that angle. Measured, a five percent column perturbation moved the upper-StO2 bound by a factor of about 5000 for a nearly collinear block, and tightening the margin to 0.002 left the flip rate unchanged."
+    },
+    "conditioning_diagnostic": "the smallest principal angle between the nuisance and physiological column spaces, computed from singular vectors retained at the declared rank tolerance rather than a full QR"
+  },
+  "frozen_run_design": {
+    "n_replicates": 6,
+    "n_photons_per_wavelength": 200000,
+    "seed_base": 2600000,
+    "seed_stride": 7919,
+    "h_relative_grid": [
+      0.4,
+      0.3,
+      0.2,
+      0.1
+    ],
+    "problems": [],
+    "source": "spec/nuisance_spec.json; the command line cannot override any of it"
+  },
+  "cost_projection": {
+    "gate_itself": {
+      "finite_difference_evaluations": 40,
+      "replicates": 6,
+      "forward_seconds_each": 126.6,
+      "finite_difference_seconds": 30384.0,
+      "ad_eta_jacobian_seconds_each": 640.0,
+      "ad_jacobian_seconds_total": 3840.0,
+      "pmc_seconds": 0.0,
+      "total_hours": 9.51
+    },
+    "study_cost_by_number_of_ensemble_columns": {
+      "0": {
+        "columns_needing_ensemble_difference": 0,
+        "seconds_per_draw": 744.0,
+        "hours_for_48_draws": 9.92
+      },
+      "1": {
+        "columns_needing_ensemble_difference": 1,
+        "seconds_per_draw": 6820.8,
+        "hours_for_48_draws": 90.94
+      },
+      "2": {
+        "columns_needing_ensemble_difference": 2,
+        "seconds_per_draw": 12897.6,
+        "hours_for_48_draws": 171.97
+      },
+      "3": {
+        "columns_needing_ensemble_difference": 3,
+        "seconds_per_draw": 18974.4,
+        "hours_for_48_draws": 252.99
+      },
+      "4": {
+        "columns_needing_ensemble_difference": 4,
+        "seconds_per_draw": 25051.2,
+        "hours_for_48_draws": 334.02
+      },
+      "5": {
+        "columns_needing_ensemble_difference": 5,
+        "seconds_per_draw": 31128.0,
+        "hours_for_48_draws": 415.04
+      }
+    },
+    "no_pmc_term": "no eta column is a pMC-supported absorption column this round",
+    "basis": "forward at 126.6 s measured in the item 1 pilot at 200000 photons per wavelength over four wavelengths. A five-column eta jacfwd is taken as about five forward evaluations, 640 s, and the eleven-column theta jacobian as 744 s scaled from the six-column 372 s measurement. Both are projections and the gate measures them.",
+    "status": "projection; the gate replaces every term with a measurement"
+  },
+  "citation_gate": {
+    "per_dimension": {
+      "log_d_epidermis": {
+        "prior_kind": "evidence_based_population_prior",
+        "passes": true,
+        "rule": "source_verified and conversion_verified must both be true, and an inexact conversion must carry conversion_approximation_declared",
+        "basis": "source and conversion verified, and an inexact conversion declares itself"
+      },
+      "log_d_papillary": {
+        "prior_kind": "evidence_anchored_sensitivity_scenario",
+        "passes": true,
+        "rule": "anchor_source_verified must be true and population_prior_phrasing_forbidden must be true",
+        "basis": "anchor verified and population-prior phrasing forbidden"
+      },
+      "log_d_reticular": {
+        "prior_kind": "evidence_anchored_sensitivity_scenario",
+        "passes": true,
+        "rule": "anchor_source_verified must be true and population_prior_phrasing_forbidden must be true",
+        "basis": "anchor verified and population-prior phrasing forbidden"
+      },
+      "log_mus_scale": {
+        "prior_kind": "evidence_based_population_prior",
+        "passes": true,
+        "rule": "source_verified and conversion_verified must both be true, and an inexact conversion must carry conversion_approximation_declared",
+        "basis": "source and conversion verified, and an inexact conversion declares itself"
+      },
+      "mus_slope": {
+        "prior_kind": "evidence_anchored_sensitivity_scenario",
+        "passes": true,
+        "rule": "anchor_source_verified must be true and population_prior_phrasing_forbidden must be true",
+        "basis": "anchor verified and population-prior phrasing forbidden; its stress variant is pre-registered with phrasing forbidden"
+      }
+    },
+    "blocking": [],
+    "all_dimensions_pass": true,
+    "explicit_release_decision": "released",
+    "spec_says_released": true,
+    "open": true,
+    "rule": "No transport may be submitted while this gate is closed. The release above covers the feasibility gate only, within release_scope."
+  },
+  "preflight": {
+    "present": true,
+    "passes": false,
+    "trusted_top_level_passes_alone": false,
+    "problems": [
+      {
+        "kind": "hash",
+        "file": "spec/nuisance_spec.json",
+        "recorded": "425085053153114d96780691a28cd729fae0741cbc587aceb5e750e5bf0ea368",
+        "now": "4fc1d6b572864c5cfd721f557804eb1ea944b743849b941c404008419e16067b"
+      },
+      {
+        "kind": "hash",
+        "file": "scripts/nuisance_feasibility_gate.py",
+        "recorded": "631dae9c8936547899736fee74b28f44c51cd434a2d7c0069d58a8478dc52319",
+        "now": "f0e7d62cad602abb2643d450fae76ab8c8a3162fce39d901f00eb6c8cffdc9fd"
+      },
+      {
+        "kind": "hash",
+        "file": "jaxpad:scripts/inverse/phase2_v12_runner.py",
+        "recorded": "d5bb146b9ebe69a15a6515154cac713c614562127d56651a96b11a2e99cd1b2a",
+        "now": "unavailable: ModuleNotFoundError"
+      },
+      {
+        "kind": "hash",
+        "file": "jaxpad:scripts/archive/inverse/multi_wl_v12_colab.py",
+        "recorded": "57f186f47fa38e418bacbef536114ba054bfab823d04868dc47d2cdb2c64e844",
+        "now": "unavailable: ModuleNotFoundError"
+      },
+      {
+        "kind": "hash",
+        "file": "jaxpad:src/pad/mc_forward.py",
+        "recorded": "9e1236fa90da223d56788ed2bccdd1e32eccb787788f03a4f0e5ebca47bf4b0f",
+        "now": "unavailable: ModuleNotFoundError"
+      },
+      {
+        "kind": "hash",
+        "file": "jaxpad:src/pad/physics_engine_v4.py",
+        "recorded": "4616e22226a015645f15c0dfa8582fab73a3c18d4bb6b1ff26bb7d54bae77f68",
+        "now": "unavailable: ModuleNotFoundError"
+      },
+      {
+        "kind": "hash",
+        "file": "jaxpad:src/pad/config_v4_633nm.py",
+        "recorded": "bdd0afd211e8edf81ac86ea72596aa2fd13b4f53509ad61985057b82461e8af3",
+        "now": "unavailable: ModuleNotFoundError"
+      },
+      {
+        "kind": "environment",
+        "field": "backend",
+        "preflight": "gpu",
+        "now": null
+      },
+      {
+        "kind": "environment",
+        "field": "device_kind",
+        "preflight": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+        "now": null
+      },
+      {
+        "kind": "environment",
+        "field": "jax_version",
+        "preflight": "0.9.1",
+        "now": null
+      },
+      {
+        "kind": "environment",
+        "field": "ptxas_version",
+        "preflight": "12.9.86",
+        "now": null
+      },
+      {
+        "kind": "environment",
+        "field": "cuda_module",
+        "preflight": "cuda/12.9",
+        "now": null
+      }
+    ],
+    "n_problems": 12,
+    "hash_bindings_verified": false,
+    "manifest_exact": true,
+    "environment_matches": false,
+    "component_conditions_reverified": true,
+    "n_bound_files": 9,
+    "expected_bound_files": 9,
+    "eta0_vs_production_rel_diff": 1.4635023881012331e-16,
+    "repeat_bitwise_identical": true,
+    "deterministic_ops_flag_set": true,
+    "ad_geometry_columns_nonzero": true,
+    "ad_scattering_columns_nonzero": true,
+    "backend": "gpu",
+    "environment_preflight": {
+      "ptxas_version": "12.9.86",
+      "cuda_module": "cuda/12.9",
+      "backend": "gpu",
+      "jax_version": "0.9.1",
+      "device_kind": "NVIDIA H100 80GB HBM3 MIG 1g.10gb",
+      "n_devices": 1
+    },
+    "environment_now": {
+      "ptxas_version": null,
+      "cuda_module": null,
+      "backend": null,
+      "jax_version": null,
+      "device_kind": null,
+      "n_devices": null,
+      "error": "ModuleNotFoundError"
+    },
+    "verdict": "the real executor reproduces the production forward solver at eta = 0, the AD path is live on every column, and repeated calls with the same keys are bitwise identical"
+  },
+  "preconditions_for_run": {
+    "citation_gate_open": true,
+    "real_executor_preflight_passed": false,
+    "preflight_hash_bindings_verified": false,
+    "deterministic_flag_in_this_process": false,
+    "all_required": true
+  },
+  "deterministic_flag": {
+    "xla_flags": "",
+    "flag": "xla_gpu_deterministic_ops=true",
+    "set_in_this_process": false,
+    "why_checked_here": "a preflight record describes the process that ran the preflight, not this one"
+  },
+  "input_hashes": {
+    "spec/nuisance_spec.json": "4fc1d6b572864c5cfd721f557804eb1ea944b743849b941c404008419e16067b",
+    "spec/baseline_spec.json": "72327c1809387e2cb2a810eebba6547aeebdb0016ec25858ba6ee3f16a8a8fa5",
+    "src/augmented.py": "f5807ccac5211dc492fbe41896ba18b3d94bacab1c157764636e0946a146b8c6",
+    "scripts/nuisance_feasibility_gate.py": "f0e7d62cad602abb2643d450fae76ab8c8a3162fce39d901f00eb6c8cffdc9fd"
+  },
+  "transport_run": false,
+  "draws_evaluated": 0,
+  "timestamp": "2026-10-05T07:42:54-0700"
+}

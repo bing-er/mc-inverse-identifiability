@@ -1,0 +1,541 @@
+{
+  "mode": "dry run, design freeze; no transport was run",
+  "validation_spec": "spec/validation_spec.json",
+  "operating_point": {
+    "source": "spec/baseline_spec.json profiles.production",
+    "psi_labels": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "nominal_psi": [
+      0.95,
+      0.0560139,
+      0.65,
+      0.0186713,
+      0.49,
+      0.45
+    ],
+    "blood_coordinate": "physical_bvf",
+    "wavelengths_nm": [
+      540.0,
+      580.0,
+      633.0,
+      800.0
+    ],
+    "radial_grid": {
+      "r_min_cm": 0.0,
+      "r_max_cm": 1.5,
+      "n_bins": 30
+    },
+    "max_steps": 4000,
+    "coordinates": "psi, identical to the production pool; no reparameterization is applied"
+  },
+  "step_plans": [
+    {
+      "target": "StO2_U",
+      "direction": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": 0.10000000000000009,
+      "h_absolute": [
+        0.040000000000000036,
+        0.030000000000000027,
+        0.020000000000000018,
+        0.010000000000000009
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.010000000000000009,
+      "margin_all_components": 0.010000000000000009,
+      "binding_cap": {
+        "cap": "headroom_fraction",
+        "binding_component_index": 0
+      },
+      "moving_component_indices": [
+        0
+      ],
+      "moving_component_range": {
+        "0": [
+          0.9099999999999999,
+          0.99
+        ]
+      },
+      "largest_component_displacement": 0.040000000000000036,
+      "extreme_points": {
+        "max": [
+          0.99,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "min": [
+          0.9099999999999999,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ]
+      }
+    },
+    {
+      "target": "f_U",
+      "direction": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": 0.01680417,
+      "h_absolute": [
+        0.006721668,
+        0.005041251,
+        0.003360834,
+        0.001680417
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.049292232,
+      "margin_all_components": 0.0186713,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 1
+      },
+      "moving_component_indices": [
+        1
+      ],
+      "moving_component_range": {
+        "1": [
+          0.049292232,
+          0.06273556799999999
+        ]
+      },
+      "largest_component_displacement": 0.006721668,
+      "extreme_points": {
+        "max": [
+          0.95,
+          0.06273556799999999,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "min": [
+          0.95,
+          0.049292232,
+          0.65,
+          0.0186713,
+          0.49,
+          0.45
+        ]
+      }
+    },
+    {
+      "target": "StO2_D",
+      "direction": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": 0.195,
+      "h_absolute": [
+        0.07800000000000001,
+        0.058499999999999996,
+        0.03900000000000001,
+        0.019500000000000003
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.272,
+      "margin_all_components": 0.0186713,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 2
+      },
+      "moving_component_indices": [
+        2
+      ],
+      "moving_component_range": {
+        "2": [
+          0.5720000000000001,
+          0.728
+        ]
+      },
+      "largest_component_displacement": 0.07800000000000001,
+      "extreme_points": {
+        "max": [
+          0.95,
+          0.0560139,
+          0.728,
+          0.0186713,
+          0.49,
+          0.45
+        ],
+        "min": [
+          0.95,
+          0.0560139,
+          0.5720000000000001,
+          0.0186713,
+          0.49,
+          0.45
+        ]
+      }
+    },
+    {
+      "target": "f_D",
+      "direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "scale": 0.0056013899999999995,
+      "h_absolute": [
+        0.002240556,
+        0.0016804169999999998,
+        0.001120278,
+        0.000560139
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.016430743999999997,
+      "margin_all_components": 0.016430743999999997,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 3
+      },
+      "moving_component_indices": [
+        3
+      ],
+      "moving_component_range": {
+        "3": [
+          0.016430743999999997,
+          0.020911856
+        ]
+      },
+      "largest_component_displacement": 0.002240556,
+      "extreme_points": {
+        "max": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.020911856,
+          0.49,
+          0.45
+        ],
+        "min": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.016430743999999997,
+          0.49,
+          0.45
+        ]
+      }
+    },
+    {
+      "target": "mua_DermR",
+      "direction": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "scale": 0.147,
+      "h_absolute": [
+        0.0588,
+        0.04409999999999999,
+        0.0294,
+        0.0147
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.43119999999999997,
+      "margin_all_components": 0.0186713,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 4
+      },
+      "moving_component_indices": [
+        4
+      ],
+      "moving_component_range": {
+        "4": [
+          0.43119999999999997,
+          0.5488
+        ]
+      },
+      "largest_component_displacement": 0.0588,
+      "extreme_points": {
+        "max": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.5488,
+          0.45
+        ],
+        "min": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.43119999999999997,
+          0.45
+        ]
+      }
+    },
+    {
+      "target": "mua_SubQ",
+      "direction": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": 0.135,
+      "h_absolute": [
+        0.054000000000000006,
+        0.0405,
+        0.027000000000000003,
+        0.013500000000000002
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.396,
+      "margin_all_components": 0.0186713,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 5
+      },
+      "moving_component_indices": [
+        5
+      ],
+      "moving_component_range": {
+        "5": [
+          0.396,
+          0.504
+        ]
+      },
+      "largest_component_displacement": 0.054000000000000006,
+      "extreme_points": {
+        "max": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.504
+        ],
+        "min": [
+          0.95,
+          0.0560139,
+          0.65,
+          0.0186713,
+          0.49,
+          0.396
+        ]
+      }
+    },
+    {
+      "target": "near_null",
+      "direction": [
+        -0.012485980766072708,
+        9.152345570621006e-05,
+        0.987657204004372,
+        -0.0026880616971772524,
+        -0.0009183385432319315,
+        0.027166377729001216
+      ],
+      "scale": 0.19743692367087398,
+      "h_absolute": [
+        0.0789747694683496,
+        0.05923107710126219,
+        0.0394873847341748,
+        0.0197436923670874
+      ],
+      "n_evaluations": 8,
+      "margin_moving_components": 0.018459010947148725,
+      "margin_all_components": 0.018459010947148725,
+      "binding_cap": {
+        "cap": "value_fraction",
+        "binding_component_index": 2
+      },
+      "moving_component_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "moving_component_range": {
+        "0": [
+          0.9490139225474131,
+          0.9509860774525868
+        ],
+        "1": [
+          0.05600667195618465,
+          0.056021128043815344
+        ],
+        "2": [
+          0.5720000000000001,
+          0.728
+        ],
+        "3": [
+          0.018459010947148725,
+          0.01888358905285127
+        ],
+        "4": [
+          0.48992747442525436,
+          0.4900725255747456
+        ],
+        "5": [
+          0.447854541581562,
+          0.452145458418438
+        ]
+      },
+      "largest_component_displacement": 0.078,
+      "extreme_points": {
+        "max": [
+          0.9490139225474131,
+          0.056021128043815344,
+          0.728,
+          0.018459010947148725,
+          0.48992747442525436,
+          0.452145458418438
+        ],
+        "min": [
+          0.9509860774525868,
+          0.05600667195618465,
+          0.5720000000000001,
+          0.01888358905285127,
+          0.4900725255747456,
+          0.447854541581562
+        ]
+      }
+    }
+  ],
+  "cost_estimate_pilot_ad_only_runnable_now": {
+    "includes_pmc": false,
+    "forward_equivalents_per_replicate_per_target": 10.0,
+    "targets": 2,
+    "replicates": 6,
+    "total_forward_equivalents": 120.0,
+    "n_photons_per_wavelength_per_replicate": 200000,
+    "estimated_seconds_per_forward_evaluation": 53.142857142857146,
+    "estimated_wall_clock_seconds": 6377.142857142858,
+    "estimated_wall_clock_hours": 1.7714285714285716,
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s. The AD and pMC factors are conservative placeholders.",
+    "status": "estimate from the production pool timing; the pilot measures it directly"
+  },
+  "cost_estimate_pilot_future_ad_plus_pmc": {
+    "includes_pmc": true,
+    "forward_equivalents_per_replicate_per_target": 11.5,
+    "targets": 2,
+    "replicates": 6,
+    "total_forward_equivalents": 138.0,
+    "n_photons_per_wavelength_per_replicate": 200000,
+    "estimated_seconds_per_forward_evaluation": 53.142857142857146,
+    "estimated_wall_clock_seconds": 7333.714285714286,
+    "estimated_wall_clock_hours": 2.0371428571428574,
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s. The AD and pMC factors are conservative placeholders.",
+    "status": "estimate from the production pool timing; the pilot measures it directly"
+  },
+  "cost_estimate_full_seven_targets_ad_only": {
+    "includes_pmc": false,
+    "forward_equivalents_per_replicate_per_target": 10.0,
+    "targets": 7,
+    "replicates": 6,
+    "total_forward_equivalents": 420.0,
+    "n_photons_per_wavelength_per_replicate": 200000,
+    "estimated_seconds_per_forward_evaluation": 53.142857142857146,
+    "estimated_wall_clock_seconds": 22320.0,
+    "estimated_wall_clock_hours": 6.2,
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s. The AD and pMC factors are conservative placeholders.",
+    "status": "estimate from the production pool timing; the pilot measures it directly"
+  },
+  "cost_estimate_full_seven_targets_future_ad_plus_pmc": {
+    "includes_pmc": true,
+    "forward_equivalents_per_replicate_per_target": 11.5,
+    "targets": 7,
+    "replicates": 6,
+    "total_forward_equivalents": 483.0,
+    "n_photons_per_wavelength_per_replicate": 200000,
+    "estimated_seconds_per_forward_evaluation": 53.142857142857146,
+    "estimated_wall_clock_seconds": 25668.0,
+    "estimated_wall_clock_hours": 7.13,
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s. The AD and pMC factors are conservative placeholders.",
+    "status": "estimate from the production pool timing; the pilot measures it directly"
+  },
+  "pilot_label": null,
+  "pmc_counted_in_runnable_plan": true,
+  "runnable_plan": "pilot, AD plus pMC",
+  "cost_basis": {
+    "reference_photons_per_wavelength": 200000,
+    "forward_seconds_at_reference_photons": 53.142857142857146,
+    "ad_jvp_in_forward_equivalents": 2.0,
+    "pmc_replay_in_forward_equivalents": 1.5,
+    "basis": "the production pool measured 372 s per seed for forward plus a six-column jacfwd at 200000 photons per wavelength over four wavelengths with max_steps 4000; forward-mode AD with six tangents costs about seven forward evaluations, so one forward evaluation is taken as 372/7 s. The AD and pMC factors are conservative placeholders."
+  },
+  "perturbation_mc_status": {
+    "kernel_path": "src/replay_kernel.py",
+    "kernel_present": true,
+    "gate_artifact": "results/replay_equivalence.json",
+    "gate_artifact_present": true,
+    "precondition": "must reproduce the production kernel photon by photon, identical detector bin assignment and identical escaping weight, before any pMC number is reported",
+    "vendored": true,
+    "gate_summary": {
+      "n_cases": 20,
+      "n_passed": 20,
+      "all_passed": true,
+      "negative_control_rejected": true,
+      "total_photon_comparisons": 80000,
+      "det_id_mismatches_total": 0,
+      "escaped_flag_mismatches_total": 0,
+      "weight_bitwise_identical_in_all_cases": true,
+      "det_id_bitwise_identical_in_all_cases": true,
+      "worst_pathlength_identity_max_rel_diff": 1.3502716373736387e-14
+    },
+    "gate_verdict": "pass, the gate can fail and the real replay is accepted; the pMC route is unblocked",
+    "blocking": null
+  },
+  "selftest": {
+    "checks": 42,
+    "passed": 42,
+    "all_passed": true
+  },
+  "note_on_near_null_step": "with the direction taken as the pushforward D v_z rather than v_z, the step is capped by StO2_D and moves deep StO2 by 0.078, the same order as the StO2_D column itself. The earlier f_D cap was an artifact of using the z-space singular vector as if it were a psi-space direction.",
+  "near_null_direction_psi_tangent": [
+    -0.012485980766072708,
+    9.152345570621006e-05,
+    0.987657204004372,
+    -0.0026880616971772524,
+    -0.0009183385432319315,
+    0.027166377729001216
+  ],
+  "near_null_direction_z": [
+    -0.012485980766072708,
+    0.0016339418556145895,
+    0.987657204004372,
+    -0.14396757039827182,
+    -0.0018741602923100643,
+    0.060369728286669366
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "analysis": "MERGE_CHECKS item 1 pilot: two columns, AD and pMC against the ensemble reference",
+  "date": "2026-10-01",
+  "forms_final_conclusions": false,
+  "purpose": "estimate replicate standard error and cost only",
+  "cluster_jobs": {
+    "gpu_equivalence_gate": "62465209, COMPLETED 00:04:25",
+    "pilot": "62465210, COMPLETED 04:30:37, afterok dependency on the gate"
+  },
+  "inputs": {
+    "validation_spec": "spec/validation_spec.json",
+    "validation_spec_sha256": "457798bedc078ce7527dfff4543512925a98f92d1eef5ccd6bdf101a57d51674",
+    "gpu_equivalence_gate": "results/replay_equivalence_gpu.json",
+    "gpu_equivalence_gate_sha256": "2896966c58481561ca3c4ed04bb443910e145d6d2470399de6c03f467964e190",
+    "cpu_equivalence_gate_sha256": "a294e5be898cea76aac15a257016c15b0c70d8cd37e532ff31eb0ea1b692cc0d",
+    "backend_rule": "pMC availability was read from the GPU gate because the pilot ran on GPU; the CPU gate does not license a GPU run"
+  },
+  "outputs": {
+    "results/jacobian_validation_pilot.json": "9c4fcb6b00c8a11c6124b2d82a1df0fea553381b9a9af7680a58adf26bdeebfe"
+  },
+  "code": {
+    "scripts/jacobian_validation.py": "7a4acddbb281cb462046a79b0519d83bd44daadec6e3a50aaa70a46ee0597f7f",
+    "src/replay_kernel.py": "0860adda918c29dd33287664990091999cff654ba875cca7d86d3db31db29d07",
+    "scripts/pilot_fir.sbatch": "9f4587c615aee8b3ea7a77de5bb77e3dfb49ba3dd8c976b0d29329c0fde4c318",
+    "scripts/replay_gate_fir.sbatch": "003aaa2c1f85070a7b017cdf13598cebdfce03c205426e54b0f52a02834d95ad"
+  },
+  "design_as_run": {
+    "targets": [
+      "f_U",
+      "StO2_D"
+    ],
+    "replicates": 6,
+    "photons_per_wavelength_per_replicate": 200000,
+    "observable": "total_escape_per_wavelength",
+    "max_steps": 4000,
+    "seeds": [
+      910000,
+      920007,
+      930014,
+      940021,
+      950028,
+      960035
+    ],
+    "one_key_array_per_replicate_shared_by_all_three_estimators": true
+  },
+  "measured_cost": {
+    "forward_seconds_per_evaluation": 126.6,
+    "forward_seconds_per_evaluation_estimated_before": 53.1,
+    "forward_cost_underestimated_by": 2.38,
+    "why_the_estimate_was_wrong": "the estimate assumed a six-tangent jacfwd costs about seven forward evaluations, so forward was taken as 372/7 s. Measured here, forward-mode AD with one tangent costs 1.17 forward equivalents, which implies the six-column jacfwd in the transport pool cost roughly two forward evaluations, not seven. The 372 s pool timing was therefore dominated by forward transport, and forward alone is about 127 s at 200000 photons per wavelength over four wavelengths.",
+    "ad_jvp_forward_equivalents_measured": 1.17,
+    "ad_jvp_forward_equivalents_placeholder": 2.0,
+    "pmc_replay_forward_equivalents_measured": 1.29,
+    "pmc_replay_forward_equivalents_placeholder": 1.5,
+    "forward_equivalents_per_replicate_per_target_measured": 10.46,
+    "compile_paid_once_seconds": {
+      "refl": 128.62,
+      "ad": 149.67,
+      "pmc": 33.86
+    },
+    "pilot_wall_clock_hours": 4.42,
+    "pilot_wall_clock_hours_estimated_before": 2.04,
+    "seven_target_full_run_hours_at_this_budget": 15.5
+  },
+  "budget_to_resolve_each_wavelength": {
+    "rule": "the smallest real effect to resolve is the AD-minus-pMC gap, since the two differ resolvably from each other but neither differs resolvably from the reference. To resolve a discrepancy of that size at 3 sigma the paired standard error must fall to gap/3, and the standard error scales as one over the square root of the total photon count.",
+    "multiplier_on_the_current_budget": {
+      "f_U_540nm": 8.6,
+      "f_U_580nm": 6.3,
+      "f_U_633nm": 33.4,
+      "f_U_800nm": 1039.8,
+      "StO2_D_540nm": 3738.7,
+      "StO2_D_580nm": 1580.4,
+      "StO2_D_633nm": 2947.9,
+      "StO2_D_800nm": 9023.9
+    },
+    "reading": "f_U at 540 and 580 nm is reachable at roughly 6 to 9 times this budget. f_U at 633 needs about 33 times. f_U at 800 nm and StO2_D at every wavelength need between 1500 and 9000 times, which is not reachable."
+  },
+  "findings": {
+    "ad_and_pmc_differ_resolvably_from_each_other": "separation_z runs from 68 to 461 across the eight wavelength-column cases, because the two estimators share random numbers and their paired difference has a standard error one to four orders of magnitude smaller than the reference's own",
+    "neither_differs_resolvably_from_the_reference": "every |z_AD| and |z_pMC| is below the threshold of 3, the largest being 2.81. At this budget the ensemble reference cannot adjudicate between them.",
+    "all_verdicts": "ad_vs_reference unresolved and pmc_vs_reference unresolved in all eight cases; ad_vs_pmc resolved separation in all eight; preference no preference in all eight, correctly, since a preference requires one estimator to be consistent with the reference while the other is not",
+    "not_a_validation": "this is consistency within the current resolution, not evidence that AD and the ensemble derivative agree",
+    "truncation_is_not_the_limitation": "the three-term minus two-term difference over the replicate standard error stays between 0.2 and 0.73, so the h^2 extrapolation is limited by replicate noise and not by the truncation of the series. The moderate-h grid is doing its job.",
+    "field_rename": "the statistic keyed full_vector_paired_discrepancy was computed on the 4-component total escape, not the 120-component radial vector. It is now keyed paired_mean_discrepancy and records which observable it was given."
+  },
+  "consequences_for_the_design": {
+    "total_escape_is_confirmed_insufficient": "the pilot used it as planned for its low variance, and it is now clear it cannot carry the final validation: StO2_D is unreachable on it by three to four orders of magnitude",
+    "the_radial_aggregates_and_radial_vector_have_not_been_tried": "they may carry more information per photon than the total, and the spec already requires them for the final validation. Whether they change the reachability picture is the open question the pilot raises.",
+    "near_null_direction_not_yet_run": "the pilot covered f_U and StO2_D only; the near-null directional derivative is a separate target in the plan"
+  }
+}

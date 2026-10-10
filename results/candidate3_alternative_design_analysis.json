@@ -1,0 +1,227 @@
+{
+  "analysis_only": true,
+  "bounded_mean_method_review": {
+    "finding": "the reviewed methods can improve constants and finite-sample width, but they still require bounded support or another justified tail/variance assumption; none is an audited drop-in change that removes the three-orders-of-magnitude resource gap while preserving literal all 120 and the 0.5-SD component estimand",
+    "pilot_variance_warning": "using the six grid-pilot replicates to set a formal variance cap would make those trials part of inference and would require a new error allocation and registration; they may not be silently reused",
+    "scope": "qualitative method audit only; no substitute interval is implemented or registered",
+    "sources": [
+      {
+        "citation": "Maurer and Pontil (2009), Empirical Bernstein Bounds and Sample Variance Penalization",
+        "method": "empirical Bernstein",
+        "url": "https://arxiv.org/abs/0907.3740"
+      },
+      {
+        "citation": "Bentkus (2004), On Hoeffding's inequalities",
+        "method": "Bentkus bounded-sum inequality",
+        "url": "https://arxiv.org/abs/math/0410159"
+      },
+      {
+        "citation": "Waudby-Smith and Ramdas, Estimating means of bounded random variables by betting",
+        "method": "betting confidence intervals and sequences",
+        "url": "https://arxiv.org/abs/2010.09686"
+      },
+      {
+        "citation": "Kuchibhotla and Zheng (2021), Near-Optimal Confidence Sequences for Bounded Random Variables",
+        "method": "near-optimal bounded-variable confidence sequences",
+        "url": "https://proceedings.mlr.press/v139/kuchibhotla21a.html"
+      }
+    ]
+  },
+  "candidate3_verdict": null,
+  "component_scale_sensitivity": {
+    "interpretation": "this retains all bins but changes the component equivalence scale; no floor is adopted because no external detector-resolution basis has been supplied",
+    "rows": [
+      {
+        "detector_count_resolution_floor": 0.0,
+        "minimum_replicates_range_term_only": 10803,
+        "minimum_total_photons_at_worst_component": 2160579346,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 29
+      },
+      {
+        "detector_count_resolution_floor": 0.25,
+        "minimum_replicates_range_term_only": 529,
+        "minimum_total_photons_at_worst_component": 105676298,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 21
+      },
+      {
+        "detector_count_resolution_floor": 0.5,
+        "minimum_replicates_range_term_only": 265,
+        "minimum_total_photons_at_worst_component": 52838150,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 21
+      },
+      {
+        "detector_count_resolution_floor": 1.0,
+        "minimum_replicates_range_term_only": 133,
+        "minimum_total_photons_at_worst_component": 26419076,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 11
+      },
+      {
+        "detector_count_resolution_floor": 2.0,
+        "minimum_replicates_range_term_only": 67,
+        "minimum_total_photons_at_worst_component": 13209539,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 11
+      },
+      {
+        "detector_count_resolution_floor": 5.0,
+        "minimum_replicates_range_term_only": 27,
+        "minimum_total_photons_at_worst_component": 5283816,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 22
+      },
+      {
+        "detector_count_resolution_floor": 10.0,
+        "minimum_replicates_range_term_only": 14,
+        "minimum_total_photons_at_worst_component": 2641909,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 22
+      }
+    ],
+    "rule": "replace each measurement SD by max(measurement SD, floor_count/(N_measurement*area)) before applying the unchanged 0.5 multiplier"
+  },
+  "coverage_claimed": false,
+  "coverage_run": false,
+  "decision": {
+    "automatic_replacement_selected": false,
+    "candidate3_current_formulation": "retire_as_operationally_infeasible",
+    "freeze_alternative_design": false,
+    "future_reopening_condition": "a new independently justified scientific support contract, detector-resolution scale, or stochastic assumption with its own coverage audit",
+    "reason": "support trimming changes which physical bins are judged, a count floor changes the component equivalence scale, and the reviewed bounded-mean methods do not supply an assumption-free orders-of-magnitude rescue",
+    "run_gate_wiring_authorized": false
+  },
+  "inputs": {
+    "photons_per_transport_replicate_per_wavelength": 200000,
+    "production_measurement_photons_per_wavelength": 100000,
+    "registration_analysis_digest": "e48c89ca32b42586b00ad0ae9a6bded5dbfb8a5ffaa1606c21258513894c3423",
+    "selected_common_grid": [
+      0.5,
+      0.3,
+      0.1,
+      0.07
+    ],
+    "source_component_margin_measurement_sd": 0.5,
+    "source_support": "literal_all_120"
+  },
+  "schema_version": "candidate3-alternative-design-audit-v1",
+  "status": "ALTERNATIVE DESIGN AUDIT; NOT A CANDIDATE 3 VERDICT",
+  "support_sensitivity": {
+    "data_independent_inputs": "committed production reflectance, annular area, and measurement photon budget",
+    "interpretation": "this can lower cost only by changing the estimand; the old threshold 5 rule retains 66/120 components and still requires 55 replicates from the range term alone",
+    "rows": [
+      {
+        "minimum_replicates_range_term_only": 10803,
+        "minimum_total_photons_at_worst_component": 2160579346,
+        "nominal_expected_measurement_count_threshold": 0.0,
+        "removed_components": 0,
+        "retained_components": 120,
+        "worst_component_index_wavelength_major": 29,
+        "worst_component_nominal_expected_measurement_count": 0.00014951843802612035
+      },
+      {
+        "minimum_replicates_range_term_only": 1059,
+        "minimum_total_photons_at_worst_component": 211676969,
+        "nominal_expected_measurement_count_threshold": 0.01,
+        "removed_components": 15,
+        "retained_components": 105,
+        "worst_component_index_wavelength_major": 18,
+        "worst_component_nominal_expected_measurement_count": 0.015231918871492153
+      },
+      {
+        "minimum_replicates_range_term_only": 703,
+        "minimum_total_photons_at_worst_component": 140490909,
+        "nominal_expected_measurement_count_threshold": 0.03,
+        "removed_components": 20,
+        "retained_components": 100,
+        "worst_component_index_wavelength_major": 52,
+        "worst_component_nominal_expected_measurement_count": 0.03429427776381892
+      },
+      {
+        "minimum_replicates_range_term_only": 395,
+        "minimum_total_photons_at_worst_component": 78898026,
+        "nominal_expected_measurement_count_threshold": 0.1,
+        "removed_components": 26,
+        "retained_components": 94,
+        "worst_component_index_wavelength_major": 49,
+        "worst_component_nominal_expected_measurement_count": 0.1076018668634773
+      },
+      {
+        "minimum_replicates_range_term_only": 236,
+        "minimum_total_photons_at_worst_component": 47005732,
+        "nominal_expected_measurement_count_threshold": 0.3,
+        "removed_components": 31,
+        "retained_components": 89,
+        "worst_component_index_wavelength_major": 89,
+        "worst_component_nominal_expected_measurement_count": 0.3003291417266528
+      },
+      {
+        "minimum_replicates_range_term_only": 117,
+        "minimum_total_photons_at_worst_component": 23328254,
+        "nominal_expected_measurement_count_threshold": 1.0,
+        "removed_components": 43,
+        "retained_components": 77,
+        "worst_component_index_wavelength_major": 83,
+        "worst_component_nominal_expected_measurement_count": 1.1893360252104819
+      },
+      {
+        "minimum_replicates_range_term_only": 81,
+        "minimum_total_photons_at_worst_component": 16084027,
+        "nominal_expected_measurement_count_threshold": 2.0,
+        "removed_components": 49,
+        "retained_components": 71,
+        "worst_component_index_wavelength_major": 80,
+        "worst_component_nominal_expected_measurement_count": 2.466930754013459
+      },
+      {
+        "minimum_replicates_range_term_only": 55,
+        "minimum_total_photons_at_worst_component": 10858439,
+        "nominal_expected_measurement_count_threshold": 5.0,
+        "removed_components": 54,
+        "retained_components": 66,
+        "worst_component_index_wavelength_major": 77,
+        "worst_component_nominal_expected_measurement_count": 5.34405432700284
+      },
+      {
+        "minimum_replicates_range_term_only": 38,
+        "minimum_total_photons_at_worst_component": 7448271,
+        "nominal_expected_measurement_count_threshold": 10.0,
+        "removed_components": 64,
+        "retained_components": 56,
+        "worst_component_index_wavelength_major": 115,
+        "worst_component_nominal_expected_measurement_count": 11.032989598394785
+      },
+      {
+        "minimum_replicates_range_term_only": 27,
+        "minimum_total_photons_at_worst_component": 5353346,
+        "nominal_expected_measurement_count_threshold": 20.0,
+        "removed_components": 72,
+        "retained_components": 48,
+        "worst_component_index_wavelength_major": 111,
+        "worst_component_nominal_expected_measurement_count": 20.776891148035237
+      },
+      {
+        "minimum_replicates_range_term_only": 17,
+        "minimum_total_photons_at_worst_component": 3362841,
+        "nominal_expected_measurement_count_threshold": 50.0,
+        "removed_components": 82,
+        "retained_components": 38,
+        "worst_component_index_wavelength_major": 105,
+        "worst_component_nominal_expected_measurement_count": 50.46792317818645
+      },
+      {
+        "minimum_replicates_range_term_only": 12,
+        "minimum_total_photons_at_worst_component": 2316077,
+        "nominal_expected_measurement_count_threshold": 100.0,
+        "removed_components": 88,
+        "retained_components": 32,
+        "worst_component_index_wavelength_major": 101,
+        "worst_component_nominal_expected_measurement_count": 103.10077672312282
+      }
+    ],
+    "rule": "retain a wavelength-major component iff its nominal production expected measurement count is at least the predeclared threshold"
+  },
+  "transport_run_by_this_analysis": false
+}

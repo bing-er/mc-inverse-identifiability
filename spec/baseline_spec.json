@@ -1,0 +1,218 @@
+{
+  "spec_version": "1.0.0",
+  "frozen": "2026-09-30",
+  "note": "Single source of truth for every configuration constant. Scripts MUST read from here. No implicit defaults are permitted anywhere in scripts/.",
+  "photon_budgets": {
+    "note": "These two are distinct quantities and must never share a name or a variable. n_transport_photons controls the Monte Carlo accuracy of the R and J estimates. n_measurement_photons is the hypothetical experimental budget entering the Fisher likelihood.",
+    "n_transport_photons": {
+      "meaning": "Monte Carlo numerical precision of the R, J estimates",
+      "unit": "photons per wavelength per stream"
+    },
+    "n_measurement_photons": {
+      "meaning": "assumed experimental photon budget in the Fisher likelihood",
+      "unit": "photons per wavelength"
+    }
+  },
+  "parameters": {
+    "coordinates": "psi",
+    "psi_labels": [
+      "StO2_U",
+      "f_U",
+      "StO2_D",
+      "f_D",
+      "mua_DermR",
+      "mua_SubQ"
+    ],
+    "psi_description": [
+      "upper-plexus oxygen saturation, dimensionless in [0,1]",
+      "upper-plexus blood volume fraction, physical BVF",
+      "deep-plexus oxygen saturation, dimensionless in [0,1]",
+      "deep-plexus blood volume fraction, physical BVF",
+      "dermis/reticular non-vascular absorption scale",
+      "subcutis non-vascular absorption scale"
+    ],
+    "nominal_psi": {
+      "StO2_U": 0.95,
+      "f_U": 0.0560139,
+      "StO2_D": 0.65,
+      "f_D": 0.0186713,
+      "mua_DermR": 0.49,
+      "mua_SubQ": 0.45
+    },
+    "phi_labels": [
+      "log_cU_oxy",
+      "log_cU_deoxy",
+      "log_cD_oxy",
+      "log_cD_deoxy",
+      "log_DermR",
+      "log_SubQ"
+    ],
+    "phi_description": "P1 legacy coordinates: elementwise log of [f_U*S_U, f_U*(1-S_U), f_D*S_D, f_D*(1-S_D), DermR, SubQ]",
+    "spectral_normalization": {
+      "note": "Dimensionless normalization applied before eigendecomposition or SVD. StO2 coordinates carry scale 1 because they are already dimensionless and O(1); the rest are scaled by their nominal value.",
+      "scale_vector": [
+        "1.0",
+        "nominal_f_U",
+        "1.0",
+        "nominal_f_D",
+        "nominal_mua_DermR",
+        "nominal_mua_SubQ"
+      ]
+    }
+  },
+  "blood_coordinate": {
+    "report_as": "physical_bvf",
+    "legacy_to_physical_divisor": 5.355813953488371,
+    "legacy_nominal": {
+      "B_U": 0.3,
+      "B_D": 0.1
+    },
+    "physical_nominal": {
+      "f_U": 0.0560139,
+      "f_D": 0.0186713
+    },
+    "legacy_reference": "blood variable referenced to 28 g/L hemoglobin rather than whole blood",
+    "eps_HbO2_per_legacy_coordinate_cm-1": [
+      68.8448,
+      64.542,
+      8.6056,
+      3.8333
+    ],
+    "eps_HHb_per_legacy_coordinate_cm-1": [
+      55.8055,
+      61.3861,
+      11.1611,
+      7.1667
+    ],
+    "invariance": "eps and f enter mu_a only as a product, so dividing both blood coordinates by the divisor while multiplying both eps vectors by it leaves every layer absorption and reflectance unchanged."
+  },
+  "wavelengths_nm": [
+    540.0,
+    580.0,
+    633.0,
+    800.0
+  ],
+  "profiles": {
+    "production": {
+      "purpose": "the single configuration the merged manuscript reports",
+      "radial": {
+        "r_min_cm": 0.0,
+        "r_max_cm": 1.5,
+        "n_bins": 30,
+        "bin_centers_cut_cm": null
+      },
+      "n_observables": 120,
+      "min_count_rule": {
+        "enabled": false,
+        "threshold": 5.0,
+        "note": "disabled in the main analysis; all 30 bins retained. MIN_COUNT=5 is run only as a sensitivity profile."
+      },
+      "n_measurement_photons_per_wavelength": 100000,
+      "n_measurement_photons_total": 400000,
+      "n_transport_photons_per_wavelength_per_stream": 200000,
+      "n_transport_streams": 32,
+      "max_steps": 4000,
+      "likelihood": "multinomial_fixed_launch",
+      "likelihood_secondary": "diagonal_poisson",
+      "parameter_coordinates": "psi",
+      "blood_coordinate": "physical_bvf"
+    },
+    "p1_legacy": {
+      "purpose": "reproduce the original P1 raw-Jacobian SVD exactly",
+      "source": "jax-pad/scripts/inverse/p1_jacobian_spectrum.py",
+      "radial": {
+        "r_min_cm": 0.0,
+        "r_max_cm": 2.0,
+        "n_bins": 50,
+        "bin_centers_cut_cm": 1.5
+      },
+      "n_observables": 152,
+      "min_count_rule": {
+        "enabled": false,
+        "threshold": null
+      },
+      "n_measurement_photons_per_wavelength": null,
+      "n_transport_photons_per_wavelength_per_stream": 30000,
+      "n_transport_streams": 1,
+      "max_steps": 2000,
+      "likelihood": "none",
+      "weighting": "none",
+      "parameter_coordinates": "phi",
+      "blood_coordinate": "legacy",
+      "decomposition": "svd_of_raw_J",
+      "note": "This profile forms no Fisher matrix, assumes no noise model and computes no CRB, by design of the original script."
+    },
+    "p2_legacy": {
+      "purpose": "reproduce the original P2 diagonal-Poisson FIM exactly",
+      "source": "jax-pad-fisher/scripts/fisher/fim_boundary_poisson_pooled.py (headline bounds); build_fim_stack.py (Fk); fim_analyze.py (a separate min-count path)",
+      "radial": {
+        "r_min_cm": 0.0,
+        "r_max_cm": 1.5,
+        "n_bins": 30,
+        "bin_centers_cut_cm": null
+      },
+      "n_observables": 120,
+      "min_count_rule": {
+        "enabled": false,
+        "threshold": 5.0,
+        "note": "CORRECTED 2026-09-30. P2's published bounds (sdU 0.084033, sdD 1.912834 at N_tot=4e5) come from fim_boundary_poisson_pooled.py, whose only condition is r<=R_MAX and R>0. MIN_COUNT=5 appears in fim_analyze.py, which is NOT the headline path: enabling it drops 54 of 120 bins and moves the deep bound to 2.4225, a 26.6% change. Reproduction confirms the no-filter route matches the frozen values to 1e-11."
+      },
+      "n_measurement_photons_per_wavelength": 100000,
+      "n_transport_photons_per_wavelength_per_stream": 200000,
+      "n_transport_streams": 32,
+      "max_steps": 2000,
+      "likelihood": "diagonal_poisson",
+      "weighting": "W_jj = n_measurement_photons * A_j / R_j",
+      "parameter_coordinates": "psi",
+      "blood_coordinate": "legacy",
+      "decomposition": "eigh_of_FIM",
+      "spectral_normalization_applied": true,
+      "rank_tolerance_rel_lambda_max": 1e-10,
+      "parameter_order_production": [
+        "StO2_U",
+        "B_U",
+        "StO2_D",
+        "B_D",
+        "DermR",
+        "SubQ"
+      ],
+      "parameter_order_fim_stack": [
+        "StO2_U",
+        "StO2_D",
+        "B_U",
+        "B_D",
+        "DermR",
+        "SubQ"
+      ],
+      "parameter_order_note": "Gcw is stored in production order; fim_stack.npz applies PERM=[0,2,1,3,4,5]. Any consumer must state which it uses.",
+      "frozen_reference_bounds_at_N_tot_4e5": {
+        "sdU": 0.08403327125082351,
+        "sdD": 1.9128344058356286
+      }
+    }
+  },
+  "sensitivity_profiles": {
+    "production_min_count_5": {
+      "base": "production",
+      "override": {
+        "min_count_rule": {
+          "enabled": true,
+          "threshold": 5.0
+        }
+      }
+    },
+    "production_steps_2000": {
+      "base": "production",
+      "override": {
+        "max_steps": 2000
+      },
+      "note": "cost and convergence comparison only"
+    },
+    "production_poisson": {
+      "base": "production",
+      "override": {
+        "likelihood": "diagonal_poisson"
+      }
+    }
+  }
+}

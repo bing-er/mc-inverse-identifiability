@@ -1,0 +1,111 @@
+{
+  "profile": "production",
+  "seed": 43000,
+  "smoke": false,
+  "n_transport_photons_per_wavelength": 200000,
+  "max_steps": 4000,
+  "n_observables": 120,
+  "blood_coordinate": "physical_bvf",
+  "psi_labels": [
+    "StO2_U",
+    "f_U",
+    "StO2_D",
+    "f_D",
+    "mua_DermR",
+    "mua_SubQ"
+  ],
+  "psi_nominal": [
+    0.95,
+    0.0560139,
+    0.65,
+    0.0186713,
+    0.49,
+    0.45
+  ],
+  "kappa": 5.355813953488371,
+  "timing_s": {
+    "jax_compile": 1.3356626250315458,
+    "execution": 3559.0229308339767,
+    "energy_diagnostic": 189.45913041592576
+  },
+  "peak_rss_mb": 874.5,
+  "reflectance_diagnostics": {
+    "min_R_per_wavelength": [
+      0.0,
+      5.073557722485889e-08,
+      7.653015230789231e-06,
+      0.00013888186867669515
+    ],
+    "max_R_per_wavelength": [
+      44.76843819460973,
+      41.76922344319006,
+      41.39842082548446,
+      48.20180223829095
+    ],
+    "n_zero_bins_per_wavelength": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "n_zero_bins_total": 1,
+    "detection_probability_per_wavelength": [
+      0.4303222660190812,
+      0.4244730085420235,
+      0.5641606940172164,
+      0.6730853821217544
+    ]
+  },
+  "termination_diagnostics": {
+    "n_photons_subsample": 20000,
+    "per_wavelength": [
+      {
+        "wavelength_nm": 540.0,
+        "mean_specular_reflected": 0.040000000000000015,
+        "mean_diffuse_reflected": 0.4313605590055404,
+        "mean_transmitted": 0.0002802265712157746,
+        "mean_absorbed": 0.5283453660393141,
+        "mean_in_flight_at_termination": 1.3848383929706937e-05,
+        "in_flight_fraction_of_entered": 1.442539992677806e-05,
+        "max_abs_accounting_residual": 0.0,
+        "fraction_detected": 0.8163
+      },
+      {
+        "wavelength_nm": 580.0,
+        "mean_specular_reflected": 0.040000000000000015,
+        "mean_diffuse_reflected": 0.43096383969995766,
+        "mean_transmitted": 0.0013959032735841295,
+        "mean_absorbed": 0.5276310735898126,
+        "mean_in_flight_at_termination": 9.18343664556055e-06,
+        "in_flight_fraction_of_entered": 9.566079839125572e-06,
+        "max_abs_accounting_residual": 0.0,
+        "fraction_detected": 0.82945
+      },
+      {
+        "wavelength_nm": 633.0,
+        "mean_specular_reflected": 0.040000000000000015,
+        "mean_diffuse_reflected": 0.565177014425334,
+        "mean_transmitted": 0.00841167491419334,
+        "mean_absorbed": 0.38640935452754455,
+        "mean_in_flight_at_termination": 1.9561329280245066e-06,
+        "in_flight_fraction_of_entered": 2.0376384666921942e-06,
+        "max_abs_accounting_residual": 0.0,
+        "fraction_detected": 0.84425
+      },
+      {
+        "wavelength_nm": 800.0,
+        "mean_specular_reflected": 0.040000000000000015,
+        "mean_diffuse_reflected": 0.6760311422001093,
+        "mean_transmitted": 0.043503136517391114,
+        "mean_absorbed": 0.2404630202227253,
+        "mean_in_flight_at_termination": 2.7010597743317212e-06,
+        "in_flight_fraction_of_entered": 2.813603931595543e-06,
+        "max_abs_accounting_residual": 0.0,
+        "fraction_detected": 0.8416
+      }
+    ]
+  },
+  "artifact": "data/derived/production/seed_43000.npz",
+  "jax_version": "0.11.1",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+}

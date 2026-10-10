@@ -1,0 +1,362 @@
+{
+  "pooled_artifact": "data/derived/production_pooled.npz",
+  "jacobian_coordinates": "psi",
+  "jacobian_array": "J_psi",
+  "reparameterize_applied": false,
+  "n_observables": 120,
+  "n_wavelengths": 4,
+  "psi_nominal": [
+    0.95,
+    0.0560139,
+    0.65,
+    0.0186713,
+    0.49,
+    0.45
+  ],
+  "column_scale_D": [
+    1.0,
+    0.0560139,
+    1.0,
+    0.0186713,
+    0.49,
+    0.45
+  ],
+  "n_measurement_photons_per_wavelength": 100000,
+  "pooled_transport_photons_per_wavelength": 6400000,
+  "note": "all three branches share one J_psi, one grid, one coordinate system and one D; only the likelihood differs",
+  "branches": {
+    "raw": {
+      "spectral_identities": {
+        "singular_values": [
+          4.841152053967418,
+          1.1016977014150287,
+          0.4029828389926863,
+          0.013076790962902086,
+          0.0014239985164690005,
+          0.0007414184108478504
+        ],
+        "eigenvalues": [
+          23.43675320963297,
+          1.213737825303156,
+          0.16239516852260685,
+          0.00017100246188743955,
+          2.0277717749103772e-06,
+          5.497012600764589e-07
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 7.579364016471932e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 2.4068905312342885e-10,
+        "eigenvector_vs_right_singular_abs_residual": 1.6128681723515115e-11,
+        "Jw_v_minus_s_u_rel_residual": 3.21062469665961e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 6529.5816547518825,
+        "condition_number_I": 42635436.58607233,
+        "eigh_resolvable_floor": 5.204004607158408e-15,
+        "smallest_eigenvalue_below_eigh_floor": false,
+        "near_null_must_be_read_from_svd": false,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "eigenvalues": [
+        23.43675320963297,
+        1.213737825303156,
+        0.16239516852260685,
+        0.00017100246188743955,
+        2.0277717749103772e-06,
+        5.497012600764589e-07
+      ],
+      "condition_number_I": 42635436.575810485,
+      "alignment": {
+        "StO2_upper": [
+          0.06980175140279996,
+          0.7468045820086819,
+          0.6613636277668521,
+          0.0027232364875440303,
+          0.0005360954695086061,
+          0.0010393477229117202
+        ],
+        "StO2_deep": [
+          4.426771711658254e-05,
+          0.0013912093580186013,
+          0.0002382651059441559,
+          0.09615419074828849,
+          0.16522677297556237,
+          0.9815561577924384
+        ]
+      },
+      "singular_values": [
+        4.841152053967418,
+        1.1016977014150287,
+        0.4029828389926863,
+        0.013076790962902086,
+        0.0014239985164690005,
+        0.0007414184108478504
+      ],
+      "near_null": {
+        "near_null_direction_z_from_svd": [
+          -0.0010393477229015597,
+          0.00021521834279550128,
+          0.9815561577951633,
+          -0.14721339565345623,
+          -0.000753780105219602,
+          0.1219591344980106
+        ],
+        "near_null_tangent_psi_per_unit_z": [
+          -0.0010393477229015597,
+          1.2055218731512929e-05,
+          0.9815561577951633,
+          -0.002748665474264377,
+          -0.00036935225155760497,
+          0.05488161052410477
+        ],
+        "near_null_tangent_psi_unit_norm_display_only": [
+          -0.0010572214084927083,
+          1.2262532592496869e-05,
+          0.9984360005733903,
+          -0.0027959343347234095,
+          -0.00037570401033020656,
+          0.05582541078423834
+        ],
+        "tangent_norm": 0.9830937158029827,
+        "smallest_singular_value": 0.0007414184108478504,
+        "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+        "whitened_response_equals_smallest_singular_value": {
+          "response": 0.0007414184108478543,
+          "smallest_singular_value": 0.0007414184108478504,
+          "relative_difference": 5.264406391641107e-15,
+          "passes": true
+        },
+        "pushforward_consistency": {
+          "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+          "normalized_max_diff": 3.7400226283023596e-16,
+          "passes": true
+        }
+      }
+    },
+    "diagonal_poisson": {
+      "spectral_identities": {
+        "singular_values": [
+          105.97281589547904,
+          42.43059409772375,
+          16.730316309181635,
+          11.184866538537113,
+          1.2976636263067767,
+          0.5277689168896097
+        ],
+        "eigenvalues": [
+          11230.237708817092,
+          1800.3553154857866,
+          279.9034838052689,
+          125.10123948488598,
+          1.6839308870396565,
+          0.2785400296354122
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 3.239449512484904e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 2.083810352267763e-12,
+        "eigenvector_vs_right_singular_abs_residual": 5.292988269900434e-14,
+        "Jw_v_minus_s_u_rel_residual": 2.514357325116666e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 200.79396967905322,
+        "condition_number_I": 40318.218259472545,
+        "eigh_resolvable_floor": 2.493613695268481e-12,
+        "smallest_eigenvalue_below_eigh_floor": false,
+        "near_null_must_be_read_from_svd": false,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct_fisher_check": {
+        "max_abs_diff": 5.4569682106375694e-12,
+        "normalized_max_diff": 5.830781885343741e-16,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      },
+      "eigenvalues": [
+        11230.237708817092,
+        1800.3553154857866,
+        279.9034838052689,
+        125.10123948488598,
+        1.6839308870396565,
+        0.2785400296354122
+      ],
+      "condition_number_I": 40318.21825938851,
+      "alignment": {
+        "StO2_upper": [
+          0.03287224039673568,
+          0.34881369447301763,
+          0.4903822549300013,
+          0.7976238406595425,
+          0.02015109422651335,
+          0.01279877424388729
+        ],
+        "StO2_deep": [
+          0.0018231319349154415,
+          0.016554559857738727,
+          0.0337375086538967,
+          0.03333345735106636,
+          0.15536803623801743,
+          0.9865769393130268
+        ]
+      },
+      "singular_values": [
+        105.97281589547904,
+        42.43059409772375,
+        16.730316309181635,
+        11.184866538537113,
+        1.2976636263067767,
+        0.5277689168896097
+      ],
+      "near_null": {
+        "near_null_direction_z_from_svd": [
+          -0.0127987742438891,
+          0.0014789106675169202,
+          0.9865769393130349,
+          -0.15130845020669836,
+          -0.0010272302263395617,
+          0.06003869344784911
+        ],
+        "near_null_tangent_psi_per_unit_z": [
+          -0.0127987742438891,
+          8.283955423922602e-05,
+          0.9865769393130349,
+          -0.002825125466344327,
+          -0.0005033428109063853,
+          0.0270174120515321
+        ],
+        "near_null_tangent_psi_unit_norm_display_only": [
+          -0.01296690357042965,
+          8.392776457872867e-05,
+          0.9995369707368514,
+          -0.002862237336043553,
+          -0.0005099549040806299,
+          0.027372322545813333
+        ],
+        "tangent_norm": 0.9870339649225156,
+        "smallest_singular_value": 0.5277689168896097,
+        "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+        "whitened_response_equals_smallest_singular_value": {
+          "response": 0.5277689168896111,
+          "smallest_singular_value": 0.5277689168896097,
+          "relative_difference": 2.7347005210513145e-15,
+          "passes": true
+        },
+        "pushforward_consistency": {
+          "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+          "normalized_max_diff": 6.790223437857781e-17,
+          "passes": true
+        }
+      }
+    },
+    "multinomial_fixed_launch": {
+      "spectral_identities": {
+        "singular_values": [
+          121.9778431905003,
+          49.04420397627152,
+          18.205113890659412,
+          13.14130753033968,
+          1.316162423533148,
+          0.5350677161239026
+        ],
+        "eigenvalues": [
+          14878.594229406279,
+          2405.3339436661277,
+          331.42617177188055,
+          172.69396360696155,
+          1.7322835251205828,
+          0.2862974608363499
+        ],
+        "eigenvalue_vs_squared_singular_residual_over_lambda_max": 1.1421155354399867e-16,
+        "eigenvalue_vs_squared_singular_rel_residual_each": 5.93546081937666e-12,
+        "eigenvector_vs_right_singular_abs_residual": 1.665612092693891e-13,
+        "Jw_v_minus_s_u_rel_residual": 2.3300714856890917e-16,
+        "fisher_symmetry_rel_residual": 0.0,
+        "condition_number_Jw": 227.96711428251183,
+        "condition_number_I": 51969.00519429581,
+        "eigh_resolvable_floor": 3.303711577508368e-12,
+        "smallest_eigenvalue_below_eigh_floor": false,
+        "near_null_must_be_read_from_svd": false,
+        "all_within_tolerance": true,
+        "rel_tol": 1e-09
+      },
+      "direct_fisher_check": {
+        "max_abs_diff": 1.0732037480920553e-10,
+        "normalized_max_diff": 8.741058906333177e-15,
+        "passes": true,
+        "note": "I built from its definition, independently of J_w"
+      },
+      "eigenvalues": [
+        14878.594229406279,
+        2405.3339436661277,
+        331.42617177188055,
+        172.69396360696155,
+        1.7322835251205828,
+        0.2862974608363499
+      ],
+      "condition_number_I": 51969.005194604266,
+      "alignment": {
+        "StO2_upper": [
+          0.005884813336255262,
+          0.424721619972069,
+          0.615451692090453,
+          0.6636251617070535,
+          0.0155523064814666,
+          0.012485980766076243
+        ],
+        "StO2_deep": [
+          0.0020400609984852695,
+          0.014537114914155077,
+          0.02828001796000219,
+          0.038999810249062856,
+          0.14831390091300303,
+          0.9876572040043965
+        ]
+      },
+      "singular_values": [
+        121.9778431905003,
+        49.04420397627152,
+        18.205113890659412,
+        13.14130753033968,
+        1.316162423533148,
+        0.5350677161239026
+      ],
+      "near_null": {
+        "near_null_direction_z_from_svd": [
+          -0.012485980766072708,
+          0.0016339418556145895,
+          0.987657204004372,
+          -0.14396757039827182,
+          -0.0018741602923100643,
+          0.060369728286669366
+        ],
+        "near_null_tangent_psi_per_unit_z": [
+          -0.012485980766072708,
+          9.152345570621006e-05,
+          0.987657204004372,
+          -0.0026880616971772524,
+          -0.0009183385432319315,
+          0.027166377729001216
+        ],
+        "near_null_tangent_psi_unit_norm_display_only": [
+          -0.01263617779737251,
+          9.262441458152119e-05,
+          0.9995379831568117,
+          -0.002720397073502978,
+          -0.0009293854706224025,
+          0.02749316898092691
+        ],
+        "tangent_norm": 0.9881137291902434,
+        "smallest_singular_value": 0.5350677161239026,
+        "coordinate_note": "the SVD of J_w = C^{-1/2} J_psi D gives right singular vectors in z, where psi = D z; the psi-space direction is the pushforward D v_z, left unnormalized so a unit step means unit displacement in z",
+        "whitened_response_equals_smallest_singular_value": {
+          "response": 0.5350677161239056,
+          "smallest_singular_value": 0.5350677161239026,
+          "relative_difference": 5.602285610133475e-15,
+          "passes": true
+        },
+        "pushforward_consistency": {
+          "identity": "J_psi @ (D v_z) == (J_psi D) @ v_z",
+          "normalized_max_diff": 1.4439030528070768e-16,
+          "passes": true
+        }
+      }
+    }
+  }
+}
